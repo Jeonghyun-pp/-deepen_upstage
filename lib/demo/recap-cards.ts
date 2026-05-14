@@ -17,6 +17,13 @@ export interface RecapCard {
     answer: string
     explanation: string
   }
+  /** 2022 개정 교육과정 성취기준 코드. ★ 데이터 팀이 정확한 코드로 교체. */
+  curriculumCode?: string
+  /** 이 결손이 영향 주는 상위 유형 — "단순 결손이 아니다" 메시지. */
+  impact?: {
+    label: string
+    description: string
+  }
 }
 
 export const RECAP_CARDS: Record<string, RecapCard> = {
@@ -24,6 +31,7 @@ export const RECAP_CARDS: Record<string, RecapCard> = {
     key: "LEAF-1",
     title: "판별식 — 1분 30초 복습",
     subtitle: "중3 · 이차방정식의 근의 판별",
+    curriculumCode: "[9수03-02]",
     body: [
       "이차방정식 ax² + bx + c = 0 의 판별식 D = b² − 4ac.",
       "",
@@ -37,6 +45,11 @@ export const RECAP_CARDS: Record<string, RecapCard> = {
       question: "x² − 6x + k = 0 이 중근을 가질 때 k 의 값은?",
       answer: "9",
       explanation: "D = 36 − 4k = 0 ⇒ k = 9.",
+    },
+    impact: {
+      label: "Q6 · 곡선 밖 접선 개수 (고2)",
+      description:
+        "판별식이 막히면 접선 개수·실근 분석이 도미노로 막힙니다. 단순 중3 단원이 아니라 고3 수능까지 이어지는 뿌리.",
     },
   },
 

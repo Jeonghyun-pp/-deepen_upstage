@@ -9,15 +9,33 @@
 import { diagnoseAttempt } from "@/lib/demo/diagnose"
 import { DiagnoseView } from "../_components/DiagnoseView"
 import { DEMO_TARGET_ITEM_ID } from "@/lib/demo/constants"
+import { getOcrResult } from "@/lib/demo/ocr-store"
 
 type Props = {
-  searchParams: Promise<{ itemId?: string; attempt?: string }>
+  searchParams: Promise<{
+    itemId?: string
+    attempt?: string
+    stepsKey?: string
+  }>
 }
 
 export default async function DiagnoseScreen({ searchParams }: Props) {
-  const { itemId = DEMO_TARGET_ITEM_ID, attempt = "wrong" } = await searchParams
-  // attempt 파라미터로 학생 풀이를 식별. 데모용은 "wrong" 캐시된 풀이 사용.
-  const diagnosis = await diagnoseAttempt({ itemId, attemptKey: attempt })
+  const {
+    itemId = DEMO_TARGET_ITEM_ID,
+    attempt = "wrong",
+    stepsKey,
+  } = await searchParams
+
+  // ③ OCR pipeline 결과가 있으면 그걸 학생 풀이로 사용.
+  // 없으면 diagnose.ts 내부 STUB_WRONG_ATTEMPT 가 fallback.
+  const ocr = stepsKey ? getOcrResult(stepsKey) : null
+
+  const diagnosis = await diagnoseAttempt({
+    itemId,
+    attemptKey: attempt,
+    studentSteps: ocr?.steps.map((s) => s.latex),
+    studentAnswer: ocr?.studentAnswer,
+  })
 
   return (
     <div className="flex-1 flex flex-col">

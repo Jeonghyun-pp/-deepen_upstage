@@ -59,6 +59,54 @@ export function DiagnoseView({ diagnosis }: { diagnosis: DiagnosisResult }) {
         <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-white/50 mb-3">
           ★ 결손 역추적 — Solar Pro
         </div>
+
+        {/* BFS 역추적 경로 — TARGET → winner */}
+        <div className="bg-white/5 border border-white/10 rounded-md p-3 mb-4">
+          <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-white/50 mb-2">
+            역추적 경로
+          </div>
+          <div className="flex items-stretch gap-2">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex-1 px-3 py-2 border border-white/20 rounded text-xs flex flex-col justify-center min-w-0"
+            >
+              <div className="text-white/40 text-[9px] uppercase tracking-wider mb-0.5">
+                풀던 문제
+              </div>
+              <div className="text-white truncate">{diagnosis.target.label}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -6 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
+              className="text-[#FFA500] text-2xl self-center"
+            >
+              →
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                boxShadow: [
+                  "0 0 0 0 rgba(255,165,0,0)",
+                  "0 0 16px 2px rgba(255,165,0,0.45)",
+                  "0 0 8px 1px rgba(255,165,0,0.25)",
+                ],
+              }}
+              transition={{ delay: 1.1, duration: 0.6 }}
+              className="flex-1 px-3 py-2 border-2 border-[#FFA500] rounded text-xs flex flex-col justify-center min-w-0"
+            >
+              <div className="text-[#FFA500] text-[9px] uppercase tracking-wider mb-0.5 font-bold">
+                결손
+              </div>
+              <div className="text-white font-bold truncate">
+                {diagnosis.candidate.label}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
         <div className="mb-4">
           <div className="text-xs text-white/40 mb-1">진짜 결손</div>
           <div className="text-2xl font-extrabold text-[#FFA500]">
@@ -79,14 +127,14 @@ export function DiagnoseView({ diagnosis }: { diagnosis: DiagnosisResult }) {
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 1.4 }}
             className="bg-white/5 border border-white/10 rounded-md p-4 mb-4"
           >
             <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-yellow-400 mb-2">
               📖 본문 인용 · {diagnosis.justification.sectionTitle ?? "NCIC 교육과정"}
             </div>
-            <div className="text-sm leading-relaxed">
-              <span className="bg-yellow-400/30 px-1 rounded">
+            <div className="text-sm leading-relaxed text-white/90">
+              <span className="bg-yellow-300 text-black px-1.5 py-0.5 rounded font-semibold shadow-[0_1px_0_rgba(0,0,0,0.15)]">
                 {diagnosis.justification.quote}
               </span>
             </div>
