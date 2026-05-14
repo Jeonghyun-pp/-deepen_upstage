@@ -36,6 +36,11 @@ const schema = z.object({
   OPENAI_API_KEY: z.string().min(1).optional(),
   OPENAI_MODEL: z.string().default("gpt-4o-mini"),
 
+  // Upstage — 해커톤 데모용. Solar Pro chat + Information Extract (Vision).
+  // 미설정 시 데모 진단/IE Vision 호출이 막힘. /demo 외 경로는 영향 없음.
+  UPSTAGE_API_KEY: z.string().min(1).optional(),
+  UPSTAGE_SOLAR_MODEL: z.string().default("solar-pro2"),
+
   // Admin (시드 작업)
   ADMIN_EMAILS: z.string().default(""),
 
@@ -91,4 +96,5 @@ export const features = {
   pdfExtraction: !!env.OPENAI_API_KEY,
   adminConfigured: env.ADMIN_EMAILS.split(",").map((s) => s.trim()).filter(Boolean).length > 0,
   tossLive: !!(env.TOSS_CLIENT_KEY && env.TOSS_SECRET_KEY),
+  upstage: !!env.UPSTAGE_API_KEY,
 } as const

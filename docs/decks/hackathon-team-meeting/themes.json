@@ -1,0 +1,168 @@
+{
+  "_comment": "Theme presets for editable-ppt. Each theme is a full token bundle. When meta.theme names a preset, the builder loads its tokens as defaults and applies user overrides from spec.tokens on top.",
+
+  "clean": {
+    "_description": "White background, ink black text, blue accent. Corporate/consulting feel. Default recommendation for business/IR/proposal decks.",
+    "colors": {
+      "bg":         "#FFFFFF",
+      "surface":    "#F5F5F5",
+      "text":       "#0A0A0A",
+      "text_muted": "#555555",
+      "accent":     "#0F62FE",
+      "accent_alt": "#161616",
+      "border":     "#E5E5E5",
+      "success":    "#198038",
+      "warning":    "#F1C21B",
+      "danger":     "#DA1E28"
+    },
+    "fonts": {
+      "display": "Pretendard",
+      "body":    "Pretendard",
+      "mono":    "JetBrains Mono"
+    },
+    "type_scale": {
+      "overline":   { "size": 12, "weight": 700, "tracking": 0.15 },
+      "title":      { "size": 34, "weight": 700, "tracking": -0.01 },
+      "body":       { "size": 19, "weight": 400, "tracking": 0 },
+      "card_title": { "size": 20, "weight": 600, "tracking": 0 },
+      "card_body":  { "size": 16, "weight": 400, "tracking": 0 },
+      "hero":       { "size": 96, "weight": 800, "tracking": -0.03 },
+      "caption":    { "size": 11, "weight": 400, "tracking": 0 },
+      "source":     { "size": 9,  "weight": 400, "tracking": 0 }
+    },
+    "spacing": { "outer_margin": 80, "gutter": 24, "section_gap": 60, "intra_gap": 16 },
+    "radius":  { "sm": 4, "md": 8, "lg": 16 }
+  },
+
+  "bold": {
+    "_description": "Dark background, neon yellow accent, geometric sans. Startup pitch, keynote, conference talk.",
+    "colors": {
+      "bg":         "#0A0A0A",
+      "surface":    "#1A1A1A",
+      "text":       "#FAFAFA",
+      "text_muted": "#9CA3AF",
+      "accent":     "#EAFE07",
+      "accent_alt": "#FF4D8D",
+      "border":     "#2A2A2A",
+      "success":    "#34D399",
+      "warning":    "#FBBF24",
+      "danger":     "#F87171"
+    },
+    "fonts": {
+      "display": "Geist",
+      "body":    "Geist",
+      "mono":    "Geist Mono"
+    },
+    "type_scale": {
+      "overline":   { "size": 12, "weight": 700, "tracking": 0.18 },
+      "title":      { "size": 36, "weight": 800, "tracking": -0.02 },
+      "body":       { "size": 19, "weight": 400, "tracking": 0 },
+      "card_title": { "size": 22, "weight": 700, "tracking": 0 },
+      "card_body":  { "size": 16, "weight": 400, "tracking": 0 },
+      "hero":       { "size": 120, "weight": 900, "tracking": -0.04 },
+      "caption":    { "size": 11, "weight": 400, "tracking": 0 },
+      "source":     { "size": 9,  "weight": 400, "tracking": 0 }
+    },
+    "spacing": { "outer_margin": 80, "gutter": 24, "section_gap": 60, "intra_gap": 16 },
+    "radius":  { "sm": 0, "md": 0, "lg": 0 }
+  },
+
+  "editorial": {
+    "_description": "Ivory background, serif display, terracotta accent. Magazine/journal/conference talk feel.",
+    "colors": {
+      "bg":         "#FAF7F2",
+      "surface":    "#F2EDE3",
+      "text":       "#1A1A1A",
+      "text_muted": "#5F574F",
+      "accent":     "#C4553A",
+      "accent_alt": "#8B7355",
+      "border":     "#D8D0C2",
+      "success":    "#6B7F4D",
+      "warning":    "#C49B47",
+      "danger":     "#A0492E"
+    },
+    "fonts": {
+      "display": "Libre Baskerville",
+      "body":    "Libre Franklin",
+      "mono":    "JetBrains Mono"
+    },
+    "type_scale": {
+      "overline":   { "size": 11, "weight": 700, "tracking": 0.2 },
+      "title":      { "size": 38, "weight": 700, "tracking": -0.01 },
+      "body":       { "size": 20, "weight": 400, "tracking": 0 },
+      "card_title": { "size": 22, "weight": 700, "tracking": 0 },
+      "card_body":  { "size": 17, "weight": 400, "tracking": 0 },
+      "hero":       { "size": 110, "weight": 700, "tracking": -0.03 },
+      "caption":    { "size": 12, "weight": 400, "tracking": 0 },
+      "source":     { "size": 10, "weight": 400, "tracking": 0 }
+    },
+    "spacing": { "outer_margin": 100, "gutter": 32, "section_gap": 72, "intra_gap": 16 },
+    "radius":  { "sm": 0, "md": 0, "lg": 0 }
+  },
+
+  "pastel": {
+    "_description": "Lavender mist background, dark slate text, violet accent. Warm corporate/education/public sector. Korean-first default.",
+    "colors": {
+      "bg":         "#F5F3FF",
+      "surface":    "#FFFFFF",
+      "text":       "#1F2937",
+      "text_muted": "#64748B",
+      "accent":     "#7C3AED",
+      "accent_alt": "#A78BFA",
+      "border":     "#E0DCFF",
+      "success":    "#10B981",
+      "warning":    "#F59E0B",
+      "danger":     "#EF4444"
+    },
+    "fonts": {
+      "display": "Pretendard",
+      "body":    "Pretendard",
+      "mono":    "JetBrains Mono"
+    },
+    "type_scale": {
+      "overline":   { "size": 12, "weight": 700, "tracking": 0.12 },
+      "title":      { "size": 32, "weight": 700, "tracking": -0.01 },
+      "body":       { "size": 19, "weight": 400, "tracking": 0 },
+      "card_title": { "size": 20, "weight": 600, "tracking": 0 },
+      "card_body":  { "size": 16, "weight": 400, "tracking": 0 },
+      "hero":       { "size": 88, "weight": 800, "tracking": -0.02 },
+      "caption":    { "size": 11, "weight": 400, "tracking": 0 },
+      "source":     { "size": 9,  "weight": 400, "tracking": 0 }
+    },
+    "spacing": { "outer_margin": 80, "gutter": 24, "section_gap": 60, "intra_gap": 16 },
+    "radius":  { "sm": 8, "md": 16, "lg": 24 }
+  },
+
+  "dark-tech": {
+    "_description": "Deep navy background, warm white text, electric cyan accent. Engineering reports, dev meetups, technical demos.",
+    "colors": {
+      "bg":         "#0A0E17",
+      "surface":    "#141B2A",
+      "text":       "#F0F0E8",
+      "text_muted": "#94A3B8",
+      "accent":     "#38BDF8",
+      "accent_alt": "#A78BFA",
+      "border":     "#1E293B",
+      "success":    "#22D3EE",
+      "warning":    "#FBBF24",
+      "danger":     "#F87171"
+    },
+    "fonts": {
+      "display": "IBM Plex Mono",
+      "body":    "Inter",
+      "mono":    "IBM Plex Mono"
+    },
+    "type_scale": {
+      "overline":   { "size": 12, "weight": 700, "tracking": 0.18 },
+      "title":      { "size": 32, "weight": 700, "tracking": -0.01 },
+      "body":       { "size": 18, "weight": 400, "tracking": 0 },
+      "card_title": { "size": 20, "weight": 600, "tracking": 0 },
+      "card_body":  { "size": 16, "weight": 400, "tracking": 0 },
+      "hero":       { "size": 96, "weight": 700, "tracking": -0.03 },
+      "caption":    { "size": 11, "weight": 400, "tracking": 0 },
+      "source":     { "size": 9,  "weight": 400, "tracking": 0 }
+    },
+    "spacing": { "outer_margin": 80, "gutter": 24, "section_gap": 60, "intra_gap": 16 },
+    "radius":  { "sm": 2, "md": 4, "lg": 8 }
+  }
+}

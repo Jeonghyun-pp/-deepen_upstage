@@ -1,0 +1,781 @@
+{
+  "meta": {
+    "title": "해커톤 D-2 팀 회의 아젠다",
+    "subtitle": "Deepen × Upstage · 2026-05-14",
+    "theme": "clean",
+    "language": "ko",
+    "size": [1920, 1080],
+    "author": "Deepen Team",
+    "font_embed": true
+  },
+
+  "tokens": {
+    "colors": {
+      "bg": "#FFFFFF",
+      "surface": "#F5F5F5",
+      "text": "#0A0A0A",
+      "text_muted": "#525252",
+      "accent": "#0F62FE",
+      "accent_alt": "#161616",
+      "border": "#E5E5E5",
+      "success": "#16A34A",
+      "warning": "#DA1E28",
+      "danger": "#DA1E28"
+    },
+    "fonts": {
+      "display": "Pretendard",
+      "body": "Pretendard",
+      "mono": "JetBrains Mono"
+    },
+    "type_scale": {
+      "overline":   { "size": 13, "weight": 700, "tracking": 0.15 },
+      "title":      { "size": 38, "weight": 700, "tracking": -0.01 },
+      "body":       { "size": 21, "weight": 400, "tracking": 0 },
+      "card_title": { "size": 22, "weight": 700, "tracking": 0 },
+      "card_body":  { "size": 17, "weight": 400, "tracking": 0 },
+      "hero":       { "size": 96, "weight": 800, "tracking": -0.03 },
+      "caption":    { "size": 12, "weight": 400, "tracking": 0 },
+      "source":     { "size": 10, "weight": 400, "tracking": 0 }
+    },
+    "spacing": { "outer_margin": 80, "gutter": 24, "section_gap": 60, "intra_gap": 16 },
+    "radius":  { "sm": 4, "md": 8, "lg": 16 }
+  },
+
+  "slides": [
+    {
+      "id": "s1-cover",
+      "layout": "title",
+      "background": { "type": "fill", "color": "bg" },
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1760, "h": 40,
+          "value": "DEEPEN × UPSTAGE HACKATHON · 팀 회의",
+          "style": { "role": "overline", "font_color": "accent", "align": "left" }
+        },
+        {
+          "type": "shape",
+          "id": "divider",
+          "shape_kind": "line",
+          "x": 80, "y": 170, "w": 200, "h": 4,
+          "style": { "fill": "accent", "stroke_width": 0 }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 210, "w": 1760, "h": 360,
+          "value": "해커톤 D-2 회의\n4개 결정을 오늘 픽스한다",
+          "style": { "role": "title", "font_size": 56, "font_color": "text", "align": "left", "valign": "top", "line_height": 1.3 }
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "x": 80, "y": 600, "w": 1760, "h": 60,
+          "value": "2026-05-14 (목) · 90~120분 · 본행사 5/16까지 D-2",
+          "style": { "role": "body", "font_size": 24, "font_color": "text_muted", "align": "left" }
+        },
+        {
+          "type": "stat_grid",
+          "id": "meta-grid",
+          "x": 80, "y": 720, "w": 1760, "h": 220,
+          "cols": 4, "rows": 1,
+          "items": [
+            { "value": "5/14", "label": "회의일 (목)", "delta": "오늘" },
+            { "value": "120분", "label": "예상 시간", "delta": "8장 가이드" },
+            { "value": "5인", "label": "참여 인원", "delta": "팀 전원" },
+            { "value": "4개", "label": "결정 산출물", "delta": "+ RNR 분배" }
+          ],
+          "style": { "value_size": 80, "value_color": "accent", "label_color": "text" }
+        },
+        {
+          "type": "text",
+          "id": "footer",
+          "x": 80, "y": 1020, "w": 1760, "h": 30,
+          "value": "Deepen Team · 박정현 · 남건우 · 남궁현종 · 문형서 · 한원석",
+          "style": { "role": "source", "font_color": "text_muted", "align": "left" }
+        }
+      ],
+      "notes": "타이틀 슬라이드. 회의 동기 한 줄과 메타 4개. 디자인 변형 시 액센트 라인과 stat_grid value_color만 함께 바꾼다."
+    },
+
+    {
+      "id": "s2-why",
+      "layout": "content",
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1760, "h": 30,
+          "value": "WHY · 왜 이 회의가 필요한가",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 150, "w": 1760, "h": 180,
+          "value": "지금 결정하지 않으면 5/16 본행사에서 무너진다",
+          "style": { "role": "title", "font_color": "text", "line_height": 1.25 }
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "x": 80, "y": 340, "w": 1100, "h": 200,
+          "value": "1p 기획서는 제출됐다 (5/13). 그러나 검증 · 알고리즘 · UX · RNR이 모두 미확정이다. 이대로 빌드에 들어가면 5명이 다른 그림을 그린다.",
+          "style": { "role": "body", "font_color": "text_muted", "line_height": 1.4 }
+        },
+        {
+          "type": "stat_grid",
+          "id": "timeline",
+          "x": 80, "y": 560, "w": 1100, "h": 180,
+          "cols": 4, "rows": 1,
+          "items": [
+            { "value": "5/13", "label": "1p 제출", "delta": "✓ 완료" },
+            { "value": "5/14", "label": "오늘 회의", "delta": "진행 중" },
+            { "value": "5/15", "label": "빌드 + 제출", "delta": "23:59 마감" },
+            { "value": "5/16", "label": "본행사", "delta": "D-day" }
+          ],
+          "style": { "value_size": 72, "value_color": "text", "label_color": "text" }
+        },
+        {
+          "type": "shape",
+          "id": "guard-card",
+          "shape_kind": "rect",
+          "x": 1240, "y": 340, "w": 600, "h": 620,
+          "style": { "fill": "surface", "stroke": "border", "stroke_width": 1, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "guard-title",
+          "x": 1280, "y": 370, "w": 520, "h": 40,
+          "value": "핵심 가드라인 3개",
+          "style": { "role": "card_title", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "guard-body",
+          "x": 1280, "y": 430, "w": 520, "h": 510,
+          "value": "① LLM 교체 ≠ 알고리즘 교체\n   출력 형태와 작업 단위가 다르다\n\n② Upstage 수치를 그대로 인용 X\n   자체 측정 수치만 슬라이드에\n\n③ 데모 5분 = 평가의 절반\n   피어 투자가 평가의 50%",
+          "style": { "role": "card_body", "font_color": "text", "line_height": 1.5 }
+        },
+        {
+          "type": "shape",
+          "id": "output-strip",
+          "shape_kind": "rect",
+          "x": 80, "y": 760, "w": 1100, "h": 200,
+          "style": { "fill": "accent", "fill_alpha": 0.08, "stroke_width": 0, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "output-title",
+          "x": 100, "y": 780, "w": 1060, "h": 30,
+          "value": "회의 산출물 4개",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "output-body",
+          "x": 100, "y": 820, "w": 1060, "h": 130,
+          "value": "①  고정 데이터셋 (Context 1 + 8문제)        ③  부스 시연 5분 시나리오\n②  알고리즘 깊이 (Upstage 부품 vs 자체)     ④  RNR + 일정 (4트랙)",
+          "style": { "role": "card_body", "font_size": 17, "font_color": "text", "line_height": 1.7 }
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "x": 80, "y": 1020, "w": 1760, "h": 20,
+          "value": "Source: docs/hackathon-2026/plan-1p.md, upstage-mapping.md",
+          "style": { "role": "source", "font_color": "text_muted" }
+        }
+      ],
+      "notes": "Complication 슬라이드. 좌측 본문+타임라인+산출물 strip, 우측 가드라인 카드. 가드라인 3개는 직전 대화의 핵심 결론."
+    },
+
+    {
+      "id": "s3-agenda-1-dataset",
+      "layout": "content",
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1000, "h": 30,
+          "value": "AGENDA 1 · 15 MIN",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "shape",
+          "id": "badge",
+          "shape_kind": "rect",
+          "x": 1660, "y": 95, "w": 180, "h": 44,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "sm" },
+          "text": {
+            "value": "결정 2개",
+            "style": { "font": "display", "font_size": 14, "font_weight": 700, "font_color": "bg", "align": "center", "valign": "middle" }
+          }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 150, "w": 1760, "h": 180,
+          "value": "교육과정 문서 1개 + 평가원·교육청 8문제로\n데이터를 고정한다",
+          "style": { "role": "title", "font_color": "text", "line_height": 1.25 }
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "x": 80, "y": 340, "w": 1760, "h": 130,
+          "value": "특정 문제 / 문서 단위 측정으로 합의. 공공 출제물만 사용. prerequisite 체인이 명시된 단일 도메인으로 한정.",
+          "style": { "role": "body", "font_color": "text_muted", "line_height": 1.4 }
+        },
+        {
+          "type": "shape",
+          "id": "chain-card",
+          "shape_kind": "rect",
+          "x": 80, "y": 480, "w": 1100, "h": 180,
+          "style": { "fill": "surface", "stroke": "border", "stroke_width": 1, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "chain-label",
+          "x": 100, "y": 500, "w": 1060, "h": 30,
+          "value": "PREREQUISITE 체인 · 1p 기획서의 그 한 문장",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "chain-text",
+          "x": 100, "y": 540, "w": 1060, "h": 110,
+          "value": "중3 판별식  →  고1 이차방정식  →  고1 이차함수  →  고2 곡선 밖 접선",
+          "style": { "font": "display", "font_size": 22, "font_weight": 700, "font_color": "text", "align": "left", "valign": "middle", "line_height": 1.5 }
+        },
+        {
+          "type": "shape",
+          "id": "context-card",
+          "shape_kind": "rect",
+          "x": 80, "y": 680, "w": 530, "h": 280,
+          "style": { "fill": "bg", "stroke": "border", "stroke_width": 1, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "context-label",
+          "x": 100, "y": 700, "w": 490, "h": 30,
+          "value": "결정 ① · CONTEXT 문서",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "context-options",
+          "x": 100, "y": 740, "w": 490, "h": 210,
+          "value": "A (추천)\n  2022 개정 수학과 교육과정 (NCIC)\n\nB\n  EBSi 무료 공개 강의 자료\n\nC\n  평가원 출제의도 · 해설집",
+          "style": { "role": "card_body", "font_color": "text", "line_height": 1.5 }
+        },
+        {
+          "type": "shape",
+          "id": "problems-card",
+          "shape_kind": "rect",
+          "x": 650, "y": 680, "w": 530, "h": 280,
+          "style": { "fill": "bg", "stroke": "border", "stroke_width": 1, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "problems-label",
+          "x": 670, "y": 700, "w": 490, "h": 30,
+          "value": "결정 ② · 8문제 출처",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "problems-list",
+          "x": 670, "y": 740, "w": 490, "h": 210,
+          "value": "Q1-3   고1 교육청 (3·6·9·11월)\nQ4-5   평가원 수1 · 미적분\nQ6      평가원 수능 · TARGET\nQ7      평가원 미적분 고난도\nQ8      평가원 함수극한 (distractor)",
+          "style": { "role": "card_body", "font_color": "text", "line_height": 1.55 }
+        },
+        {
+          "type": "shape",
+          "id": "label-callout",
+          "shape_kind": "rect",
+          "x": 1240, "y": 480, "w": 600, "h": 480,
+          "style": { "fill": "accent_alt", "stroke_width": 0, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "label-title",
+          "x": 1280, "y": 510, "w": 520, "h": 40,
+          "value": "라벨링 약속",
+          "style": { "role": "card_title", "font_color": "bg" }
+        },
+        {
+          "type": "text",
+          "id": "label-body",
+          "x": 1280, "y": 570, "w": 520, "h": 370,
+          "value": "각 문제마다 1~2줄로 기록:\n\n•  정답\n•  필요한 prerequisite 노드 ID\n     LEAF-1 · MID-2 · TARGET …\n•  학생이 막힐 만한 지점\n\n저장:\nfixed-dataset.md",
+          "style": { "role": "card_body", "font_color": "bg", "line_height": 1.55 }
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "x": 80, "y": 1020, "w": 1760, "h": 20,
+          "value": "출처: 평가원(kice.re.kr) · EBSi(ebsi.co.kr) · NCIC(ncic.re.kr) — 모두 공공저작물",
+          "style": { "role": "source", "font_color": "text_muted" }
+        }
+      ],
+      "notes": "Agenda 1. 좌상단 체인 시각화 → 좌하단 결정 카드 2개 → 우측 라벨링 약속 카드."
+    },
+
+    {
+      "id": "s4-agenda-2a-algorithm",
+      "layout": "content",
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1000, "h": 30,
+          "value": "AGENDA 2-A · 30 MIN · 가장 큰 슬롯",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "shape",
+          "id": "badge",
+          "shape_kind": "rect",
+          "x": 1660, "y": 95, "w": 180, "h": 44,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "sm" },
+          "text": {
+            "value": "결정 3개",
+            "style": { "font": "display", "font_size": 14, "font_weight": 700, "font_color": "bg", "align": "center", "valign": "middle" }
+          }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 150, "w": 1760, "h": 180,
+          "value": "Upstage는 부품 — 차별점은\n우리가 짜는 4개 알고리즘이다",
+          "style": { "role": "title", "font_color": "text", "line_height": 1.25 }
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "x": 80, "y": 340, "w": 1760, "h": 130,
+          "value": "Document Parse · Information Extract는 출력 형태와 작업 단위 자체가 다르다. 단순 endpoint 교체로는 절반도 못 간다.",
+          "style": { "role": "body", "font_color": "text_muted", "line_height": 1.4 }
+        },
+        {
+          "type": "shape",
+          "id": "upstage-card",
+          "shape_kind": "rect",
+          "x": 80, "y": 480, "w": 850, "h": 480,
+          "style": { "fill": "surface", "stroke": "border", "stroke_width": 1, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "upstage-label",
+          "x": 110, "y": 505, "w": 800, "h": 30,
+          "value": "🧩 UPSTAGE가 들어갈 곳 · 2 + 1",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "upstage-list",
+          "x": 110, "y": 550, "w": 800, "h": 390,
+          "value": "[P0]  Document Parse\n         parse-pdf.ts:98 — unpdf 대체\n         표·수식·도표 보존\n\n[P0]  Information Extract\n         extract-nodes.ts:14\n         한국어 entity 추출 (스키마)\n\n[옵션]  Upstage Embedding\n         한국어 retrieval 개선",
+          "style": { "role": "card_body", "font_color": "text", "line_height": 1.55 }
+        },
+        {
+          "type": "shape",
+          "id": "algo-card",
+          "shape_kind": "rect",
+          "x": 950, "y": 480, "w": 890, "h": 480,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "algo-label",
+          "x": 980, "y": 505, "w": 840, "h": 30,
+          "value": "⚙️ 자체 알고리즘 · 차별점 (4개)",
+          "style": { "role": "overline", "font_color": "bg" }
+        },
+        {
+          "type": "text",
+          "id": "algo-list",
+          "x": 980, "y": 550, "w": 840, "h": 390,
+          "value": "A1.  Layout-aware chunker\n        표·수식 보존, heading 트리\n\nA2.  2-stage prerequisite 엣지\n        IE entity + Solar CoT 관계\n\nA3.  결손 역추적 ★ 데모 핵심\n        BFS → LLM scoring → top-K\n\nA4.  Confidence 정책\n        ≥0.7 / 0.4~0.7 / <0.4",
+          "style": { "role": "card_body", "font_color": "bg", "line_height": 1.55 }
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "x": 80, "y": 1020, "w": 1760, "h": 20,
+          "value": "오늘 결정: ① Upstage / 자체 경계선 · ② T5 의사코드 화이트보드 1장 · ③ chunking 단위 + confidence threshold",
+          "style": { "role": "source", "font_color": "text_muted" }
+        }
+      ],
+      "notes": "Agenda 2-a. 좌(surface)/우(accent) 대비로 부품 vs 차별점 시각적 분리."
+    },
+
+    {
+      "id": "s5-agenda-2b-validation",
+      "layout": "content",
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1000, "h": 30,
+          "value": "AGENDA 2-B · 20 MIN",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "shape",
+          "id": "badge",
+          "shape_kind": "rect",
+          "x": 1660, "y": 95, "w": 180, "h": 44,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "sm" },
+          "text": {
+            "value": "결정 2개",
+            "style": { "font": "display", "font_size": 14, "font_weight": 700, "font_color": "bg", "align": "center", "valign": "middle" }
+          }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 150, "w": 1760, "h": 180,
+          "value": "검증 PASS / FAIL 기준을 미리 정해야\nfallback이 가능하다",
+          "style": { "role": "title", "font_color": "text", "line_height": 1.25 }
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "x": 80, "y": 340, "w": 1760, "h": 130,
+          "value": "이전 도메인 precision 수치는 노이즈. 8문제 셋으로 binary PASS/FAIL 7개만 본다. 실패 시 plan B를 회의에서 미리 픽스.",
+          "style": { "role": "body", "font_color": "text_muted", "line_height": 1.4 }
+        },
+        {
+          "type": "table",
+          "id": "test-table",
+          "x": 80, "y": 490, "w": 1160, "h": 480,
+          "headers": ["#", "테스트", "Baseline", "Upstage / 자체", "PASS 기준"],
+          "rows": [
+            ["T1", "Context 파싱", "unpdf", "Document Parse", "수식 LaTeX로 살아 있음"],
+            ["T2", "Entity 추출", "gpt-4o-mini", "Information Extract", "LEAF/MID/TARGET 다 존재"],
+            ["T3", "Prerequisite 엣지", "gpt-4o-mini", "A2 (자체)", "핵심 엣지 4개 중 3개+"],
+            ["T4", "Chunk-mapping", "placeholder []", "Information Extract", "Q6 → TARGET conf ≥ 0.7"],
+            ["T5", "결손 역추적 ★", "(없음)", "A3 (자체)", "Q6 오답 → LEAF-1 지목"],
+            ["T6", "Distractor 거부", "(없음)", "A3", "Q8 → LEAF-1 잘못 지목 X"],
+            ["T7", "한국어 retrieval", "OpenAI emb", "Upstage emb", "recall@5 +5%p"]
+          ],
+          "column_widths": [0.05, 0.20, 0.18, 0.22, 0.35],
+          "style": {
+            "header_fill": "accent_alt",
+            "header_font_color": "bg",
+            "row_alt_fill": "surface",
+            "border_color": "border",
+            "font_size": 14
+          }
+        },
+        {
+          "type": "shape",
+          "id": "fallback-card",
+          "shape_kind": "rect",
+          "x": 1280, "y": 490, "w": 560, "h": 480,
+          "style": { "fill": "warning", "fill_alpha": 0.08, "stroke": "warning", "stroke_width": 2, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "fallback-label",
+          "x": 1310, "y": 515, "w": 510, "h": 40,
+          "value": "🚨 FALLBACK 시나리오",
+          "style": { "role": "card_title", "font_color": "warning" }
+        },
+        {
+          "type": "text",
+          "id": "fallback-body",
+          "x": 1310, "y": 575, "w": 510, "h": 380,
+          "value": "T1 FAIL\n   전략 전면 재검토\n\nT2 FAIL\n   gpt-4o-mini 유지\n   Solar Pro 2를 리캡으로\n\nT3 FAIL\n   GPT-4o 시도\n   그래도 안 되면 그래프 하드코딩\n\nT5 FAIL\n   '결손 후보 top-3' UX로 약화",
+          "style": { "role": "card_body", "font_size": 16, "font_color": "text", "line_height": 1.5 }
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "x": 80, "y": 1020, "w": 1760, "h": 20,
+          "value": "D-1 오전 4시간 안에 T1~T5 측정. 결과는 docs/hackathon-2026/validation-2026-05-14.md에 binary로 기록.",
+          "style": { "role": "source", "font_color": "text_muted" }
+        }
+      ],
+      "notes": "Agenda 2-b. T5가 데모 핵심이라 표에서 별표로 강조."
+    },
+
+    {
+      "id": "s6-agenda-3-demo",
+      "layout": "content",
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1000, "h": 30,
+          "value": "AGENDA 3 · 20 MIN",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "shape",
+          "id": "badge",
+          "shape_kind": "rect",
+          "x": 1660, "y": 95, "w": 180, "h": 44,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "sm" },
+          "text": {
+            "value": "결정 1개",
+            "style": { "font": "display", "font_size": 14, "font_weight": 700, "font_color": "bg", "align": "center", "valign": "middle" }
+          }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 150, "w": 1760, "h": 180,
+          "value": "심사위원이 보는 5분을\n한 컷씩 픽스한다",
+          "style": { "role": "title", "font_color": "text", "line_height": 1.25 }
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "x": 80, "y": 340, "w": 1760, "h": 130,
+          "value": "피어 투자가 평가 50%. 슬라이드보다 만져볼 수 있는 데모가 표를 모은다. 화면별 owner와 인터랙션을 미리 합의.",
+          "style": { "role": "body", "font_color": "text_muted", "line_height": 1.4 }
+        },
+        {
+          "type": "table",
+          "id": "scenario-table",
+          "x": 80, "y": 490, "w": 1160, "h": 480,
+          "headers": ["시간", "화면", "입력 / 액션", "시스템 응답", "Owner"],
+          "rows": [
+            ["0:00", "업로드", "Context + 8문제 드래그앤드롭", "분류 + 파싱 진행바", "Backend"],
+            ["0:30", "그래프", "(자동)", "Concept-Pattern-Item 30초 렌더", "Frontend"],
+            ["1:30", "Q6 캔버스", "펜으로 풀이 (오답)", "LaTeX 단계 자동 인식", "Frontend"],
+            ["2:30", "진단", "(자동)", "LEAF-1 (판별식) + 인용 하이라이트", "알고리즘"],
+            ["3:30", "리캡 카드", "카드 클릭", "2분짜리 한국어 리캡 + Q1 풀이", "알고리즘"],
+            ["4:30", "복귀", "Q6 재시도", "정답 + 그래프 highlight", "Frontend"]
+          ],
+          "column_widths": [0.09, 0.13, 0.27, 0.36, 0.15],
+          "style": {
+            "header_fill": "accent_alt",
+            "header_font_color": "bg",
+            "row_alt_fill": "surface",
+            "border_color": "border",
+            "font_size": 14
+          }
+        },
+        {
+          "type": "shape",
+          "id": "impact-card",
+          "shape_kind": "rect",
+          "x": 1280, "y": 490, "w": 560, "h": 480,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "impact-label",
+          "x": 1310, "y": 515, "w": 510, "h": 40,
+          "value": "🎯 5분 안에 보여야 할 것",
+          "style": { "role": "card_title", "font_color": "bg" }
+        },
+        {
+          "type": "text",
+          "id": "impact-body",
+          "x": 1310, "y": 575, "w": 510, "h": 380,
+          "value": "① 30초 룰\n     업로드 후 30초 안에 그래프\n\n② 인용 가시화\n     '진짜 결손' 카드에 형광 인용\n\n③ 그래프 인터랙션\n     노드 클릭 → prereq 따라가기\n\n④ 5분 후 재시작 버튼\n     부스 반복 시연\n\n⑤ 노트북 1대 + 큰 화면",
+          "style": { "role": "card_body", "font_size": 16, "font_color": "bg", "line_height": 1.5 }
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "x": 80, "y": 1020, "w": 1760, "h": 20,
+          "value": "Source: 1p 기획서 '데모 시나리오 (5분)' + Business Track OT '만져볼 수 있는 데모' 가이드",
+          "style": { "role": "source", "font_color": "text_muted" }
+        }
+      ],
+      "notes": "Agenda 3. 6단계 시나리오 표 + 임팩트 체크리스트."
+    },
+
+    {
+      "id": "s7-agenda-4-rnr",
+      "layout": "content",
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1000, "h": 30,
+          "value": "AGENDA 4 · 20 MIN",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "shape",
+          "id": "badge",
+          "shape_kind": "rect",
+          "x": 1660, "y": 95, "w": 180, "h": 44,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "sm" },
+          "text": {
+            "value": "결정 2개",
+            "style": { "font": "display", "font_size": 14, "font_weight": 700, "font_color": "bg", "align": "center", "valign": "middle" }
+          }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 150, "w": 1760, "h": 180,
+          "value": "4개 트랙으로 5명 × 남은 2일을\n분배한다",
+          "style": { "role": "title", "font_color": "text", "line_height": 1.25 }
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "x": 80, "y": 340, "w": 1760, "h": 130,
+          "value": "D-1(금) 빌드 + 23:59 제출, D-day(토) 본행사. 트랙은 미리 그리고, 알고리즘 결정에 따라 인원을 옮긴다.",
+          "style": { "role": "body", "font_color": "text_muted", "line_height": 1.4 }
+        },
+        {
+          "type": "table",
+          "id": "track-table",
+          "x": 80, "y": 490, "w": 1160, "h": 340,
+          "headers": ["트랙", "작업", "인원", "의존성"],
+          "rows": [
+            ["A. Backend / Upstage", "Document Parse + IE wiring (T1 · T2)", "1~2명", "API 키 확보"],
+            ["B. 알고리즘 (차별점)", "A2 엣지 추출 + A3 결손 역추적 (T3·T5)", "1~2명", "A 트랙 출력"],
+            ["C. Frontend / 데모 UX", "6단계 화면 polish + tldraw 캔버스", "1명", "시나리오 (s6)"],
+            ["D. 발표 / 측정 / 제출", "피치 덱 + README + 1p PDF + GitHub", "1명", "전 트랙 통합"]
+          ],
+          "column_widths": [0.22, 0.40, 0.13, 0.25],
+          "style": {
+            "header_fill": "accent_alt",
+            "header_font_color": "bg",
+            "row_alt_fill": "surface",
+            "border_color": "border",
+            "font_size": 15
+          }
+        },
+        {
+          "type": "shape",
+          "id": "timeline-card",
+          "shape_kind": "rect",
+          "x": 1280, "y": 490, "w": 560, "h": 340,
+          "style": { "fill": "surface", "stroke": "border", "stroke_width": 1, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "timeline-label",
+          "x": 1310, "y": 510, "w": 510, "h": 40,
+          "value": "📅 남은 일정",
+          "style": { "role": "card_title", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "timeline-body",
+          "x": 1310, "y": 565, "w": 510, "h": 250,
+          "value": "5/14 (목) · 오늘\n   검증 4시간 (T1~T5)\n\n5/15 (금)\n   PR 09:00 / 통합·리허설\n   23:59 장표·레포 제출\n\n5/16 (토)\n   15:30 피치 7분\n   17:30 부스 데모",
+          "style": { "role": "card_body", "font_size": 16, "font_color": "text", "line_height": 1.5 }
+        },
+        {
+          "type": "shape",
+          "id": "deliverable-strip",
+          "shape_kind": "rect",
+          "x": 80, "y": 855, "w": 1760, "h": 130,
+          "style": { "fill": "accent", "fill_alpha": 0.08, "stroke_width": 0, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "deliverable-label",
+          "x": 100, "y": 875, "w": 1720, "h": 30,
+          "value": "📦 제출물 OWNER · 트랙 D",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "deliverable-body",
+          "x": 100, "y": 905, "w": 1720, "h": 75,
+          "value": "1p 기획서 PDF · 발표 장표 PDF (~10-12장) · GitHub README · 데모 자료 (QR · 데모 계정)",
+          "style": { "role": "card_body", "font_size": 17, "font_color": "text", "valign": "middle" }
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "x": 80, "y": 1020, "w": 1760, "h": 20,
+          "value": "마감: 5/15(금) 23:59 · 5/16(토) 15:30 피치 + 17:30 부스 데모",
+          "style": { "role": "source", "font_color": "text_muted" }
+        }
+      ],
+      "notes": "Agenda 4. 4트랙 표 + 일정 카드 + 제출물 strip."
+    },
+
+    {
+      "id": "s8-prep-and-next",
+      "layout": "closing",
+      "blocks": [
+        {
+          "type": "text",
+          "id": "overline",
+          "x": 80, "y": 100, "w": 1760, "h": 30,
+          "value": "CLOSING · 회의 전 / 회의 후",
+          "style": { "role": "overline", "font_color": "accent" }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "x": 80, "y": 150, "w": 1760, "h": 180,
+          "value": "회의 전 5개 준비물 —\n안 가져오면 회의가 굴러가지 않는다",
+          "style": { "role": "title", "font_color": "text", "line_height": 1.25 }
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "x": 80, "y": 340, "w": 1760, "h": 130,
+          "value": "오늘 회의는 빌드 가능 상태로 끝내는 게 목표. Owner가 준비물을 못 가져오면 결정이 지연되고, D-2가 D-1.5가 된다.",
+          "style": { "role": "body", "font_color": "text_muted", "line_height": 1.4 }
+        },
+        {
+          "type": "table",
+          "id": "prep-table",
+          "x": 80, "y": 490, "w": 1160, "h": 480,
+          "headers": ["#", "항목", "Owner", "산출물"],
+          "rows": [
+            ["1", "Context 문서 후보 PDF 3개 (NCIC · EBSi · 평가원)", "1명", "노트북에 다운로드"],
+            ["2", "8문제 후보 PDF 셋 (Q1~Q8)", "1명", "평가원·교육청 발췌"],
+            ["3", "현재 코드 4파일 현황 브리핑", "코드 잘 아는 사람", "각 1분"],
+            ["4", "Upstage API 키 (UPWAVE-YONSEI redeem)", "1명", "$80 잔액 확인"],
+            ["5", "upstage-mapping.md 사전 읽기", "전원", "회의 전 10분"]
+          ],
+          "column_widths": [0.05, 0.50, 0.20, 0.25],
+          "style": {
+            "header_fill": "accent_alt",
+            "header_font_color": "bg",
+            "row_alt_fill": "surface",
+            "border_color": "border",
+            "font_size": 15
+          }
+        },
+        {
+          "type": "shape",
+          "id": "next-card",
+          "shape_kind": "rect",
+          "x": 1280, "y": 490, "w": 560, "h": 480,
+          "style": { "fill": "accent", "stroke_width": 0, "radius": "md" }
+        },
+        {
+          "type": "text",
+          "id": "next-label",
+          "x": 1310, "y": 515, "w": 510, "h": 40,
+          "value": "🚀 회의 종료 직후",
+          "style": { "role": "card_title", "font_color": "bg" }
+        },
+        {
+          "type": "text",
+          "id": "next-body",
+          "x": 1310, "y": 575, "w": 510, "h": 380,
+          "value": "① 4시간 검증 즉시 시작\n     T1 · T2 · T3 · T5\n\n② 결과 binary 기록\n     validation-2026-05-14.md\n\n③ PASS/FAIL 슬랙 공지\n     fallback 발동 결정\n\n④ 5/15 첫 PR 09:00\n\n⑤ 5/15 21시 리허설",
+          "style": { "role": "card_body", "font_size": 16, "font_color": "bg", "line_height": 1.5 }
+        },
+        {
+          "type": "text",
+          "id": "footer",
+          "x": 80, "y": 1020, "w": 1760, "h": 30,
+          "value": "Deepen × Upstage Hackathon · 2026-05-14 · 박정현 · 남건우 · 남궁현종 · 문형서 · 한원석",
+          "style": { "role": "source", "font_color": "text_muted" }
+        }
+      ],
+      "notes": "Closing. 좌측 준비물 표 5행 + 우측 회의 직후 액션 카드."
+    }
+  ]
+}
