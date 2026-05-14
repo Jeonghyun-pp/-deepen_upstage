@@ -1,0 +1,100 @@
+{
+  "file": "deck.pptx",
+  "slide_count": 8,
+  "slide_size_in": [
+    13.333333333333334,
+    7.5
+  ],
+  "slides": [
+    {
+      "index": 1,
+      "info": {
+        "shape_count": 18,
+        "has_chart": false,
+        "has_table": false,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "index": 2,
+      "info": {
+        "shape_count": 23,
+        "has_chart": false,
+        "has_table": false,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "index": 3,
+      "info": {
+        "shape_count": 18,
+        "has_chart": false,
+        "has_table": false,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "index": 4,
+      "info": {
+        "shape_count": 12,
+        "has_chart": false,
+        "has_table": false,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "index": 5,
+      "info": {
+        "shape_count": 10,
+        "has_chart": false,
+        "has_table": true,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "index": 6,
+      "info": {
+        "shape_count": 10,
+        "has_chart": false,
+        "has_table": true,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "index": 7,
+      "info": {
+        "shape_count": 13,
+        "has_chart": false,
+        "has_table": true,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "index": 8,
+      "info": {
+        "shape_count": 9,
+        "has_chart": false,
+        "has_table": true,
+        "has_picture": false
+      },
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "total_errors": 0,
+  "total_warnings": 0
+}

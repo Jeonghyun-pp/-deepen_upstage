@@ -1,0 +1,459 @@
+ × 
+ AI 
+
+ 2026 5 16 () ·  L40, L60
+
+ Powered by Upstage
+
+
+ AI     .
+
+           
+ .
+    ,   ().
+ ?
+
+4               Upstage   SW    88
+
+- AIKU · KUBIG    AI          Business :11
+()                        SW  Tech :11
+- YAI · YBIGTA            
+()
+Upstage   AI 1 
+Upstage   AI 1 
+                   Section 1
+
+Upstage  
+
+     
+Upsta ge                                                                                                        Generative intelligence
+
+Upstage                                                                                                                               A family of small yet powerful LLMs
+
+ AI   
+
+                                     Document intelligence
+
+                                                                              Make your documents LLM-ready
+                                                                              From chaos to order
+                                                                              Universal information extraction
+
+                                                                                                       Agents
+Products
+
+Solar LLM
+
+ A family of small yet powerful LLMs
+Solar LLM
+
+A family of small yet powerful LLMs
+
+            Solar Mini                         Solar Pro 3
+
+            .   .                   Mixture-of-Experts (MoE)    
+                  (10.7B, 2024 1 )                   (102B, 2026 1 )
+
+           Solar Pro 2
+
+  .  . (31B, 2025 7 )
+
+      Purpose-trained LLMs
+
+(: , )  (: , )  LLM
+
+                                                                                                                                                                                                                                              10
+Solar LLM
+
+Solar Pro 2
+
+Solar Pro 2       --  ,  .
+
+Best-in-class Korean performance  Strong multi-step reasoning
+
+                                                               11
+Solar LLM
+
+Solar Pro 3
+
+      --       .
+
+ MoE(Mixture of Experts)    Solar Pro 3 Instruction Following, Preference
+  : 102B                        Alignment, Reasoning   Solar Pro 2  
+  : 12B                           ,      
+  : 128K                          .
+
+                                                                                                                                                                                                                   12
+Solar LLM
+
+Solar Open 100B
+
+Upstage's flagship 102B-parameter large language model
+
+   MoE(Mixture of Experts) 
+
+                129 ( 128 +  1,  8 )
+
+    : 102.6B
+    : 12B
+    : 128K
+    : NVIDIA B200 GPU
+
+                                                                                                                                                                                                                                                                                                                                                                 13
+Solar LLM
+
+Solar LLM, connected everywhere
+
+       -- AWS Marketplace LangChain.
+
+Predibase              Upstage Console
+
+           NVIDIA NIM                   HuggingFace                  LlamaIndex
+
+                                                2M
+                                        Derivations 1K
+
+                     Docker Hub                          Ollama
+
+                              74 4                          12 7.1K
+
+Datastax   LangChain
+
+                                        AWS Marketplace
+
+                                                                     Dify
+
+                                                                       43 3
+
+                                                                                                                         14
+Products
+
+Document Parse
+
+ Make your documents LLM-ready
+Document Parse
+
+Why do I need Document Parse?
+
+  LLM   -- LLM      .
+
+                                                                                                                                                                                                                                                                                                                                                                 16
+Document Parse
+
+What Document Parse does
+
+Document Parse   -- PDF,  (tiff, jpeg ), Microsoft Office (xlsx, pptx ) --  HTML  Markdown
+ .
+
+                                                                                                                                                                                                                                                                                                                                                                 17
+Document Parse
+
+Why Document Parse?
+
+Document Parse        .     .
+
+                                                                         Acc uracy                                                                           Speed
+                                                                       Higher the better                                                                 Lower the better 
+
+Upstage Document Parse                       TEDS                        TEDS-S                                                NID                                     Avg Time
+
+                                Text and table structure recogn ition  Table stru cture                         Text and layou t stru cture recognition  Average time fo r proces sing single page pdf
+                                                                         recognition                                                                                       do cumen ts (s ec.)
+                                         94.48                                                                            97.02
+                                                                        94.16                                                                                         3.79
+
+Amazon Textract                 88.05                                  90.79                                    96.71                                    14.47
+
+LlamaParse                      74.57                                  76.34                                    92.82                                    4.14
+
+Unstructured                    65.56                                  70.00                                    91.18                                    13.14
+                                66.13                                  71.58                                    90.86                                    5.85
+Google                          87.19                                  89.75                                    87.69                                    4.44
+Layout Parser
+
+Azure AI Document Intelligence
+
+Mistral OCR*                    -                                                                            -  86.98                                    4.38
+
+Nanonets**                      69.68                                  71.31                                    90.71                                    24.74
+
+* Mistr al OCR does not provide table region or HTML info, so TEDS-s/TEDS evaluation is not possible.                                                       Las t updated Oct 2025
+** Nanonet only takes image input, table region extracted based on table html tags                                                                                                                                       18
+This evaluation was conducted on the dataset available at https://huggingface.co/datasets/upstage/dp-bench.
+Document Parse
+
+What's under the hood?
+
+Document Parse  , OCR ,    .
+
+                                 Upstage Document Parse
+
+            Text Reading module                                                       
+                                                                                         
+            Upstage OCR                                                                .
+
+Document       PDF parser        Layout  Layout Table    Layout Chart      Final       
+   (PDF,                          Text    Recognizer      Recognizer     Results        
+            Layout analysis      Merge                                                .
+MS office,       module                                                 (HTML or
+  image)         Detector                                              Markdown)   Upstage Document
+                                                                                      Parse(DP)  
+             Reading Order                                                             HTML 
+                Extractor                                                             Markdown 
+                                                                                      .
+             Heading level
+               Recognizer
+
+                     ...
+
+                                                                                                     19
+Products
+
+Document Classify
+
+ From chaos to order
+Document Classify
+
+What does Document Classify do?
+
+  -- , , PDF --        .
+
+     --  , MS Office,             Document        Invoice
+     PDF                          classification  Contract
+                                  API             Resume
+   --     
+      (100   )                                      ...
+
+                                                                                                        21
+
+                            Any
+                        document
+Products
+
+Information Extract
+
+ Universal information extraction
+Information Extract
+
+From high-precision OCR to universal LLM agents
+
+OCR  , Information Extract    .
+
+      Traditional OCR models  Upstage Information Extract
+
+Invoice                          A single LLM-powered agentic pipeline to extract
+                                 any information from all your document types.
+Quote
+                                       Universal
+Enrollment                             Ex traction
+form
+                                         Model
+
+                              Invoice               Enrollment
+                                                        form
+
+                                       Quote
+
+                                                                                   23
+Information Extract
+
+Information Extract  OCR ?
+
+ OCR  , Information Extract      .
+
+   --                
+
+                   , PDF, Office ,  
+             ,    ,  500   
+ --         .          
+   .               .
+
+                                      24
+Information Extract
+
+ LLM   ?
+
+LLM ,        .
+
+                                                        
+
+LM                                         LLM      
+  --                            .                   .
+
+                     .
+
+                                                          25
+Information Extract
+
+ LLM   ?
+
+Information Extract  LLM 10%    ,       .
+
+Benchmark                    OpenAI              Anthropic                  Google                 Google                 Alibaba                   Upstage
+                            GPT-4.1         Claude Sonnet 4.5         Gemini 2.5 Flash        Gemini 2.5 Pro        Qwen 2.5 VL 72B         Information Extract
+ Accuracy
+                           OpenAI Platform           Claude C onsole        Google AI Studio      Google AI Studio            Toget her AI    infor mation-extract-250930
+KIEval-4.0*
+                             73.65          63.66                     76.59                   77.77                 68.60                   78.32
+
+ Latency                   15.48s           16.13s                    35.68s                  37.92s                41.83s                  7.50s
+                           $0.006
+Per document                                $0.017                    $0.004                  $0.020                $0.011                  $0.040
+
+ Price
+
+Per page
+(For LLMs, 1k input token
+estimate)
+
+* KIEval (ICDAR 2025) is an exact-match metric where a field is considered "correct" if its predicted value matches the ground truth within a defined
+threshold. Note that accuracies can only be calculated when a ground truth set is set.
+** Dataset: Internal KIE-bench-6.1.1.0 (Accuracy from 427/965 docs, where all models succeeded in inference)
+
+                                                                                                                                                                                                                                                                                                                                                               26
+Information Extract
+
+What's under the hood?
+
+ , , ,   (agentic) .
+
+                                         information-extract-engine-0.5.0
+
+Document  Document     Sub-pipeline 1    Intermediate         Valid ator    Final        
+ Schema     Router  (DP + LLM based IE)         IE                            IE           LLM 
+                                                                                        .
+                       Sub-pipeline 2       Results                        Results
+                                                                                      LLM   
+                               ...                                                      . (Bring Your Own LLM)
+
+                                                              Routing                SaaS  ,  
+                                                                                           
+          Data      Optional model                     Model                             
+
+                                                                                                                                                                         27
+Products
+
+Upstage Studio
+
+ Tackle Document Chaos with Intelligence
+Upstage Studio
+
+What does Upstage Studio do?
+
+   AI    .
+
+                                    
+                                   . , , ,  AI 
+                                     
+
+                                    ,
+                                      
+
+                                ·  
+                                    ,     
+
+                               , ,  ,  
+                                      
+
+                               Studio Agent   
+                                          
+                                   
+
+                                                                                                                                               29
+Upsta ge                       (https://edu.upstage.ai/courses)
+
+Meet the Upstage Usecase
+
+(https://edu.upstage.ai/blog)
+API Key  
+
+           PDF    .
+
+             
+            #  .
+
+           https://console.upstage.ai/docs/for-agents
+
+     API Key    . GitHub    .env 
+ .
+   
+
+            Business Track            Tech Track
+ 
+     Upstage API                     Solar LLM 
+              ·                    RAG  
+              ··                · 
+              ·
+                                    Python 
+      Upstage  1  
+                                    
+            5/09() ~ 5/15()
+                                 ·submission.csv
+           1 ,,                       15:00 ~ 22:00
+                      
+                                   ( )
+               15:00 ~ 19:00+
+             ( +  )
+ 
+
+                                     -- 5/16 ()
+      
+                                                   Business Track          Tech Track
+     5/9 ()      OT ()                                              / ·KEY 
+                OT    OT           15:00~15:30   OT                RAG  
+5/09 () ~ 5/15                                                     ( )
+       ()       Business Track     15:30~17:30   (7 + Q&A)         ( )
+                                                                     /  
+    5/16 ()                        17:30~18:30   +                  4  
+                                                                    / 
+                                   18:30~19:00    
+
+                                   19:00~   / 
+
+                                   20:30~21:30 --
+
+                                   21:30~22:00 --
+ 
+
+               
+
+                 +  ()
+                Business Track:   /
+
+    L40, L60      (  )
+
+  2 62
+ 
+
+                          
+
+ ,    @yonko.hackathon  , 
+       ·                ( DM)
+
+    +  .    .
+                   
+
+                Upstage API  
+                Upstage 
+         1      · 
+         1         
+         1        5 29  
+         1     
+          ,  
+
+ *    ,   .
+ 
+
+                       OT   
+
+1   OT                      
+   (  )                    OT 
+                         API Key   PDF 
+2  Business Track OT         
+      
+
+3  Tech Track OT
+      
+
+ AI    .
+5 16 3  .
+
