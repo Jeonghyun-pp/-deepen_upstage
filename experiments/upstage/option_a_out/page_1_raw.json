@@ -1,0 +1,22 @@
+{
+  "id": "iex-OL3qaGzMPrNdDW-2",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"problems\":[{\"number\":1,\"points\":2,\"problem_type\":\"multiple_choice\",\"question\":\"$1\\\\ 1\\\\\\\\4\\\\ 2$의 값은?\",\"choices\":[\"1 V3 3 3 3 V3 5 9\",\"7\",\"9\",\"11 13 5 15\",\"\",\"\"]},{\"number\":2,\"points\":2,\"problem_type\":\"short_answer\",\"question\":\"함수 $f(x) = 3x^3 + 4x + 1$에 대하여 $\\\\lim_{h \\\\to 0} \\\\frac{f(1+h)-f(1)}{h}$의 값은?\",\"choices\":[]},{\"number\":3,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"수열 $\\\\{a_n\\\\}$에 대하여 $(2a_k - k) = 0$일 때, $E a_k$의 값은? $k=1$ $k=1$\",\"choices\":[\"1\",\"2\",\"3\",\"4\",\"5\"]},{\"number\":4,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"이 실수 전체의 집합에서 연속일 때, 상수 $a$의 값은?\",\"choices\":[\"1\",\"2\",\"3\",\"4\",\"5\"]}]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778571984,
+  "model": "information-extract-260304",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 3772,
+    "completion_tokens": 287,
+    "total_tokens": 4059
+  }
+}

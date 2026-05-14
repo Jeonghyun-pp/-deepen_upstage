@@ -1,0 +1,22 @@
+{
+  "id": "iex-P9Cm8q2WcUVhYg00",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"problems\":[{\"number\":1,\"points\":2,\"problem_type\":\"multiple_choice\",\"question\":\"$1^{1} \\\\times 4^{2}$의 값은?\",\"choices\":[\"1\",\"\\\\sqrt{3}\",\"3\",\"4 \\\\times 3 \\\\sqrt{3}\",\"9\"]},{\"number\":2,\"points\":2,\"problem_type\":\"multiple_choice\",\"question\":\"함수 $f(x) = 3x + 4x + 1$에 대하여 $\\\\lim_{h \\\\to 0} \\\\frac{f(1+h)-f(1)}{h}$의 값은?\",\"choices\":[\"7\",\"2\",\"9\",\"11\",\"4\"]},{\"number\":3,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"수열 $\\\\{a_n\\\\}$에 대하여 $\\\\sum_{k=1}^{4} 2a_k k = 0$일 때, $a$의 값은?\",\"choices\":[\"1\",\"2\",\"3\",\"4\",\"5\"]},{\"number\":4,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"함수\\n$$f(x)=\\\\begin{cases} a x - 2 & x < 1 \\\\\\\\ \\\\text{(이하 생략)} & x \\\\geq 1 \\\\end{cases}$$\\n이 실수 전체의 집합에서 연속일 때, 상수 $a$의 값은?\",\"choices\":[\"1\",\"2\",\"3\",\"4\",\"5\"]}]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778572697,
+  "model": "information-extract-nightly",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 4789,
+    "completion_tokens": 346,
+    "total_tokens": 5135
+  }
+}

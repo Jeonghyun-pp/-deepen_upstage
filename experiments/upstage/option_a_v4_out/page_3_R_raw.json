@@ -1,0 +1,22 @@
+{
+  "id": "iex-C6NEEj_RCLQ-x2H_",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"problems\":[{\"number\":10,\"points\":4,\"problem_type\":\"multiple_choice\",\"question\":\"상수 $a$ ($a>1$)에 대하여 곡선 $y = a^{x-2}$ 위의 점 중 제 1 사분면에 있는 점 $A$를 지나고 $y$축에 평행한 직선이 $x$축과 만나는 점을 $B$, 곡선 $y = a^{|x-2|}$의 점근선과 만나는 점을 $C$라 하자. $AB = BC$이고 삼각형 $AOC$의 넓이가 $8$일 때, $a \\\\times OB$의 값은? (단, $O$는 원점이다.)\",\"choices\":[\"2\",\"2\",\"2\",\"2\",\"2\"]}]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778573594,
+  "model": "information-extract-260304",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 3820,
+    "completion_tokens": 190,
+    "total_tokens": 4010
+  }
+}

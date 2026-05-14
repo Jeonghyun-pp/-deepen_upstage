@@ -1,0 +1,22 @@
+{
+  "id": "iex-QSHJHtQ5946ze1Gy",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"problems\":[{\"number\":8,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"$\\\\sin\\\\theta + 3\\\\cos\\\\theta = 0$이고 $\\\\cos\\\\theta > 0$일 때, $\\\\sin\\\\theta$의 값은?\",\"choices\":[\"\\\\frac{3}{\\\\sqrt{10}}\",\"-\\\\frac{3}{\\\\sqrt{10}}\",\"0\",\"\\\\frac{1}{\\\\sqrt{10}}\",\"-\\\\frac{1}{\\\\sqrt{10}}\"]},{\"number\":9,\"points\":4,\"problem_type\":\"short_answer\",\"question\":\"양수 $a$에 대하여 함수 $f(x)$를 $$\\\\int\\\\left({\\\\mathcal A}\\\\right)\\\\longrightarrow\\\\;\\\\mathcal A^{\\\\;3}\\\\longrightarrow{}^{\\\\;\\\\frac{}{}{}}\\\\mathcal A\\\\L_{}\\\\iota$$ 라 하자. 직선 $y=5$가 곡선 $y=f(x)$에 접할 때, $f(2)$의 값은?\",\"choices\":[]},{\"number\":10,\"points\":4,\"problem_type\":\"short_answer\",\"question\":\"상수 $a(a>1)$에 대하여 곡선 $y=a^{x-2}$ 위의 점 중 제1사분면에 있는 점 $A$를 지나고 $y$축에 평행한 직선이 $x$축과 만나는 점을 $B$, 곡선 $y=a^{2x}$의 점근선과 만나는 점을 $C$라 하자. $AB=BC$이고 삼각형 $AOC$의 넓이가 $8$일 때, $a\\\\times OB$의 값은? (단, $O$는 원점이다.)\",\"choices\":[]}]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778573355,
+  "model": "information-extract-260304",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 4858,
+    "completion_tokens": 400,
+    "total_tokens": 5258
+  }
+}

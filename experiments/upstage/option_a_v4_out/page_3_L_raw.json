@@ -1,0 +1,22 @@
+{
+  "id": "iex-qOjkVVOELH-HBBNx",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"problems\":[{\"number\":8,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"$\\\\sin \\\\theta + 3 \\\\cos \\\\theta = 0$이고 $\\\\cos \\\\theta > 0$일 때, $\\\\sin \\\\theta$의 값은?\",\"choices\":[\"2\",\"10\",\"5\",\"\\\\sqrt{10}\",\"3\\\\sqrt{10}\"]},{\"number\":9,\"points\":4,\"problem_type\":\"multiple_choice\",\"question\":\"양수 $a$에 대하여 함수 $f(x)$를 $$f(x) = x^2 + 3ax + 4$$라 하자. 직선 $y = 5$가 곡선 $y = f(x)$에 접할 때, $f(2)$의 값은?\",\"choices\":[\"11\",\"12\",\"13\",\"14\",\"15\"]}]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778573576,
+  "model": "information-extract-260304",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 4252,
+    "completion_tokens": 194,
+    "total_tokens": 4446
+  }
+}

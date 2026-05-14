@@ -1,0 +1,2176 @@
+{
+  "api": "2.0",
+  "content": {
+    "html": "<header id='0' style='font-size:20px'>2026학년도 대학수학능력시험 문제지</header>\n<br><header id='1' style='font-size:22px'>수학 영역</header>\n<p id='2' data-category='paragraph' style='font-size:16px'>1</p>\n<br><header id='3' style='font-size:22px'>1</header>\n<br><p id='4' data-category='paragraph' style='font-size:22px'>제2교시</p>\n<br><p id='5' data-category='paragraph' style='font-size:22px'>홀수형</p>\n<br><figure id='6'><img alt=\"\" data-coord=\"top-left:(1405,347); bottom-right:(1565,429)\" /></figure>\n<p id='7' data-category='paragraph' style='font-size:20px'>5지선다형</p>\n<p id='8' data-category='paragraph' style='font-size:18px'>1<br>1. 91×3 2 의 값은? [2점]</p>\n<p id='9' data-category='paragraph' style='font-size:16px'>1 ② V3 ③ 3 ④ 3V3 9</p>\n<br><p id='10' data-category='paragraph' style='font-size:20px'>3. 수열 {an}에 대하여 (2ak-k) = 0일 때, Eak의 값은?<br>k=1 k=1<br>[3점]</p>\n<p id='11' data-category='paragraph' style='font-size:14px'>① 1 2 4 5</p>\n<p id='12' data-category='paragraph' style='font-size:18px'>f(1+h)-f(1)<br>2. 함수 f(x)=3x3+4x+1에 대하여 lim 의<br>h→0 h<br>값은? [2점]</p>\n<p id='13' data-category='paragraph' style='font-size:16px'>7</p>\n<br><p id='14' data-category='paragraph' style='font-size:16px'>9 ③ 11 ④ 13 ⑤ 15</p>\n<br><p id='15' data-category='paragraph' style='font-size:18px'>4. 함수</p>\n<p id='16' data-category='equation'>$$f(x)=\\left\\{\\begin{array}{l l}{{3x-2}}&{{(x<1)}}\\\\ {{}}&{{}}\\\\ {{x^{2}-3x+a}}&{{(x\\geq1)}}\\end{array}\\right.$$</p>\n<p id='17' data-category='paragraph' style='font-size:18px'>이 실수 전체의 집합에서 연속일 때, 상수 a의 값은? [3점]</p>\n<p id='18' data-category='paragraph' style='font-size:16px'>① 1</p>\n<br><p id='19' data-category='paragraph' style='font-size:14px'>2</p>\n<br><p id='20' data-category='paragraph' style='font-size:14px'>3</p>\n<br><p id='21' data-category='paragraph' style='font-size:14px'>4</p>\n<br><p id='22' data-category='paragraph' style='font-size:14px'>5</p>\n<footer id='23' style='font-size:18px'>20</footer>\n<br><footer id='24' style='font-size:16px'>이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.</footer>\n<header id='25' style='font-size:22px'>2</header>\n<br><header id='26' style='font-size:22px'>수학 영역</header>\n<br><header id='27' style='font-size:20px'>홀수형</header>\n<p id='28' data-category='paragraph' style='font-size:18px'>5. 함수 f(x) =(x+2)(2x2-x-2)에 대하여 f'(1)의 값은? [3점]</p>\n<p id='29' data-category='paragraph' style='font-size:14px'>① 6 ② 7 ③ 8 ④ 9 ⑤ 10</p>\n<p id='30' data-category='paragraph' style='font-size:16px'>6. 1보다 큰 두 실수 a, 6가</p>\n<p id='31' data-category='equation'>$$\\log_{a}b=3\\,,\\quad\\log_{3}{\\frac{b}{a}}={\\frac{1}{2}}$$</p>\n<p id='32' data-category='paragraph' style='font-size:18px'>을 만족시킬 때, log9ab의 값은? [3점]</p>\n<p id='33' data-category='paragraph' style='font-size:20px'>① 3|8 ② 1/2 ③ 5 8 ④ 3|4 ⑤ 7/8</p>\n<br><p id='34' data-category='paragraph' style='font-size:18px'>7. 두 곡선 y=x2+3, y - 1.5 x2+3과 직선 x=2로</p>\n<br><p id='35' data-category='paragraph' style='font-size:18px'>둘러싸인 부분의 넓이는? [3점]</p>\n<p id='36' data-category='equation'>$$(\\overline{{{1}}})\\ \\frac{\\mathrm{{18}}}{\\mathrm{{5}}}\\qquad\\ {\\mathrm{(\\overline{{{2}}})}}\\ \\frac{\\overline{{{7}}}}{\\overline{{{2}}}}\\qquad\\quad(\\overline{{{3}}})\\ \\frac{\\underline{{{17}}}}{\\mathrm{{\\bar{5}}}}\\qquad\\quad(\\overline{{{4}}})\\ \\frac{\\overline{{{33}}}}\\qquad\\quad(\\overline{{{5}}})\\ \\frac{\\mathrm{{\\bar{5}}}\\ \\!\\bar{5}}}{\\mathrm{{\\bar{5}}}}$$</p>\n<figure id='37' data-category='chart'><img data-coord=\"top-left:(992,577); bottom-right:(1514,1076)\" /><figcaption><p>X-Axis: x</p><p>Chart Type: line</p></figcaption><table><thead><tr><td></td><td>0</td><td>1</td><td>2</td></tr></thead><tbody><tr><td>item_01</td><td>5</td><td>1</td><td>0</td></tr></tbody></table></figure>\n<footer id='38' style='font-size:16px'>2</footer>\n<br><footer id='39' style='font-size:16px'>20</footer>\n<br><footer id='40' style='font-size:14px'>이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.</footer>\n<header id='41' style='font-size:20px'>홀수형</header>\n<br><header id='42' style='font-size:22px'>수학 영역</header>\n<br><header id='43' style='font-size:22px'>3</header>\n<p id='44' data-category='paragraph' style='font-size:18px'>8. sin +3cos= 0이고 cos(-)>0일 때, sin의 값은? [3점]</p>\n<p id='45' data-category='paragraph' style='font-size:18px'>3V10</p>\n<br><p id='46' data-category='paragraph' style='font-size:20px'>V10</p>\n<br><p id='47' data-category='paragraph' style='font-size:18px'>①</p>\n<br><p id='48' data-category='paragraph' style='font-size:18px'>②</p>\n<br><p id='49' data-category='paragraph' style='font-size:14px'>10</p>\n<br><p id='50' data-category='paragraph' style='font-size:14px'>5</p>\n<br><p id='51' data-category='paragraph' style='font-size:18px'>V10</p>\n<br><p id='52' data-category='paragraph' style='font-size:20px'>3V10</p>\n<br><p id='53' data-category='paragraph' style='font-size:18px'>④</p>\n<br><p id='54' data-category='paragraph' style='font-size:18px'>⑤</p>\n<br><p id='55' data-category='paragraph' style='font-size:14px'>5</p>\n<br><p id='56' data-category='paragraph' style='font-size:16px'>10</p>\n<br><p id='57' data-category='paragraph' style='font-size:16px'>③ 0</p>\n<br><p id='58' data-category='paragraph' style='font-size:18px'>10. 상수 a(a> 1)에 대하여 곡선 y= ax -2 위의 점 중<br>제1사분면에 있는 점 A를 지나고 y축에 평행한 직선이 x 축과<br>만나는 점을 B, 곡선 y = ax - 2의 점근선과 만나는 점을 C라<br>하자. AB = BC 이고 삼각형 AOC의 넓이가 8일 때,</p>\n<p id='59' data-category='paragraph' style='font-size:16px'>17</p>\n<br><p id='60' data-category='paragraph' style='font-size:16px'>⑤ 2 6</p>\n<br><p id='61' data-category='paragraph' style='font-size:18px'>a× OB의 값은? (단, O는 원점이다.) [4점]</p>\n<p id='62' data-category='paragraph' style='font-size:14px'>13</p>\n<br><p id='63' data-category='paragraph' style='font-size:14px'>7</p>\n<br><p id='64' data-category='paragraph' style='font-size:14px'>5</p>\n<br><p id='65' data-category='paragraph' style='font-size:14px'>8</p>\n<br><p id='66' data-category='paragraph' style='font-size:16px'>① 26</p>\n<br><p id='67' data-category='paragraph' style='font-size:18px'>② 23</p>\n<br><p id='68' data-category='paragraph' style='font-size:16px'>③ 22</p>\n<br><p id='69' data-category='paragraph' style='font-size:14px'>④ 2 3</p>\n<h1 id='70' style='font-size:18px'>9. 양수 a에 대하여 함수 f(x)를</h1>\n<p id='71' data-category='equation'>$$f(x)=x^{3}+3a x^{2}-9a^{2}x+4$$</p>\n<p id='72' data-category='paragraph' style='font-size:18px'>라 하자. 직선 y=5가 곡선 y=f(x)에 접할 때, f(2)의 값은?<br>[4점]</p>\n<p id='73' data-category='paragraph' style='font-size:16px'>① 11 ② 12 ③ 13 ④ 14 ⑤ 15</p>\n<footer id='74' style='font-size:16px'>3</footer>\n<br><footer id='75' style='font-size:18px'>20</footer>\n<br><footer id='76' style='font-size:16px'>이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.</footer>",
+    "markdown": "2026학년도 대학수학능력시험 문제지\n\n수학 영역\n\n1\n\n1\n\n제2교시\n\n홀수형\n\n![image](/image/placeholder)\n\n\n5지선다형\n\n1\n1. 91×3 2 의 값은? [2점]\n\n1 ② V3 ③ 3 ④ 3V3 9\n\n3. 수열 {an}에 대하여 (2ak-k) = 0일 때, Eak의 값은?\nk=1 k=1\n[3점]\n\n① 1 2 4 5\n\nf(1+h)-f(1)\n2. 함수 f(x)=3x3+4x+1에 대하여 lim 의\nh→0 h\n값은? [2점]\n\n7\n\n9 ③ 11 ④ 13 ⑤ 15\n\n4. 함수\n\n$$f(x)=\\left\\{\\begin{array}{l l}{{3x-2}}&{{(x<1)}}\\\\ {{}}&{{}}\\\\ {{x^{2}-3x+a}}&{{(x\\geq1)}}\\end{array}\\right.$$\n\n이 실수 전체의 집합에서 연속일 때, 상수 a의 값은? [3점]\n\n① 1\n\n2\n\n3\n\n4\n\n5\n\n20\n\n이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.\n\n2\n\n수학 영역\n\n홀수형\n\n5. 함수 f(x) =(x+2)(2x2-x-2)에 대하여 f'(1)의 값은? [3점]\n\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10\n\n6. 1보다 큰 두 실수 a, 6가\n\n$$\\log_{a}b=3\\,,\\quad\\log_{3}{\\frac{b}{a}}={\\frac{1}{2}}$$\n\n을 만족시킬 때, log9ab의 값은? [3점]\n\n① 3|8 ② 1/2 ③ 5 8 ④ 3|4 ⑤ 7/8\n\n7. 두 곡선 y=x2+3, y - 1.5 x2+3과 직선 x=2로\n\n둘러싸인 부분의 넓이는? [3점]\n\n$$(\\overline{{{1}}})\\ \\frac{\\mathrm{{18}}}{\\mathrm{{5}}}\\qquad\\ {\\mathrm{(\\overline{{{2}}})}}\\ \\frac{\\overline{{{7}}}}{\\overline{{{2}}}}\\qquad\\quad(\\overline{{{3}}})\\ \\frac{\\underline{{{17}}}}{\\mathrm{{\\bar{5}}}}\\qquad\\quad(\\overline{{{4}}})\\ \\frac{\\overline{{{33}}}}\\qquad\\quad(\\overline{{{5}}})\\ \\frac{\\mathrm{{\\bar{5}}}\\ \\!\\bar{5}}}{\\mathrm{{\\bar{5}}}}$$\n\n![image](/image/placeholder)\n- X-Axis: x\n- Chart Type: line\n|  | 0 | 1 | 2 |\n| --- | --- | --- | --- |\n| item_01 | 5 | 1 | 0 |\n\n\n2\n\n20\n\n이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.\n\n홀수형\n\n수학 영역\n\n3\n\n8. sin +3cos= 0이고 cos(-)>0일 때, sin의 값은? [3점]\n\n3V10\n\nV10\n\n①\n\n②\n\n10\n\n5\n\nV10\n\n3V10\n\n④\n\n⑤\n\n5\n\n10\n\n③ 0\n\n10. 상수 a(a> 1)에 대하여 곡선 y= ax -2 위의 점 중\n제1사분면에 있는 점 A를 지나고 y축에 평행한 직선이 x 축과\n만나는 점을 B, 곡선 y = ax - 2의 점근선과 만나는 점을 C라\n하자. AB = BC 이고 삼각형 AOC의 넓이가 8일 때,\n\n17\n\n⑤ 2 6\n\na× OB의 값은? (단, O는 원점이다.) [4점]\n\n13\n\n7\n\n5\n\n8\n\n① 26\n\n② 23\n\n③ 22\n\n④ 2 3\n\n# 9. 양수 a에 대하여 함수 f(x)를\n\n$$f(x)=x^{3}+3a x^{2}-9a^{2}x+4$$\n\n라 하자. 직선 y=5가 곡선 y=f(x)에 접할 때, f(2)의 값은?\n[4점]\n\n① 11 ② 12 ③ 13 ④ 14 ⑤ 15\n\n3\n\n20\n\n이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.",
+    "text": "2026학년도 대학수학능력시험 문제지\n수학 영역\n1\n1\n제2교시\n홀수형\n![image](/image/placeholder)\n\n5지선다형\n1\n1. 91×3 2 의 값은? [2점]\n1 ② V3 ③ 3 ④ 3V3 9\n3. 수열 {an}에 대하여 (2ak-k) = 0일 때, Eak의 값은?\nk=1 k=1\n[3점]\n① 1 2 4 5\nf(1+h)-f(1)\n2. 함수 f(x)=3x3+4x+1에 대하여 lim 의\nh→0 h\n값은? [2점]\n7\n9 ③ 11 ④ 13 ⑤ 15\n4. 함수\n3x-2 (x<1)\n f(x) =\n x2 -3x +a (x≥1)\n이 실수 전체의 집합에서 연속일 때, 상수 a의 값은? [3점]\n① 1\n2\n3\n4\n5\n20\n이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.\n2\n수학 영역\n홀수형\n5. 함수 f(x) =(x+2)(2x2-x-2)에 대하여 f'(1)의 값은? [3점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10\n6. 1보다 큰 두 실수 a, 6가\nb 1\n logab=3, log3 a 2\n을 만족시킬 때, log9ab의 값은? [3점]\n① 3|8 ② 1/2 ③ 5 8 ④ 3|4 ⑤ 7/8\n7. 두 곡선 y=x2+3, y - 1.5 x2+3과 직선 x=2로\n둘러싸인 부분의 넓이는? [3점]\n33 16|5\n 18|5 ② 7/2 ③ 17 ④ ⑤\n 10\n![image](/image/placeholder)\n- X-Axis: x\n- Chart Type: line\n|  | 0 | 1 | 2 |\n| --- | --- | --- | --- |\n| item_01 | 5 | 1 | 0 |\n\n2\n20\n이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.\n홀수형\n수학 영역\n3\n8. sin +3cos= 0이고 cos(-)>0일 때, sin의 값은? [3점]\n3V10\nV10\n①\n②\n10\n5\nV10\n3V10\n④\n⑤\n5\n10\n③ 0\n10. 상수 a(a> 1)에 대하여 곡선 y= ax -2 위의 점 중\n제1사분면에 있는 점 A를 지나고 y축에 평행한 직선이 x 축과\n만나는 점을 B, 곡선 y = ax - 2의 점근선과 만나는 점을 C라\n하자. AB = BC 이고 삼각형 AOC의 넓이가 8일 때,\n17\n⑤ 2 6\na× OB의 값은? (단, O는 원점이다.) [4점]\n13\n7\n5\n8\n① 26\n② 23\n③ 22\n④ 2 3\n9. 양수 a에 대하여 함수 f(x)를\nf(x)=x3+3ax2-9a2x+4\n라 하자. 직선 y=5가 곡선 y=f(x)에 접할 때, f(2)의 값은?\n[4점]\n① 11 ② 12 ③ 13 ④ 14 ⑤ 15\n3\n20\n이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다."
+  },
+  "elements": [
+    {
+      "category": "header",
+      "content": {
+        "html": "<header id='0' style='font-size:20px'>2026학년도 대학수학능력시험 문제지</header>",
+        "markdown": "2026학년도 대학수학능력시험 문제지",
+        "text": "2026학년도 대학수학능력시험 문제지"
+      },
+      "coordinates": [
+        {
+          "x": 0.3101,
+          "y": 0.0953
+        },
+        {
+          "x": 0.6869,
+          "y": 0.0953
+        },
+        {
+          "x": 0.6869,
+          "y": 0.1176
+        },
+        {
+          "x": 0.3101,
+          "y": 0.1176
+        }
+      ],
+      "id": 0,
+      "page": 1
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<br><header id='1' style='font-size:22px'>수학 영역</header>",
+        "markdown": "수학 영역",
+        "text": "수학 영역"
+      },
+      "coordinates": [
+        {
+          "x": 0.3969,
+          "y": 0.1266
+        },
+        {
+          "x": 0.6002,
+          "y": 0.1266
+        },
+        {
+          "x": 0.6002,
+          "y": 0.1664
+        },
+        {
+          "x": 0.3969,
+          "y": 0.1664
+        }
+      ],
+      "id": 1,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='2' data-category='paragraph' style='font-size:16px'>1</p>",
+        "markdown": "1",
+        "text": "1"
+      },
+      "coordinates": [
+        {
+          "x": 0.4745,
+          "y": 0.9104
+        },
+        {
+          "x": 0.4834,
+          "y": 0.9104
+        },
+        {
+          "x": 0.4834,
+          "y": 0.9195
+        },
+        {
+          "x": 0.4745,
+          "y": 0.9195
+        }
+      ],
+      "id": 2,
+      "page": 1
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<br><header id='3' style='font-size:22px'>1</header>",
+        "markdown": "1",
+        "text": "1"
+      },
+      "coordinates": [
+        {
+          "x": 0.8708,
+          "y": 0.0912
+        },
+        {
+          "x": 0.892,
+          "y": 0.0912
+        },
+        {
+          "x": 0.892,
+          "y": 0.1175
+        },
+        {
+          "x": 0.8708,
+          "y": 0.1175
+        }
+      ],
+      "id": 3,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='4' data-category='paragraph' style='font-size:22px'>제2교시</p>",
+        "markdown": "제2교시",
+        "text": "제2교시"
+      },
+      "coordinates": [
+        {
+          "x": 0.1054,
+          "y": 0.133
+        },
+        {
+          "x": 0.2103,
+          "y": 0.133
+        },
+        {
+          "x": 0.2103,
+          "y": 0.1576
+        },
+        {
+          "x": 0.1054,
+          "y": 0.1576
+        }
+      ],
+      "id": 4,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='5' data-category='paragraph' style='font-size:22px'>홀수형</p>",
+        "markdown": "홀수형",
+        "text": "홀수형"
+      },
+      "coordinates": [
+        {
+          "x": 0.8007,
+          "y": 0.1398
+        },
+        {
+          "x": 0.892,
+          "y": 0.1398
+        },
+        {
+          "x": 0.892,
+          "y": 0.1729
+        },
+        {
+          "x": 0.8007,
+          "y": 0.1729
+        }
+      ],
+      "id": 5,
+      "page": 1
+    },
+    {
+      "category": "figure",
+      "content": {
+        "html": "<br><figure id='6'><img alt=\"\" data-coord=\"top-left:(1405,347); bottom-right:(1565,429)\" /></figure>",
+        "markdown": "![image](/image/placeholder)\n",
+        "text": "![image](/image/placeholder)\n"
+      },
+      "coordinates": [
+        {
+          "x": 0.8007,
+          "y": 0.1398
+        },
+        {
+          "x": 0.892,
+          "y": 0.1398
+        },
+        {
+          "x": 0.892,
+          "y": 0.1729
+        },
+        {
+          "x": 0.8007,
+          "y": 0.1729
+        }
+      ],
+      "id": 6,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='7' data-category='paragraph' style='font-size:20px'>5지선다형</p>",
+        "markdown": "5지선다형",
+        "text": "5지선다형"
+      },
+      "coordinates": [
+        {
+          "x": 0.1264,
+          "y": 0.1966
+        },
+        {
+          "x": 0.2115,
+          "y": 0.1966
+        },
+        {
+          "x": 0.2115,
+          "y": 0.2116
+        },
+        {
+          "x": 0.1264,
+          "y": 0.2116
+        }
+      ],
+      "id": 7,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='8' data-category='paragraph' style='font-size:18px'>1<br>1. 91×3 2 의 값은? [2점]</p>",
+        "markdown": "1\n1. 91×3 2 의 값은? [2점]",
+        "text": "1\n1. 91×3 2 의 값은? [2점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.1022,
+          "y": 0.2285
+        },
+        {
+          "x": 0.2718,
+          "y": 0.2285
+        },
+        {
+          "x": 0.2718,
+          "y": 0.2533
+        },
+        {
+          "x": 0.1022,
+          "y": 0.2533
+        }
+      ],
+      "id": 8,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='9' data-category='paragraph' style='font-size:16px'>1 ② V3 ③ 3 ④ 3V3 9</p>",
+        "markdown": "1 ② V3 ③ 3 ④ 3V3 9",
+        "text": "1 ② V3 ③ 3 ④ 3V3 9"
+      },
+      "coordinates": [
+        {
+          "x": 0.1135,
+          "y": 0.2643
+        },
+        {
+          "x": 0.4393,
+          "y": 0.2643
+        },
+        {
+          "x": 0.4393,
+          "y": 0.2807
+        },
+        {
+          "x": 0.1135,
+          "y": 0.2807
+        }
+      ],
+      "id": 9,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='10' data-category='paragraph' style='font-size:20px'>3. 수열 {an}에 대하여 (2ak-k) = 0일 때, Eak의 값은?<br>k=1 k=1<br>[3점]</p>",
+        "markdown": "3. 수열 {an}에 대하여 (2ak-k) = 0일 때, Eak의 값은?\nk=1 k=1\n[3점]",
+        "text": "3. 수열 {an}에 대하여 (2ak-k) = 0일 때, Eak의 값은?\nk=1 k=1\n[3점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.512,
+          "y": 0.1921
+        },
+        {
+          "x": 0.8983,
+          "y": 0.1921
+        },
+        {
+          "x": 0.8983,
+          "y": 0.2301
+        },
+        {
+          "x": 0.512,
+          "y": 0.2301
+        }
+      ],
+      "id": 10,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='11' data-category='paragraph' style='font-size:14px'>① 1 2 4 5</p>",
+        "markdown": "① 1 2 4 5",
+        "text": "① 1 2 4 5"
+      },
+      "coordinates": [
+        {
+          "x": 0.5279,
+          "y": 0.2404
+        },
+        {
+          "x": 0.8531,
+          "y": 0.2404
+        },
+        {
+          "x": 0.8531,
+          "y": 0.2554
+        },
+        {
+          "x": 0.5279,
+          "y": 0.2554
+        }
+      ],
+      "id": 11,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='12' data-category='paragraph' style='font-size:18px'>f(1+h)-f(1)<br>2. 함수 f(x)=3x3+4x+1에 대하여 lim 의<br>h→0 h<br>값은? [2점]</p>",
+        "markdown": "f(1+h)-f(1)\n2. 함수 f(x)=3x3+4x+1에 대하여 lim 의\nh→0 h\n값은? [2점]",
+        "text": "f(1+h)-f(1)\n2. 함수 f(x)=3x3+4x+1에 대하여 lim 의\nh→0 h\n값은? [2점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.0992,
+          "y": 0.5141
+        },
+        {
+          "x": 0.4644,
+          "y": 0.5141
+        },
+        {
+          "x": 0.4644,
+          "y": 0.559
+        },
+        {
+          "x": 0.0992,
+          "y": 0.559
+        }
+      ],
+      "id": 12,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='13' data-category='paragraph' style='font-size:16px'>7</p>",
+        "markdown": "7",
+        "text": "7"
+      },
+      "coordinates": [
+        {
+          "x": 0.1152,
+          "y": 0.5697
+        },
+        {
+          "x": 0.1477,
+          "y": 0.5697
+        },
+        {
+          "x": 0.1477,
+          "y": 0.584
+        },
+        {
+          "x": 0.1152,
+          "y": 0.584
+        }
+      ],
+      "id": 13,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='14' data-category='paragraph' style='font-size:16px'>9 ③ 11 ④ 13 ⑤ 15</p>",
+        "markdown": "9 ③ 11 ④ 13 ⑤ 15",
+        "text": "9 ③ 11 ④ 13 ⑤ 15"
+      },
+      "coordinates": [
+        {
+          "x": 0.1856,
+          "y": 0.5695
+        },
+        {
+          "x": 0.4464,
+          "y": 0.5695
+        },
+        {
+          "x": 0.4464,
+          "y": 0.5846
+        },
+        {
+          "x": 0.1856,
+          "y": 0.5846
+        }
+      ],
+      "id": 14,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='15' data-category='paragraph' style='font-size:18px'>4. 함수</p>",
+        "markdown": "4. 함수",
+        "text": "4. 함수"
+      },
+      "coordinates": [
+        {
+          "x": 0.5145,
+          "y": 0.5203
+        },
+        {
+          "x": 0.568,
+          "y": 0.5203
+        },
+        {
+          "x": 0.568,
+          "y": 0.5347
+        },
+        {
+          "x": 0.5145,
+          "y": 0.5347
+        }
+      ],
+      "id": 15,
+      "page": 1
+    },
+    {
+      "category": "equation",
+      "content": {
+        "html": "<p id='16' data-category='equation'>$$f(x)=\\left\\{\\begin{array}{l l}{{3x-2}}&{{(x<1)}}\\\\ {{}}&{{}}\\\\ {{x^{2}-3x+a}}&{{(x\\geq1)}}\\end{array}\\right.$$</p>",
+        "markdown": "$$f(x)=\\left\\{\\begin{array}{l l}{{3x-2}}&{{(x<1)}}\\\\ {{}}&{{}}\\\\ {{x^{2}-3x+a}}&{{(x\\geq1)}}\\end{array}\\right.$$",
+        "text": "3x-2 (x<1)\n f(x) =\n x2 -3x +a (x≥1)"
+      },
+      "coordinates": [
+        {
+          "x": 0.561,
+          "y": 0.5458
+        },
+        {
+          "x": 0.7453,
+          "y": 0.5458
+        },
+        {
+          "x": 0.7453,
+          "y": 0.5842
+        },
+        {
+          "x": 0.561,
+          "y": 0.5842
+        }
+      ],
+      "id": 16,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='17' data-category='paragraph' style='font-size:18px'>이 실수 전체의 집합에서 연속일 때, 상수 a의 값은? [3점]</p>",
+        "markdown": "이 실수 전체의 집합에서 연속일 때, 상수 a의 값은? [3점]",
+        "text": "이 실수 전체의 집합에서 연속일 때, 상수 a의 값은? [3점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.5291,
+          "y": 0.595
+        },
+        {
+          "x": 0.8759,
+          "y": 0.595
+        },
+        {
+          "x": 0.8759,
+          "y": 0.6091
+        },
+        {
+          "x": 0.5291,
+          "y": 0.6091
+        }
+      ],
+      "id": 17,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='18' data-category='paragraph' style='font-size:16px'>① 1</p>",
+        "markdown": "① 1",
+        "text": "① 1"
+      },
+      "coordinates": [
+        {
+          "x": 0.5302,
+          "y": 0.6219
+        },
+        {
+          "x": 0.5598,
+          "y": 0.6219
+        },
+        {
+          "x": 0.5598,
+          "y": 0.6336
+        },
+        {
+          "x": 0.5302,
+          "y": 0.6336
+        }
+      ],
+      "id": 18,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='19' data-category='paragraph' style='font-size:14px'>2</p>",
+        "markdown": "2",
+        "text": "2"
+      },
+      "coordinates": [
+        {
+          "x": 0.6231,
+          "y": 0.6235
+        },
+        {
+          "x": 0.6321,
+          "y": 0.6235
+        },
+        {
+          "x": 0.6321,
+          "y": 0.6315
+        },
+        {
+          "x": 0.6231,
+          "y": 0.6315
+        }
+      ],
+      "id": 19,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='20' data-category='paragraph' style='font-size:14px'>3</p>",
+        "markdown": "3",
+        "text": "3"
+      },
+      "coordinates": [
+        {
+          "x": 0.6961,
+          "y": 0.624
+        },
+        {
+          "x": 0.7044,
+          "y": 0.624
+        },
+        {
+          "x": 0.7044,
+          "y": 0.6315
+        },
+        {
+          "x": 0.6961,
+          "y": 0.6315
+        }
+      ],
+      "id": 20,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='21' data-category='paragraph' style='font-size:14px'>4</p>",
+        "markdown": "4",
+        "text": "4"
+      },
+      "coordinates": [
+        {
+          "x": 0.7691,
+          "y": 0.6236
+        },
+        {
+          "x": 0.7774,
+          "y": 0.6236
+        },
+        {
+          "x": 0.7774,
+          "y": 0.6315
+        },
+        {
+          "x": 0.7691,
+          "y": 0.6315
+        }
+      ],
+      "id": 21,
+      "page": 1
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='22' data-category='paragraph' style='font-size:14px'>5</p>",
+        "markdown": "5",
+        "text": "5"
+      },
+      "coordinates": [
+        {
+          "x": 0.8414,
+          "y": 0.6235
+        },
+        {
+          "x": 0.8504,
+          "y": 0.6235
+        },
+        {
+          "x": 0.8504,
+          "y": 0.6319
+        },
+        {
+          "x": 0.8414,
+          "y": 0.6319
+        }
+      ],
+      "id": 22,
+      "page": 1
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<footer id='23' style='font-size:18px'>20</footer>",
+        "markdown": "20",
+        "text": "20"
+      },
+      "coordinates": [
+        {
+          "x": 0.5052,
+          "y": 0.9148
+        },
+        {
+          "x": 0.5247,
+          "y": 0.9148
+        },
+        {
+          "x": 0.5247,
+          "y": 0.9259
+        },
+        {
+          "x": 0.5052,
+          "y": 0.9259
+        }
+      ],
+      "id": 23,
+      "page": 1
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<br><footer id='24' style='font-size:16px'>이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.</footer>",
+        "markdown": "이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.",
+        "text": "이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다."
+      },
+      "coordinates": [
+        {
+          "x": 0.5847,
+          "y": 0.9257
+        },
+        {
+          "x": 0.9147,
+          "y": 0.9257
+        },
+        {
+          "x": 0.9147,
+          "y": 0.9386
+        },
+        {
+          "x": 0.5847,
+          "y": 0.9386
+        }
+      ],
+      "id": 24,
+      "page": 1
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<header id='25' style='font-size:22px'>2</header>",
+        "markdown": "2",
+        "text": "2"
+      },
+      "coordinates": [
+        {
+          "x": 0.1032,
+          "y": 0.0908
+        },
+        {
+          "x": 0.1295,
+          "y": 0.0908
+        },
+        {
+          "x": 0.1295,
+          "y": 0.1167
+        },
+        {
+          "x": 0.1032,
+          "y": 0.1167
+        }
+      ],
+      "id": 25,
+      "page": 2
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<br><header id='26' style='font-size:22px'>수학 영역</header>",
+        "markdown": "수학 영역",
+        "text": "수학 영역"
+      },
+      "coordinates": [
+        {
+          "x": 0.4262,
+          "y": 0.0917
+        },
+        {
+          "x": 0.5693,
+          "y": 0.0917
+        },
+        {
+          "x": 0.5693,
+          "y": 0.1197
+        },
+        {
+          "x": 0.4262,
+          "y": 0.1197
+        }
+      ],
+      "id": 26,
+      "page": 2
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<br><header id='27' style='font-size:20px'>홀수형</header>",
+        "markdown": "홀수형",
+        "text": "홀수형"
+      },
+      "coordinates": [
+        {
+          "x": 0.8248,
+          "y": 0.0912
+        },
+        {
+          "x": 0.8903,
+          "y": 0.0912
+        },
+        {
+          "x": 0.8903,
+          "y": 0.1143
+        },
+        {
+          "x": 0.8248,
+          "y": 0.1143
+        }
+      ],
+      "id": 27,
+      "page": 2
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='28' data-category='paragraph' style='font-size:18px'>5. 함수 f(x) =(x+2)(2x2-x-2)에 대하여 f'(1)의 값은? [3점]</p>",
+        "markdown": "5. 함수 f(x) =(x+2)(2x2-x-2)에 대하여 f'(1)의 값은? [3점]",
+        "text": "5. 함수 f(x) =(x+2)(2x2-x-2)에 대하여 f'(1)의 값은? [3점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.0997,
+          "y": 0.1364
+        },
+        {
+          "x": 0.4843,
+          "y": 0.1364
+        },
+        {
+          "x": 0.4843,
+          "y": 0.1519
+        },
+        {
+          "x": 0.0997,
+          "y": 0.1519
+        }
+      ],
+      "id": 28,
+      "page": 2
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='29' data-category='paragraph' style='font-size:14px'>① 6 ② 7 ③ 8 ④ 9 ⑤ 10</p>",
+        "markdown": "① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
+        "text": "① 6 ② 7 ③ 8 ④ 9 ⑤ 10"
+      },
+      "coordinates": [
+        {
+          "x": 0.1132,
+          "y": 0.163
+        },
+        {
+          "x": 0.4458,
+          "y": 0.163
+        },
+        {
+          "x": 0.4458,
+          "y": 0.1776
+        },
+        {
+          "x": 0.1132,
+          "y": 0.1776
+        }
+      ],
+      "id": 29,
+      "page": 2
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='30' data-category='paragraph' style='font-size:16px'>6. 1보다 큰 두 실수 a, 6가</p>",
+        "markdown": "6. 1보다 큰 두 실수 a, 6가",
+        "text": "6. 1보다 큰 두 실수 a, 6가"
+      },
+      "coordinates": [
+        {
+          "x": 0.0995,
+          "y": 0.4801
+        },
+        {
+          "x": 0.2789,
+          "y": 0.4801
+        },
+        {
+          "x": 0.2789,
+          "y": 0.4947
+        },
+        {
+          "x": 0.0995,
+          "y": 0.4947
+        }
+      ],
+      "id": 30,
+      "page": 2
+    },
+    {
+      "category": "equation",
+      "content": {
+        "html": "<p id='31' data-category='equation'>$$\\log_{a}b=3\\,,\\quad\\log_{3}{\\frac{b}{a}}={\\frac{1}{2}}$$</p>",
+        "markdown": "$$\\log_{a}b=3\\,,\\quad\\log_{3}{\\frac{b}{a}}={\\frac{1}{2}}$$",
+        "text": "b 1\n logab=3, log3 a 2"
+      },
+      "coordinates": [
+        {
+          "x": 0.1483,
+          "y": 0.5085
+        },
+        {
+          "x": 0.2946,
+          "y": 0.5085
+        },
+        {
+          "x": 0.2946,
+          "y": 0.5316
+        },
+        {
+          "x": 0.1483,
+          "y": 0.5316
+        }
+      ],
+      "id": 31,
+      "page": 2
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='32' data-category='paragraph' style='font-size:18px'>을 만족시킬 때, log9ab의 값은? [3점]</p>",
+        "markdown": "을 만족시킬 때, log9ab의 값은? [3점]",
+        "text": "을 만족시킬 때, log9ab의 값은? [3점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.115,
+          "y": 0.5442
+        },
+        {
+          "x": 0.3439,
+          "y": 0.5442
+        },
+        {
+          "x": 0.3439,
+          "y": 0.5585
+        },
+        {
+          "x": 0.115,
+          "y": 0.5585
+        }
+      ],
+      "id": 32,
+      "page": 2
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='33' data-category='paragraph' style='font-size:20px'>① 3|8 ② 1/2 ③ 5 8 ④ 3|4 ⑤ 7/8</p>",
+        "markdown": "① 3|8 ② 1/2 ③ 5 8 ④ 3|4 ⑤ 7/8",
+        "text": "① 3|8 ② 1/2 ③ 5 8 ④ 3|4 ⑤ 7/8"
+      },
+      "coordinates": [
+        {
+          "x": 0.1151,
+          "y": 0.5728
+        },
+        {
+          "x": 0.4438,
+          "y": 0.5728
+        },
+        {
+          "x": 0.4438,
+          "y": 0.597
+        },
+        {
+          "x": 0.1151,
+          "y": 0.597
+        }
+      ],
+      "id": 33,
+      "page": 2
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='34' data-category='paragraph' style='font-size:18px'>7. 두 곡선 y=x2+3, y - 1.5 x2+3과 직선 x=2로</p>",
+        "markdown": "7. 두 곡선 y=x2+3, y - 1.5 x2+3과 직선 x=2로",
+        "text": "7. 두 곡선 y=x2+3, y - 1.5 x2+3과 직선 x=2로"
+      },
+      "coordinates": [
+        {
+          "x": 0.513,
+          "y": 0.1331
+        },
+        {
+          "x": 0.8397,
+          "y": 0.1331
+        },
+        {
+          "x": 0.8397,
+          "y": 0.1548
+        },
+        {
+          "x": 0.513,
+          "y": 0.1548
+        }
+      ],
+      "id": 34,
+      "page": 2
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='35' data-category='paragraph' style='font-size:18px'>둘러싸인 부분의 넓이는? [3점]</p>",
+        "markdown": "둘러싸인 부분의 넓이는? [3점]",
+        "text": "둘러싸인 부분의 넓이는? [3점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.5283,
+          "y": 0.1597
+        },
+        {
+          "x": 0.7127,
+          "y": 0.1597
+        },
+        {
+          "x": 0.7127,
+          "y": 0.1734
+        },
+        {
+          "x": 0.5283,
+          "y": 0.1734
+        }
+      ],
+      "id": 35,
+      "page": 2
+    },
+    {
+      "category": "equation",
+      "content": {
+        "html": "<p id='36' data-category='equation'>$$(\\overline{{{1}}})\\ \\frac{\\mathrm{{18}}}{\\mathrm{{5}}}\\qquad\\ {\\mathrm{(\\overline{{{2}}})}}\\ \\frac{\\overline{{{7}}}}{\\overline{{{2}}}}\\qquad\\quad(\\overline{{{3}}})\\ \\frac{\\underline{{{17}}}}{\\mathrm{{\\bar{5}}}}\\qquad\\quad(\\overline{{{4}}})\\ \\frac{\\overline{{{33}}}}\\qquad\\quad(\\overline{{{5}}})\\ \\frac{\\mathrm{{\\bar{5}}}\\ \\!\\bar{5}}}{\\mathrm{{\\bar{5}}}}$$</p>",
+        "markdown": "$$(\\overline{{{1}}})\\ \\frac{\\mathrm{{18}}}{\\mathrm{{5}}}\\qquad\\ {\\mathrm{(\\overline{{{2}}})}}\\ \\frac{\\overline{{{7}}}}{\\overline{{{2}}}}\\qquad\\quad(\\overline{{{3}}})\\ \\frac{\\underline{{{17}}}}{\\mathrm{{\\bar{5}}}}\\qquad\\quad(\\overline{{{4}}})\\ \\frac{\\overline{{{33}}}}\\qquad\\quad(\\overline{{{5}}})\\ \\frac{\\mathrm{{\\bar{5}}}\\ \\!\\bar{5}}}{\\mathrm{{\\bar{5}}}}$$",
+        "text": "33 16|5\n 18|5 ② 7/2 ③ 17 ④ ⑤\n 10"
+      },
+      "coordinates": [
+        {
+          "x": 0.5283,
+          "y": 0.1868
+        },
+        {
+          "x": 0.8631,
+          "y": 0.1868
+        },
+        {
+          "x": 0.8631,
+          "y": 0.2106
+        },
+        {
+          "x": 0.5283,
+          "y": 0.2106
+        }
+      ],
+      "id": 36,
+      "page": 2
+    },
+    {
+      "category": "chart",
+      "content": {
+        "html": "<figure id='37' data-category='chart'><img data-coord=\"top-left:(992,577); bottom-right:(1514,1076)\" /><figcaption><p>X-Axis: x</p><p>Chart Type: line</p></figcaption><table><thead><tr><td></td><td>0</td><td>1</td><td>2</td></tr></thead><tbody><tr><td>item_01</td><td>5</td><td>1</td><td>0</td></tr></tbody></table></figure>",
+        "markdown": "![image](/image/placeholder)\n- X-Axis: x\n- Chart Type: line\n|  | 0 | 1 | 2 |\n| --- | --- | --- | --- |\n| item_01 | 5 | 1 | 0 |\n",
+        "text": "![image](/image/placeholder)\n- X-Axis: x\n- Chart Type: line\n|  | 0 | 1 | 2 |\n| --- | --- | --- | --- |\n| item_01 | 5 | 1 | 0 |\n"
+      },
+      "coordinates": [
+        {
+          "x": 0.5657,
+          "y": 0.2326
+        },
+        {
+          "x": 0.8627,
+          "y": 0.2326
+        },
+        {
+          "x": 0.8627,
+          "y": 0.4338
+        },
+        {
+          "x": 0.5657,
+          "y": 0.4338
+        }
+      ],
+      "id": 37,
+      "page": 2
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<footer id='38' style='font-size:16px'>2</footer>",
+        "markdown": "2",
+        "text": "2"
+      },
+      "coordinates": [
+        {
+          "x": 0.4725,
+          "y": 0.9099
+        },
+        {
+          "x": 0.4836,
+          "y": 0.9099
+        },
+        {
+          "x": 0.4836,
+          "y": 0.9207
+        },
+        {
+          "x": 0.4725,
+          "y": 0.9207
+        }
+      ],
+      "id": 38,
+      "page": 2
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<br><footer id='39' style='font-size:16px'>20</footer>",
+        "markdown": "20",
+        "text": "20"
+      },
+      "coordinates": [
+        {
+          "x": 0.5052,
+          "y": 0.9148
+        },
+        {
+          "x": 0.5246,
+          "y": 0.9148
+        },
+        {
+          "x": 0.5246,
+          "y": 0.9258
+        },
+        {
+          "x": 0.5052,
+          "y": 0.9258
+        }
+      ],
+      "id": 39,
+      "page": 2
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<br><footer id='40' style='font-size:14px'>이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.</footer>",
+        "markdown": "이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.",
+        "text": "이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다."
+      },
+      "coordinates": [
+        {
+          "x": 0.5847,
+          "y": 0.9258
+        },
+        {
+          "x": 0.9146,
+          "y": 0.9258
+        },
+        {
+          "x": 0.9146,
+          "y": 0.9386
+        },
+        {
+          "x": 0.5847,
+          "y": 0.9386
+        }
+      ],
+      "id": 40,
+      "page": 2
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<header id='41' style='font-size:20px'>홀수형</header>",
+        "markdown": "홀수형",
+        "text": "홀수형"
+      },
+      "coordinates": [
+        {
+          "x": 0.1079,
+          "y": 0.0916
+        },
+        {
+          "x": 0.174,
+          "y": 0.0916
+        },
+        {
+          "x": 0.174,
+          "y": 0.1138
+        },
+        {
+          "x": 0.1079,
+          "y": 0.1138
+        }
+      ],
+      "id": 41,
+      "page": 3
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<br><header id='42' style='font-size:22px'>수학 영역</header>",
+        "markdown": "수학 영역",
+        "text": "수학 영역"
+      },
+      "coordinates": [
+        {
+          "x": 0.4259,
+          "y": 0.0918
+        },
+        {
+          "x": 0.5689,
+          "y": 0.0918
+        },
+        {
+          "x": 0.5689,
+          "y": 0.1195
+        },
+        {
+          "x": 0.4259,
+          "y": 0.1195
+        }
+      ],
+      "id": 42,
+      "page": 3
+    },
+    {
+      "category": "header",
+      "content": {
+        "html": "<br><header id='43' style='font-size:22px'>3</header>",
+        "markdown": "3",
+        "text": "3"
+      },
+      "coordinates": [
+        {
+          "x": 0.87,
+          "y": 0.0909
+        },
+        {
+          "x": 0.895,
+          "y": 0.0909
+        },
+        {
+          "x": 0.895,
+          "y": 0.1166
+        },
+        {
+          "x": 0.87,
+          "y": 0.1166
+        }
+      ],
+      "id": 43,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='44' data-category='paragraph' style='font-size:18px'>8. sin +3cos= 0이고 cos(-)>0일 때, sin의 값은? [3점]</p>",
+        "markdown": "8. sin +3cos= 0이고 cos(-)>0일 때, sin의 값은? [3점]",
+        "text": "8. sin +3cos= 0이고 cos(-)>0일 때, sin의 값은? [3점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.1005,
+          "y": 0.1327
+        },
+        {
+          "x": 0.4831,
+          "y": 0.1327
+        },
+        {
+          "x": 0.4831,
+          "y": 0.1464
+        },
+        {
+          "x": 0.1005,
+          "y": 0.1464
+        }
+      ],
+      "id": 44,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='45' data-category='paragraph' style='font-size:18px'>3V10</p>",
+        "markdown": "3V10",
+        "text": "3V10"
+      },
+      "coordinates": [
+        {
+          "x": 0.1388,
+          "y": 0.1606
+        },
+        {
+          "x": 0.1752,
+          "y": 0.1606
+        },
+        {
+          "x": 0.1752,
+          "y": 0.1722
+        },
+        {
+          "x": 0.1388,
+          "y": 0.1722
+        }
+      ],
+      "id": 45,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='46' data-category='paragraph' style='font-size:20px'>V10</p>",
+        "markdown": "V10",
+        "text": "V10"
+      },
+      "coordinates": [
+        {
+          "x": 0.2622,
+          "y": 0.16
+        },
+        {
+          "x": 0.2917,
+          "y": 0.16
+        },
+        {
+          "x": 0.2917,
+          "y": 0.174
+        },
+        {
+          "x": 0.2622,
+          "y": 0.174
+        }
+      ],
+      "id": 46,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='47' data-category='paragraph' style='font-size:18px'>①</p>",
+        "markdown": "①",
+        "text": "①"
+      },
+      "coordinates": [
+        {
+          "x": 0.1167,
+          "y": 0.1675
+        },
+        {
+          "x": 0.1317,
+          "y": 0.1675
+        },
+        {
+          "x": 0.1317,
+          "y": 0.1786
+        },
+        {
+          "x": 0.1167,
+          "y": 0.1786
+        }
+      ],
+      "id": 47,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='48' data-category='paragraph' style='font-size:18px'>②</p>",
+        "markdown": "②",
+        "text": "②"
+      },
+      "coordinates": [
+        {
+          "x": 0.2372,
+          "y": 0.1673
+        },
+        {
+          "x": 0.2539,
+          "y": 0.1673
+        },
+        {
+          "x": 0.2539,
+          "y": 0.1792
+        },
+        {
+          "x": 0.2372,
+          "y": 0.1792
+        }
+      ],
+      "id": 48,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='49' data-category='paragraph' style='font-size:14px'>10</p>",
+        "markdown": "10",
+        "text": "10"
+      },
+      "coordinates": [
+        {
+          "x": 0.1498,
+          "y": 0.1744
+        },
+        {
+          "x": 0.1664,
+          "y": 0.1744
+        },
+        {
+          "x": 0.1664,
+          "y": 0.1838
+        },
+        {
+          "x": 0.1498,
+          "y": 0.1838
+        }
+      ],
+      "id": 49,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='50' data-category='paragraph' style='font-size:14px'>5</p>",
+        "markdown": "5",
+        "text": "5"
+      },
+      "coordinates": [
+        {
+          "x": 0.2716,
+          "y": 0.1755
+        },
+        {
+          "x": 0.2806,
+          "y": 0.1755
+        },
+        {
+          "x": 0.2806,
+          "y": 0.1835
+        },
+        {
+          "x": 0.2716,
+          "y": 0.1835
+        }
+      ],
+      "id": 50,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='51' data-category='paragraph' style='font-size:18px'>V10</p>",
+        "markdown": "V10",
+        "text": "V10"
+      },
+      "coordinates": [
+        {
+          "x": 0.1542,
+          "y": 0.1905
+        },
+        {
+          "x": 0.1808,
+          "y": 0.1905
+        },
+        {
+          "x": 0.1808,
+          "y": 0.2016
+        },
+        {
+          "x": 0.1542,
+          "y": 0.2016
+        }
+      ],
+      "id": 51,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='52' data-category='paragraph' style='font-size:20px'>3V10</p>",
+        "markdown": "3V10",
+        "text": "3V10"
+      },
+      "coordinates": [
+        {
+          "x": 0.2714,
+          "y": 0.1887
+        },
+        {
+          "x": 0.3087,
+          "y": 0.1887
+        },
+        {
+          "x": 0.3087,
+          "y": 0.2017
+        },
+        {
+          "x": 0.2714,
+          "y": 0.2017
+        }
+      ],
+      "id": 52,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='53' data-category='paragraph' style='font-size:18px'>④</p>",
+        "markdown": "④",
+        "text": "④"
+      },
+      "coordinates": [
+        {
+          "x": 0.1165,
+          "y": 0.1968
+        },
+        {
+          "x": 0.1325,
+          "y": 0.1968
+        },
+        {
+          "x": 0.1325,
+          "y": 0.2081
+        },
+        {
+          "x": 0.1165,
+          "y": 0.2081
+        }
+      ],
+      "id": 53,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='54' data-category='paragraph' style='font-size:18px'>⑤</p>",
+        "markdown": "⑤",
+        "text": "⑤"
+      },
+      "coordinates": [
+        {
+          "x": 0.2381,
+          "y": 0.1969
+        },
+        {
+          "x": 0.2531,
+          "y": 0.1969
+        },
+        {
+          "x": 0.2531,
+          "y": 0.208
+        },
+        {
+          "x": 0.2381,
+          "y": 0.208
+        }
+      ],
+      "id": 54,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='55' data-category='paragraph' style='font-size:14px'>5</p>",
+        "markdown": "5",
+        "text": "5"
+      },
+      "coordinates": [
+        {
+          "x": 0.1621,
+          "y": 0.2045
+        },
+        {
+          "x": 0.1718,
+          "y": 0.2045
+        },
+        {
+          "x": 0.1718,
+          "y": 0.2129
+        },
+        {
+          "x": 0.1621,
+          "y": 0.2129
+        }
+      ],
+      "id": 55,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='56' data-category='paragraph' style='font-size:16px'>10</p>",
+        "markdown": "10",
+        "text": "10"
+      },
+      "coordinates": [
+        {
+          "x": 0.282,
+          "y": 0.2038
+        },
+        {
+          "x": 0.2998,
+          "y": 0.2038
+        },
+        {
+          "x": 0.2998,
+          "y": 0.2136
+        },
+        {
+          "x": 0.282,
+          "y": 0.2136
+        }
+      ],
+      "id": 56,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='57' data-category='paragraph' style='font-size:16px'>③ 0</p>",
+        "markdown": "③ 0",
+        "text": "③ 0"
+      },
+      "coordinates": [
+        {
+          "x": 0.3575,
+          "y": 0.1672
+        },
+        {
+          "x": 0.3889,
+          "y": 0.1672
+        },
+        {
+          "x": 0.3889,
+          "y": 0.1783
+        },
+        {
+          "x": 0.3575,
+          "y": 0.1783
+        }
+      ],
+      "id": 57,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='58' data-category='paragraph' style='font-size:18px'>10. 상수 a(a> 1)에 대하여 곡선 y= ax -2 위의 점 중<br>제1사분면에 있는 점 A를 지나고 y축에 평행한 직선이 x 축과<br>만나는 점을 B, 곡선 y = ax - 2의 점근선과 만나는 점을 C라<br>하자. AB = BC 이고 삼각형 AOC의 넓이가 8일 때,</p>",
+        "markdown": "10. 상수 a(a> 1)에 대하여 곡선 y= ax -2 위의 점 중\n제1사분면에 있는 점 A를 지나고 y축에 평행한 직선이 x 축과\n만나는 점을 B, 곡선 y = ax - 2의 점근선과 만나는 점을 C라\n하자. AB = BC 이고 삼각형 AOC의 넓이가 8일 때,",
+        "text": "10. 상수 a(a> 1)에 대하여 곡선 y= ax -2 위의 점 중\n제1사분면에 있는 점 A를 지나고 y축에 평행한 직선이 x 축과\n만나는 점을 B, 곡선 y = ax - 2의 점근선과 만나는 점을 C라\n하자. AB = BC 이고 삼각형 AOC의 넓이가 8일 때,"
+      },
+      "coordinates": [
+        {
+          "x": 0.5162,
+          "y": 0.1335
+        },
+        {
+          "x": 0.8978,
+          "y": 0.1335
+        },
+        {
+          "x": 0.8978,
+          "y": 0.1983
+        },
+        {
+          "x": 0.5162,
+          "y": 0.1983
+        }
+      ],
+      "id": 58,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='59' data-category='paragraph' style='font-size:16px'>17</p>",
+        "markdown": "17",
+        "text": "17"
+      },
+      "coordinates": [
+        {
+          "x": 0.8484,
+          "y": 0.2284
+        },
+        {
+          "x": 0.8627,
+          "y": 0.2284
+        },
+        {
+          "x": 0.8627,
+          "y": 0.2386
+        },
+        {
+          "x": 0.8484,
+          "y": 0.2386
+        }
+      ],
+      "id": 59,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='60' data-category='paragraph' style='font-size:16px'>⑤ 2 6</p>",
+        "markdown": "⑤ 2 6",
+        "text": "⑤ 2 6"
+      },
+      "coordinates": [
+        {
+          "x": 0.822,
+          "y": 0.2371
+        },
+        {
+          "x": 0.8606,
+          "y": 0.2371
+        },
+        {
+          "x": 0.8606,
+          "y": 0.2488
+        },
+        {
+          "x": 0.822,
+          "y": 0.2488
+        }
+      ],
+      "id": 60,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='61' data-category='paragraph' style='font-size:18px'>a× OB의 값은? (단, O는 원점이다.) [4점]</p>",
+        "markdown": "a× OB의 값은? (단, O는 원점이다.) [4점]",
+        "text": "a× OB의 값은? (단, O는 원점이다.) [4점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.5292,
+          "y": 0.2015
+        },
+        {
+          "x": 0.7807,
+          "y": 0.2015
+        },
+        {
+          "x": 0.7807,
+          "y": 0.2154
+        },
+        {
+          "x": 0.5292,
+          "y": 0.2154
+        }
+      ],
+      "id": 61,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='62' data-category='paragraph' style='font-size:14px'>13</p>",
+        "markdown": "13",
+        "text": "13"
+      },
+      "coordinates": [
+        {
+          "x": 0.5572,
+          "y": 0.2288
+        },
+        {
+          "x": 0.5716,
+          "y": 0.2288
+        },
+        {
+          "x": 0.5716,
+          "y": 0.2386
+        },
+        {
+          "x": 0.5572,
+          "y": 0.2386
+        }
+      ],
+      "id": 62,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='63' data-category='paragraph' style='font-size:14px'>7</p>",
+        "markdown": "7",
+        "text": "7"
+      },
+      "coordinates": [
+        {
+          "x": 0.6306,
+          "y": 0.2291
+        },
+        {
+          "x": 0.6395,
+          "y": 0.2291
+        },
+        {
+          "x": 0.6395,
+          "y": 0.2378
+        },
+        {
+          "x": 0.6306,
+          "y": 0.2378
+        }
+      ],
+      "id": 63,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='64' data-category='paragraph' style='font-size:14px'>5</p>",
+        "markdown": "5",
+        "text": "5"
+      },
+      "coordinates": [
+        {
+          "x": 0.7034,
+          "y": 0.229
+        },
+        {
+          "x": 0.7126,
+          "y": 0.229
+        },
+        {
+          "x": 0.7126,
+          "y": 0.2383
+        },
+        {
+          "x": 0.7034,
+          "y": 0.2383
+        }
+      ],
+      "id": 64,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='65' data-category='paragraph' style='font-size:14px'>8</p>",
+        "markdown": "8",
+        "text": "8"
+      },
+      "coordinates": [
+        {
+          "x": 0.7752,
+          "y": 0.2294
+        },
+        {
+          "x": 0.7851,
+          "y": 0.2294
+        },
+        {
+          "x": 0.7851,
+          "y": 0.238
+        },
+        {
+          "x": 0.7752,
+          "y": 0.238
+        }
+      ],
+      "id": 65,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='66' data-category='paragraph' style='font-size:16px'>① 26</p>",
+        "markdown": "① 26",
+        "text": "① 26"
+      },
+      "coordinates": [
+        {
+          "x": 0.53,
+          "y": 0.2363
+        },
+        {
+          "x": 0.5715,
+          "y": 0.2363
+        },
+        {
+          "x": 0.5715,
+          "y": 0.2494
+        },
+        {
+          "x": 0.53,
+          "y": 0.2494
+        }
+      ],
+      "id": 66,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='67' data-category='paragraph' style='font-size:18px'>② 23</p>",
+        "markdown": "② 23",
+        "text": "② 23"
+      },
+      "coordinates": [
+        {
+          "x": 0.6042,
+          "y": 0.2367
+        },
+        {
+          "x": 0.6402,
+          "y": 0.2367
+        },
+        {
+          "x": 0.6402,
+          "y": 0.2488
+        },
+        {
+          "x": 0.6042,
+          "y": 0.2488
+        }
+      ],
+      "id": 67,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='68' data-category='paragraph' style='font-size:16px'>③ 22</p>",
+        "markdown": "③ 22",
+        "text": "③ 22"
+      },
+      "coordinates": [
+        {
+          "x": 0.6766,
+          "y": 0.2371
+        },
+        {
+          "x": 0.7131,
+          "y": 0.2371
+        },
+        {
+          "x": 0.7131,
+          "y": 0.2488
+        },
+        {
+          "x": 0.6766,
+          "y": 0.2488
+        }
+      ],
+      "id": 68,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<br><p id='69' data-category='paragraph' style='font-size:14px'>④ 2 3</p>",
+        "markdown": "④ 2 3",
+        "text": "④ 2 3"
+      },
+      "coordinates": [
+        {
+          "x": 0.7496,
+          "y": 0.2376
+        },
+        {
+          "x": 0.7848,
+          "y": 0.2376
+        },
+        {
+          "x": 0.7848,
+          "y": 0.2488
+        },
+        {
+          "x": 0.7496,
+          "y": 0.2488
+        }
+      ],
+      "id": 69,
+      "page": 3
+    },
+    {
+      "category": "heading1",
+      "content": {
+        "html": "<h1 id='70' style='font-size:18px'>9. 양수 a에 대하여 함수 f(x)를</h1>",
+        "markdown": "# 9. 양수 a에 대하여 함수 f(x)를",
+        "text": "9. 양수 a에 대하여 함수 f(x)를"
+      },
+      "coordinates": [
+        {
+          "x": 0.0995,
+          "y": 0.5031
+        },
+        {
+          "x": 0.305,
+          "y": 0.5031
+        },
+        {
+          "x": 0.305,
+          "y": 0.5184
+        },
+        {
+          "x": 0.0995,
+          "y": 0.5184
+        }
+      ],
+      "id": 70,
+      "page": 3
+    },
+    {
+      "category": "equation",
+      "content": {
+        "html": "<p id='71' data-category='equation'>$$f(x)=x^{3}+3a x^{2}-9a^{2}x+4$$</p>",
+        "markdown": "$$f(x)=x^{3}+3a x^{2}-9a^{2}x+4$$",
+        "text": "f(x)=x3+3ax2-9a2x+4"
+      },
+      "coordinates": [
+        {
+          "x": 0.1493,
+          "y": 0.531
+        },
+        {
+          "x": 0.3128,
+          "y": 0.531
+        },
+        {
+          "x": 0.3128,
+          "y": 0.5459
+        },
+        {
+          "x": 0.1493,
+          "y": 0.5459
+        }
+      ],
+      "id": 71,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='72' data-category='paragraph' style='font-size:18px'>라 하자. 직선 y=5가 곡선 y=f(x)에 접할 때, f(2)의 값은?<br>[4점]</p>",
+        "markdown": "라 하자. 직선 y=5가 곡선 y=f(x)에 접할 때, f(2)의 값은?\n[4점]",
+        "text": "라 하자. 직선 y=5가 곡선 y=f(x)에 접할 때, f(2)의 값은?\n[4점]"
+      },
+      "coordinates": [
+        {
+          "x": 0.1145,
+          "y": 0.5566
+        },
+        {
+          "x": 0.4845,
+          "y": 0.5566
+        },
+        {
+          "x": 0.4845,
+          "y": 0.5881
+        },
+        {
+          "x": 0.1145,
+          "y": 0.5881
+        }
+      ],
+      "id": 72,
+      "page": 3
+    },
+    {
+      "category": "paragraph",
+      "content": {
+        "html": "<p id='73' data-category='paragraph' style='font-size:16px'>① 11 ② 12 ③ 13 ④ 14 ⑤ 15</p>",
+        "markdown": "① 11 ② 12 ③ 13 ④ 14 ⑤ 15",
+        "text": "① 11 ② 12 ③ 13 ④ 14 ⑤ 15"
+      },
+      "coordinates": [
+        {
+          "x": 0.1145,
+          "y": 0.5979
+        },
+        {
+          "x": 0.4454,
+          "y": 0.5979
+        },
+        {
+          "x": 0.4454,
+          "y": 0.6131
+        },
+        {
+          "x": 0.1145,
+          "y": 0.6131
+        }
+      ],
+      "id": 73,
+      "page": 3
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<footer id='74' style='font-size:16px'>3</footer>",
+        "markdown": "3",
+        "text": "3"
+      },
+      "coordinates": [
+        {
+          "x": 0.472,
+          "y": 0.9101
+        },
+        {
+          "x": 0.4837,
+          "y": 0.9101
+        },
+        {
+          "x": 0.4837,
+          "y": 0.9206
+        },
+        {
+          "x": 0.472,
+          "y": 0.9206
+        }
+      ],
+      "id": 74,
+      "page": 3
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<br><footer id='75' style='font-size:18px'>20</footer>",
+        "markdown": "20",
+        "text": "20"
+      },
+      "coordinates": [
+        {
+          "x": 0.5056,
+          "y": 0.915
+        },
+        {
+          "x": 0.5243,
+          "y": 0.915
+        },
+        {
+          "x": 0.5243,
+          "y": 0.9257
+        },
+        {
+          "x": 0.5056,
+          "y": 0.9257
+        }
+      ],
+      "id": 75,
+      "page": 3
+    },
+    {
+      "category": "footer",
+      "content": {
+        "html": "<br><footer id='76' style='font-size:16px'>이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.</footer>",
+        "markdown": "이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다.",
+        "text": "이 문제지에 관한 저작권은 한국교육과정평가원에 있습니다."
+      },
+      "coordinates": [
+        {
+          "x": 0.585,
+          "y": 0.9259
+        },
+        {
+          "x": 0.9144,
+          "y": 0.9259
+        },
+        {
+          "x": 0.9144,
+          "y": 0.9385
+        },
+        {
+          "x": 0.585,
+          "y": 0.9385
+        }
+      ],
+      "id": 76,
+      "page": 3
+    }
+  ],
+  "model": "document-parse-260128",
+  "ocr": true,
+  "usage": {
+    "pages": 3,
+    "standard": [
+      1,
+      2,
+      3
+    ]
+  }
+}

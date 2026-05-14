@@ -1,0 +1,142 @@
+[
+  {
+    "number": 1,
+    "points": 2,
+    "problem_type": "multiple_choice",
+    "question": "$4^{2}$의 값은?",
+    "choices": [
+      "12 \\sqrt{3}",
+      "34 \\sqrt{3} 59",
+      "9 \\times 3",
+      "",
+      ""
+    ],
+    "_source": "page1_L"
+  },
+  {
+    "number": 2,
+    "points": 2,
+    "problem_type": "multiple_choice",
+    "question": "$f(1+h)-f(1)$에 대하여 $\\lim_{h \\to 0}$의 값은? 함수 $f(x)=3x+4x+1$",
+    "choices": [
+      "7",
+      "9",
+      "11",
+      "13",
+      "15"
+    ],
+    "_source": "page1_L"
+  },
+  {
+    "number": 3,
+    "points": 3,
+    "problem_type": "multiple_choice",
+    "question": "수열 $\\{a_n\\}$에 대하여 $\\sum_{k=1}^{n} 2a_k k = 0$일 때, $a_k$의 값은?",
+    "choices": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "_source": "page1_R"
+  },
+  {
+    "number": 4,
+    "points": 3,
+    "problem_type": "multiple_choice",
+    "question": "함수 $$f(x) \\longrightarrow \\begin{cases} \\vartheta x-2 & (x<1) \\end{cases}$$이 실수 전체의 집합에서 연속일 때, 상수 $a$의 값은?",
+    "choices": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "_source": "page1_R"
+  },
+  {
+    "number": 5,
+    "points": 3,
+    "problem_type": "multiple_choice",
+    "question": "함수 $f(x) = (x + 2)(2x^2 - 2)$에 대하여 $f'(1)$의 값은?",
+    "choices": [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "_source": "page2_L"
+  },
+  {
+    "number": 6,
+    "points": 3,
+    "problem_type": "multiple_choice",
+    "question": "$1$보다 큰 두 실수 $a$, $b$가 $$\begin{align*} \text{(1) } \frac{\text{log}_{a} b}{-\text{∞}} \\ \text{(2) } |\text{log}_{3} \frac{b}{4}| = -2 \\\\ \text{을 만족시킬 때, } \text{log}_{a} b \text{의 값은?} \\\\ \text{(수식 오류 있음)} \\\\ \text{(문항 본문에 보이는 수식 그대로 표기)} \\\\ \text{(선택지 추출)} \\\\ \text{(선택지 일부 OCR 오류 있음)} \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)} \\\\ \text{(문항 번호, 배점, 문제 유형, 문제 본문, 선택지 추출)} \\\\ \text{(문항 번호: 6)} \\\\ \text{(배점: 3)} \\\\ \text{(문제 유형: multiple_choice)} \\\\ \text{(문제 본문: $1$보다 큰 두 실수 $a$, $b$가 $$1\text{og}_{a}b\text{-\text{∞}},\text{ }|\text{og}_{3}\frac{b}{4}\text{- 2}$$을 만족시킬 때, $\text{log}_{a}b$의 값은?) \\\\ \text{(선택지: 2, 3, 4, 5, 8)} \\\\ \text{(선택지 마커 제외)} \\\\ \text{(선택지 내용만)} \\\\ \text{(수식 LaTeX)} \\\\ \text{(단답형이면 빈 배열)} \\\\ \text{(보이지 않는 선택지는 추측해 넣지 말 것)}",
+    "choices": [
+      "2",
+      "3",
+      "4",
+      "5",
+      "8"
+    ],
+    "_source": "page2_L"
+  },
+  {
+    "number": 7,
+    "points": 3,
+    "problem_type": "multiple_choice",
+    "question": "두 곡선 $y = x + 3$, $y = -x + 3$과 직선 $x = 2$로 둘러싸인 부분의 넓이는?",
+    "choices": [
+      "18",
+      "7",
+      "17",
+      "33",
+      "16"
+    ],
+    "_source": "page2_R"
+  },
+  {
+    "number": 8,
+    "points": 3,
+    "problem_type": "multiple_choice",
+    "question": "$\\sin \\theta + 3 \\cos \\theta = 0$이고 $\\cos \\theta > 0$일 때, $\\sin \\theta$의 값은?",
+    "choices": [
+      "2",
+      "10",
+      "5",
+      "\\sqrt{10}",
+      "3\\sqrt{10}"
+    ],
+    "_source": "page3_L"
+  },
+  {
+    "number": 9,
+    "points": 4,
+    "problem_type": "multiple_choice",
+    "question": "양수 $a$에 대하여 함수 $f(x)$를 $$f(x) = x^2 + 3ax + 4$$라 하자. 직선 $y = 5$가 곡선 $y = f(x)$에 접할 때, $f(2)$의 값은?",
+    "choices": [
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "_source": "page3_L"
+  },
+  {
+    "number": 10,
+    "points": 4,
+    "problem_type": "multiple_choice",
+    "question": "상수 $a$ ($a>1$)에 대하여 곡선 $y = a^{x-2}$ 위의 점 중 제 1 사분면에 있는 점 $A$를 지나고 $y$축에 평행한 직선이 $x$축과 만나는 점을 $B$, 곡선 $y = a^{|x-2|}$의 점근선과 만나는 점을 $C$라 하자. $AB = BC$이고 삼각형 $AOC$의 넓이가 $8$일 때, $a \\times OB$의 값은? (단, $O$는 원점이다.)",
+    "choices": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "2"
+    ],
+    "_source": "page3_R"
+  }
+]

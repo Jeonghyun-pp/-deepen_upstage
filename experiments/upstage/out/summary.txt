@@ -1,0 +1,12 @@
+model: document-parse-260128
+apiVersion: None
+billed pages: 3
+elements: 76
+categories:
+  paragraph: 51
+  footer: 8
+  header: 6
+  heading1: 5
+  equation: 4
+  figure: 1
+  chart: 1

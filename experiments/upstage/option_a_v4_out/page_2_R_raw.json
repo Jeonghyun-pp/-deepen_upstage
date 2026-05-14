@@ -1,0 +1,22 @@
+{
+  "id": "iex-TV3U3Fihbqb8hcGq",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"problems\":[{\"number\":7,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"두 곡선 $y = x + 3$, $y = -x + 3$과 직선 $x = 2$로 둘러싸인 부분의 넓이는?\",\"choices\":[\"18\",\"7\",\"17\",\"33\",\"16\"]}]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778573550,
+  "model": "information-extract-260304",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 3846,
+    "completion_tokens": 89,
+    "total_tokens": 3935
+  }
+}

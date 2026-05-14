@@ -1,0 +1,22 @@
+{
+  "id": "iex-jajwkt-eS1kINCie",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"number\":1,\"points\":2,\"question\":\"$4^{2}$의 값은?\",\"choices\":[\"1\",\"\\\\sqrt{3}\",\"3 \\\\frac{4}{3}\",\"3 \\\\frac{5}{9}\"]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778574260,
+  "model": "information-extract-260304",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 1408,
+    "completion_tokens": 51,
+    "total_tokens": 1459
+  }
+}

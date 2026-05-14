@@ -1,0 +1,22 @@
+{
+  "id": "iex-NHiFX3BMMagN2B1T",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"problems\":[{\"number\":3,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"수열 $\\\\{a_n\\\\}$에 대하여 $\\\\sum_{k=1}^{n} 2a_k k = 0$일 때, $a_k$의 값은?\",\"choices\":[\"1\",\"2\",\"3\",\"4\",\"5\"]},{\"number\":4,\"points\":3,\"problem_type\":\"multiple_choice\",\"question\":\"함수 $$f(x) \\\\longrightarrow \\\\begin{cases} \\\\vartheta x-2 & (x<1) \\\\end{cases}$$이 실수 전체의 집합에서 연속일 때, 상수 $a$의 값은?\",\"choices\":[\"1\",\"2\",\"3\",\"4\",\"5\"]}]}",
+        "role": "assistant",
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1778573490,
+  "model": "information-extract-260304",
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 4082,
+    "completion_tokens": 176,
+    "total_tokens": 4258
+  }
+}
