@@ -7,12 +7,13 @@
 
 import { GraphView } from "../_components/GraphView"
 import { loadDemoGraph } from "@/lib/demo/queries"
-import { DEMO_TARGET_ITEM_ID } from "@/lib/demo/constants"
+import { getTargetItemId } from "@/lib/demo/data-loader"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 export default async function GraphScreen() {
   const graph = await loadDemoGraph()
+  const targetItemId = getTargetItemId()
 
   return (
     <div className="flex-1 flex flex-col">
@@ -29,12 +30,12 @@ export default async function GraphScreen() {
       </div>
 
       <div className="flex-1 min-h-[500px]">
-        <GraphView graph={graph} highlightId={null} targetItemId={DEMO_TARGET_ITEM_ID} />
+        <GraphView graph={graph} highlightId={null} targetItemId={targetItemId} />
       </div>
 
       <div className="px-8 pb-6 flex justify-end">
         <Link
-          href={`/demo/solve?itemId=${DEMO_TARGET_ITEM_ID}`}
+          href={`/demo/solve?itemId=${targetItemId}`}
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#15803D] text-white text-sm font-bold rounded-md hover:bg-[#0F6A30] transition"
         >
           Q6 풀어보기

@@ -21,7 +21,7 @@ import {
   STUB_OCR_RESULT,
 } from "@/lib/upstage/parse-handwriting"
 import { loadDemoItem } from "@/lib/demo/queries"
-import { DEMO_TARGET_ITEM_ID } from "@/lib/demo/constants"
+import { getTargetItemId } from "@/lib/demo/data-loader"
 import { setOcrResult } from "@/lib/demo/ocr-store"
 import type { OcrStepsOutputT } from "@/lib/upstage/prompts/ocr-steps"
 
@@ -36,7 +36,7 @@ const SAMPLE_PATH = path.join(
 )
 
 export async function POST(req: NextRequest) {
-  const itemId = req.nextUrl.searchParams.get("itemId") ?? DEMO_TARGET_ITEM_ID
+  const itemId = req.nextUrl.searchParams.get("itemId") ?? getTargetItemId()
   const item = await loadDemoItem(itemId)
   if (!item) {
     return NextResponse.json(

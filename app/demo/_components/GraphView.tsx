@@ -58,13 +58,15 @@ export function GraphView({ graph, highlightId, targetItemId }: Props) {
       <GraphCanvas
         nodes={rgNodes}
         edges={rgEdges}
-        layoutType="forceDirected2d"
+        layoutType="forceDirected3d"
+        cameraMode="orbit"
         edgeArrowPosition="end"
-        labelType="all"
+        labelType="nodes"
         theme={{
           canvas: { background: "#FAFAF8" },
           node: {
-            color: "#525252",
+            fill: "#525252",
+            activeFill: "#15803D",
             opacity: 1,
             selectedOpacity: 1,
             inactiveOpacity: 0.4,
@@ -75,7 +77,8 @@ export function GraphView({ graph, highlightId, targetItemId }: Props) {
             },
           },
           edge: {
-            color: "#94a3b8",
+            fill: "#94a3b8",
+            activeFill: "#15803D",
             opacity: 0.7,
             selectedOpacity: 1,
             inactiveOpacity: 0.2,

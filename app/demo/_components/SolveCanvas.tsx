@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowRight, Check, X, Camera, Loader2 } from "lucide-react"
+import { ArrowRight, Check, X, Camera, Loader2, Upload } from "lucide-react"
 import type { DemoNode } from "@/lib/demo/queries"
 import type { OcrStepsOutputT } from "@/lib/upstage/prompts/ocr-steps"
 
@@ -37,6 +37,14 @@ export function SolveCanvas({ item, isRetry }: Props) {
   const [ocr, setOcr] = useState<OcrResponse | null>(null)
   const [ocrLoading, setOcrLoading] = useState(false)
   const [ocrError, setOcrError] = useState<string | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+
+  // blob URL 누수 방지.
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl)
+    }
+  }, [previewUrl])
 
   if (!item) {
     return <div className="px-8 py-12 text-black/50">문항을 찾을 수 없습니다.</div>
@@ -49,9 +57,35 @@ export function SolveCanvas({ item, isRetry }: Props) {
   async function handleUploadSample() {
     setOcrLoading(true)
     setOcrError(null)
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl)
+      setPreviewUrl(null)
+    }
     try {
       const resp = await fetch(`/api/demo/ocr?itemId=${item!.id}`, {
         method: "POST",
+      })
+      if (!resp.ok) throw new Error(`OCR ${resp.status}`)
+      const data = (await resp.json()) as OcrResponse
+      setOcr(data)
+    } catch (err) {
+      setOcrError(err instanceof Error ? err.message : String(err))
+    } finally {
+      setOcrLoading(false)
+    }
+  }
+
+  async function handleUploadFile(file: File) {
+    setOcrLoading(true)
+    setOcrError(null)
+    if (previewUrl) URL.revokeObjectURL(previewUrl)
+    setPreviewUrl(URL.createObjectURL(file))
+    try {
+      const form = new FormData()
+      form.append("file", file)
+      const resp = await fetch(`/api/demo/ocr?itemId=${item!.id}`, {
+        method: "POST",
+        body: form,
       })
       if (!resp.ok) throw new Error(`OCR ${resp.status}`)
       const data = (await resp.json()) as OcrResponse
@@ -134,7 +168,9 @@ export function SolveCanvas({ item, isRetry }: Props) {
             ocr={ocr}
             loading={ocrLoading}
             error={ocrError}
-            onUpload={handleUploadSample}
+            previewUrl={previewUrl}
+            onUploadSample={handleUploadSample}
+            onUploadFile={handleUploadFile}
           />
         )}
       </div>
@@ -274,16 +310,38 @@ function UploadPanel({
   ocr,
   loading,
   error,
-  onUpload,
+  previewUrl,
+  onUploadSample,
+  onUploadFile,
 }: {
   ocr: OcrResponse | null
   loading: boolean
   error: string | null
-  onUpload: () => void
+  previewUrl: string | null
+  onUploadSample: () => void
+  onUploadFile: (file: File) => void
 }) {
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    // 같은 파일 재선택 가능하도록 input 비우기.
+    e.target.value = ""
+    if (file) onUploadFile(file)
+  }
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-12 gap-3">
+        {previewUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={previewUrl}
+            alt="업로드한 풀이"
+            className="max-h-40 rounded-md border border-black/10 mb-2"
+          />
+        )}
         <Loader2 className="animate-spin text-black/40" size={32} />
         <div className="text-sm text-black/50">
           학생 손글씨 풀이를 인식하는 중…
@@ -297,24 +355,76 @@ function UploadPanel({
 
   if (!ocr) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 gap-4 border-2 border-dashed border-black/15 rounded-lg">
+      <div className="flex flex-col items-center justify-center py-10 gap-4 border-2 border-dashed border-black/15 rounded-lg px-6">
         <Camera size={32} className="text-black/30" />
-        <div className="text-sm text-black/50 text-center">
-          종이에 푼 풀이를 사진으로 올려주세요.
+        <div className="text-sm text-black/60 text-center max-w-sm">
+          종이에 푼 풀이를 <span className="font-bold">사진으로 촬영</span>하거나{" "}
+          <span className="font-bold">갤러리에서 선택</span>해 올려주세요.
         </div>
+
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={handleChange}
+          className="hidden"
+        />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleChange}
+          className="hidden"
+        />
+
+        <div className="flex gap-2 flex-wrap justify-center">
+          <button
+            onClick={() => cameraInputRef.current?.click()}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#15803D] text-white text-sm font-bold rounded-md hover:bg-[#0F6A30]"
+          >
+            <Camera size={16} /> 촬영
+          </button>
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-bold rounded-md hover:bg-black/80"
+          >
+            <Upload size={16} /> 파일 선택
+          </button>
+        </div>
+
         <button
-          onClick={onUpload}
-          className="px-4 py-2 bg-black text-white text-sm font-bold rounded-md hover:bg-black/80"
+          onClick={onUploadSample}
+          className="text-xs text-black/40 hover:text-black/70 underline underline-offset-2"
         >
-          데모 풀이 불러오기
+          데모용 sample 풀이로 시연
         </button>
-        {error && <div className="text-xs text-red-500">에러: {error}</div>}
+
+        {error && (
+          <div className="text-xs text-red-500 max-w-sm text-center">
+            에러: {error}
+          </div>
+        )}
       </div>
     )
   }
 
   return (
     <div>
+      {previewUrl && (
+        <div className="mb-4">
+          <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-2">
+            업로드한 풀이
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={previewUrl}
+            alt="업로드한 풀이"
+            className="max-h-44 rounded-md border border-black/10"
+          />
+        </div>
+      )}
+
       <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
         인식된 풀이 단계
         <span className="ml-2 text-[9px] text-black/30">

@@ -3,8 +3,8 @@
  */
 
 import { redirect } from "next/navigation"
-import { DEMO_TARGET_ITEM_ID } from "@/lib/demo/constants"
+import { getTargetItemId } from "@/lib/demo/data-loader"
 
 export default function RetryRedirect() {
-  redirect(`/demo/solve?itemId=${DEMO_TARGET_ITEM_ID}&mode=retry`)
+  redirect(`/demo/solve?itemId=${getTargetItemId()}&mode=retry`)
 }

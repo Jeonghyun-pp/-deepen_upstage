@@ -14,6 +14,8 @@ export const DiagnoseInput = z.object({
   steps: z.array(z.string()).min(1),
   studentAnswer: z.string(),
   correctAnswer: z.string(),
+  /** 정답 풀이 본문 — 학생 풀이 ↔ 정답 풀이 step 비교의 기준. */
+  targetSolution: z.string().optional(),
   targetPattern: z.object({
     label: z.string(),
     content: z.string(),
@@ -63,7 +65,7 @@ export const EXAMPLES: Array<{
 }> = []
 
 function renderUser(input: DiagnoseInputT): string {
-  return [
+  const lines = [
     `[TARGET 문항]`,
     `${input.targetPattern.label}: ${input.targetPattern.content}`,
     ``,
@@ -75,10 +77,16 @@ function renderUser(input: DiagnoseInputT): string {
     ``,
     `[학생 답]: ${input.studentAnswer}`,
     `[정답]: ${input.correctAnswer}`,
+  ]
+  if (input.targetSolution) {
+    lines.push(``, `[정답 풀이]`, input.targetSolution)
+  }
+  lines.push(
     ``,
     `[CONTEXT 문서 chunks]`,
     ...input.contextChunks.map((c) => `[${c.id}]\n${c.content}`),
-  ].join("\n")
+  )
+  return lines.join("\n")
 }
 
 export function buildMessages(

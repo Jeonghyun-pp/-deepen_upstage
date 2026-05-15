@@ -18,7 +18,7 @@ import { db } from "@/lib/db"
 import { edges, nodes } from "@/lib/db/schema"
 import { isAvailable, scorePrereqMatch } from "@/lib/upstage/client"
 import { loadDemoItem, loadChunksForPattern } from "./queries"
-import { PATTERN_LEAF_1 } from "./constants"
+import { getFallbackPatternId, getPatternByUuid } from "./data-loader"
 
 export interface DiagnosisResult {
   /** Target item (Q6). */
@@ -26,6 +26,8 @@ export interface DiagnosisResult {
   /** 가장 가능성 높은 prereq 후보. */
   candidate: {
     id: string
+    /** Pattern stableKey (LEAF-1 등) — 리캡 카드 라우팅에 사용. */
+    patternKey: string
     label: string
     content: string
     score: number
@@ -96,7 +98,7 @@ export async function diagnoseAttempt({
     prereqIds = prereqRows.map((r) => r.source)
   }
 
-  if (prereqIds.length === 0) prereqIds = [PATTERN_LEAF_1] // fallback
+  if (prereqIds.length === 0) prereqIds = [getFallbackPatternId()] // fallback
 
   const prereqs = await db
     .select()
@@ -126,6 +128,7 @@ export async function diagnoseAttempt({
           steps,
           studentAnswer: ans,
           correctAnswer: target.itemAnswer ?? "?",
+          targetSolution: target.itemSolution ?? undefined,
           targetPattern: { label: target.label, content: target.content },
           candidatePattern: { id: p.id, label: p.label, content: p.content },
           contextChunks: candidateChunks.map((c) => ({ id: c.id, content: c.content })),
@@ -153,19 +156,22 @@ export async function diagnoseAttempt({
     }),
   )
 
-  // argmax. tie 시 LEAF-1 우선 (데모 안전판).
+  // argmax. tie 시 fallback pattern (보통 LEAF-1) 우선 — 데모 안전판.
+  const fallbackId = getFallbackPatternId()
   const winner = scored.reduce((best, cur) => {
     if (cur.score > best.score) return cur
-    if (cur.score === best.score && cur.patternId === PATTERN_LEAF_1) return cur
+    if (cur.score === best.score && cur.patternId === fallbackId) return cur
     return best
   })
 
   const winnerNode = prereqs.find((p) => p.id === winner.patternId)!
+  const winnerPattern = getPatternByUuid(winnerNode.id)
 
   return {
     target: { id: target.id, label: target.label, content: target.content },
     candidate: {
       id: winnerNode.id,
+      patternKey: winnerPattern?.stableKey ?? "UNKNOWN",
       label: winnerNode.label,
       content: winnerNode.content,
       score: winner.score,

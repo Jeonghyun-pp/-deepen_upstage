@@ -1,0 +1,75 @@
+[
+  {
+    "stableKey": "LEAF-1",
+    "uuid": "11111111-1111-4111-8111-111111111111",
+    "displayLayer": "concept",
+    "label": "판별식",
+    "content": "이차방정식 ax²+bx+c=0의 실근 개수를 D=b²-4ac의 부호로 판별. D>0 두 실근, D=0 중근, D<0 허근.",
+    "tldr": "판별식 D=b²-4ac",
+    "grade": "중3",
+    "signature": ["판별식", "이차방정식"],
+    "isKiller": false,
+    "isFallback": true,
+    "whiteboardPos": { "x": 200, "y": 100 }
+  },
+  {
+    "stableKey": "LEAF-2",
+    "uuid": "22222222-2222-4222-8222-222222222222",
+    "displayLayer": "concept",
+    "label": "이차방정식 근 존재 조건",
+    "content": "이차방정식이 실근을 가질 조건 D≥0.",
+    "tldr": "D≥0 ⇔ 실근",
+    "grade": "고1",
+    "signature": ["이차방정식", "근의 존재"],
+    "isKiller": false,
+    "whiteboardPos": { "x": 500, "y": 100 }
+  },
+  {
+    "stableKey": "LEAF-3",
+    "uuid": "33333333-3333-4333-8333-333333333333",
+    "displayLayer": "concept",
+    "label": "미분계수 = 접선 기울기",
+    "content": "f'(a) = 점 (a, f(a))에서의 접선의 기울기.",
+    "tldr": "f'(a) = 접선 기울기",
+    "grade": "고2",
+    "signature": ["미분계수", "접선", "기울기"],
+    "isKiller": false,
+    "whiteboardPos": { "x": 800, "y": 100 }
+  },
+  {
+    "stableKey": "MID-1",
+    "uuid": "44444444-4444-4444-8444-444444444444",
+    "displayLayer": "pattern",
+    "label": "이차함수와 직선의 위치관계",
+    "content": "이차함수와 직선이 만나는 점의 개수 = 두 식을 연립한 이차방정식의 판별식 부호.",
+    "tldr": "위치관계 ↔ 판별식",
+    "grade": "고1",
+    "signature": ["이차함수", "직선", "위치관계"],
+    "isKiller": false,
+    "whiteboardPos": { "x": 350, "y": 350 }
+  },
+  {
+    "stableKey": "MID-2",
+    "uuid": "55555555-5555-4555-8555-555555555555",
+    "displayLayer": "pattern",
+    "label": "곡선 위 점에서의 접선의 방정식",
+    "content": "곡선 y=f(x) 위의 점 (a, f(a))에서의 접선: y - f(a) = f'(a)(x - a).",
+    "tldr": "y - f(a) = f'(a)(x-a)",
+    "grade": "고2",
+    "signature": ["접선", "미분"],
+    "isKiller": false,
+    "whiteboardPos": { "x": 700, "y": 350 }
+  },
+  {
+    "stableKey": "TARGET",
+    "uuid": "66666666-6666-4666-8666-666666666666",
+    "displayLayer": "pattern",
+    "label": "곡선 밖 한 점에서 그은 접선의 개수",
+    "content": "곡선 밖 점 P에서 그은 접선의 접점을 t로 두면 f'(t)·(P_x - t) = P_y - f(t). 이 t-방정식의 실근 개수 = 접선의 개수. 판별식 분석 필요.",
+    "tldr": "접점 t-방정식의 실근 = 접선 개수",
+    "grade": "고2",
+    "signature": ["접선", "곡선 밖", "판별식"],
+    "isKiller": true,
+    "whiteboardPos": { "x": 500, "y": 600 }
+  }
+]

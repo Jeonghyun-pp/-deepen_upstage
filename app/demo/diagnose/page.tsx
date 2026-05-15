@@ -8,7 +8,7 @@
 
 import { diagnoseAttempt } from "@/lib/demo/diagnose"
 import { DiagnoseView } from "../_components/DiagnoseView"
-import { DEMO_TARGET_ITEM_ID } from "@/lib/demo/constants"
+import { getTargetItemId } from "@/lib/demo/data-loader"
 import { getOcrResult } from "@/lib/demo/ocr-store"
 
 type Props = {
@@ -21,7 +21,7 @@ type Props = {
 
 export default async function DiagnoseScreen({ searchParams }: Props) {
   const {
-    itemId = DEMO_TARGET_ITEM_ID,
+    itemId = getTargetItemId(),
     attempt = "wrong",
     stepsKey,
   } = await searchParams

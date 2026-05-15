@@ -7,14 +7,14 @@
 
 import { loadDemoItem } from "@/lib/demo/queries"
 import { SolveCanvas } from "../_components/SolveCanvas"
-import { DEMO_TARGET_ITEM_ID } from "@/lib/demo/constants"
+import { getTargetItemId } from "@/lib/demo/data-loader"
 
 type Props = {
   searchParams: Promise<{ itemId?: string; mode?: "retry" }>
 }
 
 export default async function SolveScreen({ searchParams }: Props) {
-  const { itemId = DEMO_TARGET_ITEM_ID, mode } = await searchParams
+  const { itemId = getTargetItemId(), mode } = await searchParams
   const item = await loadDemoItem(itemId)
   const isRetry = mode === "retry"
 
