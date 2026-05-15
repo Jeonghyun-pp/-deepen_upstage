@@ -10,6 +10,9 @@
 import { AggregateView } from "../_components/AggregateView"
 import { loadDemoData } from "@/lib/demo/data-loader"
 
+// 종합 narration Solar Pro(narrateAggregate) server action 호출 → timeout 60s.
+export const maxDuration = 60
+
 export default async function DiagnoseScreen() {
   const data = loadDemoData()
 

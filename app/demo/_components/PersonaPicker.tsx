@@ -39,7 +39,7 @@ export function PersonaPicker({ personas }: { personas: PersonaInfo[] }) {
           } disabled:opacity-60`}
         >
           <div className="text-[10px] tracking-[0.18em] font-bold uppercase text-[#15803D] mb-1.5">
-            페르소나 {p.key} · {p.count}문제
+            {p.count}문제 세션
           </div>
           <div className="text-sm font-bold mb-1">{p.title}</div>
           <div className="text-xs text-black/50 leading-relaxed">

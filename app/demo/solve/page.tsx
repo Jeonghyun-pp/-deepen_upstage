@@ -19,6 +19,10 @@ import {
   loadDemoData,
 } from "@/lib/demo/data-loader"
 
+// 회차별 Solar Pro 진단(diagnoseSolution) server action 을 호출하므로
+// Vercel 함수 timeout 을 60s 로 (기본 ~10s 면 Solar 응답 중 끊김).
+export const maxDuration = 60
+
 type Props = {
   searchParams: Promise<{
     itemId?: string

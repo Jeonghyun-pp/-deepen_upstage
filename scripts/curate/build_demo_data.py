@@ -344,6 +344,24 @@ def synthesize_choices(answer_raw: str, seq_idx: int):
     return [str(c) for c in sorted_cands], target_idx + 1
 
 
+def collect_prereq_concepts(target_ids: list, max_hops: int = 2) -> list:
+    """
+    최종_id 의 1~max_hops-hop 직접 선행개념 (concepts.json '선행개념' 기반).
+    그래프 14노드(node_id_set)에 속한 것만 반환 → 진단 후보를 좁힘.
+    """
+    result: set = set()
+    frontier = set(target_ids)
+    for _ in range(max_hops):
+        nxt: set = set()
+        for cid in frontier:
+            c = concept_by_id.get(cid)
+            if c:
+                nxt.update(c.get("선행개념", []))
+        result |= nxt
+        frontier = nxt
+    return sorted(c for c in result if c in node_id_set)
+
+
 def derive_from_extracted(pid: str, seq_idx: int):
     """
     extracted-md 파싱 결과 → (body, choices, answer_idx, points, solution, was_synth).
@@ -613,9 +631,11 @@ for pid in pool["pool_problem_ids"]:
         "personaMappings": personas,
         "examPoints": points,
         "wasSynthesizedChoices": was_synth,
-        # few-shot 진단(diagnoseSolution) 입력용 개념 — mapping JSON 에서.
+        # few-shot 진단(diagnoseSolution) 입력용 개념.
+        # prerequisiteConcepts = 최종_id 의 1~2-hop 직접 선행 ∩ 그래프 14노드.
+        # → 무관 개념(다항식연산 등)이 후보에서 구조적으로 빠짐.
         "targetConcepts": p.get("최종_id", []),
-        "prerequisiteConcepts": p.get("선행_및_추가_id", []),
+        "prerequisiteConcepts": collect_prereq_concepts(p.get("최종_id", [])),
     }
     if distractor_meanings:
         item_record["distractorMeanings"] = distractor_meanings

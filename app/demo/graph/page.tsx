@@ -10,25 +10,31 @@ import { PersonaPicker } from "../_components/PersonaPicker"
 import { loadDemoGraph } from "@/lib/demo/queries"
 import { getAllPersonas, getPersonaSequence } from "@/lib/demo/data-loader"
 
+// DB(loadDemoGraph) 를 읽으므로 빌드 시 prerender 금지 — 런타임 렌더.
+// seed 갱신이 재배포 없이 반영되도록.
+export const dynamic = "force-dynamic"
+
+// 페르소나는 "어떤 5문제를 푸는 학생"일 뿐 — 결손은 진단이 발견하므로
+// 선택 화면에서는 결손을 노출하지 않는다.
 const PERSONA_META: Record<
   string,
   { title: string; subtitle: string }
 > = {
   A: {
-    title: "이차방정식·판별식 결손",
-    subtitle: "판별식 D=b²-4ac 단계에서 막힌 학생 — 메인 시연",
+    title: "학생 A",
+    subtitle: "2026 평가원 5문제 — 메인 시연",
   },
   B: {
-    title: "미분계수 결손",
-    subtitle: "f'(a) 정의 자체를 잘못 적용하는 학생",
+    title: "학생 B",
+    subtitle: "2026 평가원 5문제",
   },
   C: {
-    title: "인수분해 결손",
-    subtitle: "고등 인수분해 (삼차·치환·인수정리) 가 약한 학생",
+    title: "학생 C",
+    subtitle: "2026 평가원 5문제",
   },
   D: {
-    title: "도함수 결손",
-    subtitle: "(xⁿ)' = nx^(n-1) 규칙이 흔들리는 학생",
+    title: "학생 D",
+    subtitle: "2026 평가원 5문제",
   },
 }
 

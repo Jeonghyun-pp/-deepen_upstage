@@ -9,6 +9,9 @@ import { ResultView } from "../_components/ResultView"
 import { loadDemoGraph } from "@/lib/demo/queries"
 import { loadDemoData } from "@/lib/demo/data-loader"
 
+// DB(loadDemoGraph) 를 읽으므로 런타임 렌더.
+export const dynamic = "force-dynamic"
+
 export default async function ResultScreen() {
   const graph = await loadDemoGraph()
   const data = loadDemoData()
