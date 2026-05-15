@@ -2,10 +2,20 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowRight, Check, X } from "lucide-react"
+import { ArrowRight, Check, X, Loader2 } from "lucide-react"
 import type { DemoNode } from "@/lib/demo/queries"
 import { appendAttempt, type AttemptRecord } from "@/lib/demo/session"
+import { runSolutionDiagnosis } from "@/lib/demo/actions"
+import type { SolutionDiagnosisOutputT } from "@/lib/upstage/prompts/solution-diagnosis"
 import { MathText } from "./MathText"
+
+type DiagnosisContext = {
+  problemId: string
+  officialSolution: string
+  typicalWrongSolution: string
+  targetConcepts: string[]
+  prerequisiteConcepts: string[]
+}
 
 type Props = {
   item: DemoNode | null
@@ -18,11 +28,13 @@ type Props = {
   personaKey?: string
   /** 다음 회차 url — server 가 미리 계산 (마지막 회차면 /demo/diagnose). */
   nextUrl?: string
+  /** few-shot 진단 입력 컨텍스트. */
+  diagnosisContext?: DiagnosisContext | null
 }
 
 /**
- * 5지선다 클릭만으로 풀이 진행 — OCR 제거.
- * 회차별로 appendAttempt 호출해 sessionStorage 에 누적.
+ * 5지선다 클릭 → 제출 시 few-shot 풀이 진단(diagnoseSolution) 호출.
+ * 회차별로 appendAttempt 로 sessionStorage 누적.
  */
 export function SolveCanvas({
   item,
@@ -32,10 +44,15 @@ export function SolveCanvas({
   totalRounds = 5,
   personaKey: _personaKey = "A",
   nextUrl,
+  diagnosisContext,
 }: Props) {
   const router = useRouter()
   const [selected, setSelected] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const [diagnosing, setDiagnosing] = useState(false)
+  const [diagnosis, setDiagnosis] = useState<SolutionDiagnosisOutputT | null>(
+    null,
+  )
   const isLastRound = !isRetry && round >= totalRounds
 
   if (!item) {
@@ -46,7 +63,7 @@ export function SolveCanvas({
   const isCorrect = selected === correctIdx
   const choices = item.itemChoices ?? []
 
-  function recordAttempt() {
+  function recordAttempt(diag: SolutionDiagnosisOutputT | null) {
     if (isRetry || !item) return
     const record: AttemptRecord = {
       itemId: item.id,
@@ -63,14 +80,36 @@ export function SolveCanvas({
         ? "이 문제는 정답 — 관련 prereq 무죄."
         : "이 문제 오답 — 결손 의심.",
       justificationQuote: null,
+      diagnosis: diag,
       timestamp: Date.now(),
     }
     appendAttempt(record)
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (selected === null) return
     setSubmitted(true)
+    if (isRetry || !diagnosisContext || !item) return
+
+    // 정답이면 정답 풀이, 오답이면 대표 오답 풀이를 진단 입력으로.
+    const correct = selected === correctIdx
+    const studentSolution = correct
+      ? diagnosisContext.officialSolution
+      : diagnosisContext.typicalWrongSolution
+    if (!studentSolution.trim()) return
+
+    setDiagnosing(true)
+    const result = await runSolutionDiagnosis({
+      problemId: diagnosisContext.problemId,
+      problem: item.content,
+      studentSolution,
+      officialSolution: diagnosisContext.officialSolution,
+      targetConcepts: diagnosisContext.targetConcepts,
+      prerequisiteConcepts: diagnosisContext.prerequisiteConcepts,
+      relatedProblemCards: "",
+    })
+    setDiagnosis(result)
+    setDiagnosing(false)
   }
 
   function handleNext() {
@@ -79,11 +118,10 @@ export function SolveCanvas({
       return
     }
     if (isRetry) {
-      // 재시도 후 → 정복·결손 그래프 엔딩.
       router.push("/demo/result")
       return
     }
-    recordAttempt()
+    recordAttempt(diagnosis)
     router.push(nextUrl ?? "/demo/diagnose")
   }
 
@@ -108,7 +146,7 @@ export function SolveCanvas({
         />
       </div>
 
-      {/* 우: 채점·다음 단계 */}
+      {/* 우: 채점 + 회차 진단 */}
       <div className="bg-white rounded-lg border border-black/5 p-6 flex flex-col">
         <ChoiceSidebar
           submitted={submitted}
@@ -120,6 +158,8 @@ export function SolveCanvas({
           isLastRound={isLastRound}
           round={round}
           totalRounds={totalRounds}
+          diagnosing={diagnosing}
+          diagnosis={diagnosis}
         />
       </div>
     </div>
@@ -181,6 +221,8 @@ function ChoiceSidebar({
   isLastRound,
   round,
   totalRounds,
+  diagnosing,
+  diagnosis,
 }: {
   submitted: boolean
   isCorrect: boolean
@@ -191,6 +233,8 @@ function ChoiceSidebar({
   isLastRound: boolean
   round: number
   totalRounds: number
+  diagnosing: boolean
+  diagnosis: SolutionDiagnosisOutputT | null
 }) {
   const nextLabel = isRetry
     ? "정복·결손 지도 보기"
@@ -224,20 +268,15 @@ function ChoiceSidebar({
             {isCorrect ? <Check size={20} /> : <X size={20} />}
             {isCorrect ? "정답!" : "오답"}
           </div>
-          <p className="text-sm text-black/60 mb-4">
-            {isRetry
-              ? isCorrect
-                ? "정답이에요. 결손이 채워졌습니다."
-                : "결손이 아직 남아있어요. 다시 짚어봅니다."
-              : isLastRound
-                ? "마지막 회차입니다. 5문제 종합으로 결손을 찾아냅니다."
-                : isCorrect
-                  ? "정답 — 관련 prereq 는 무죄로 처리됩니다."
-                  : "회차 진단을 누적해 다음 문제로 이어갑니다."}
-          </p>
+
+          {/* 회차 진단 — Solar 풀이 분석 */}
+          {!isRetry && (
+            <MiniDiagnosis diagnosing={diagnosing} diagnosis={diagnosis} />
+          )}
+
           <button
             onClick={onNext}
-            className="mt-auto flex items-center justify-center gap-2 px-4 py-2.5 bg-[#15803D] text-white text-sm font-bold rounded-md"
+            className="mt-4 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#15803D] text-white text-sm font-bold rounded-md"
           >
             {nextLabel}
             <ArrowRight size={16} />
@@ -245,5 +284,71 @@ function ChoiceSidebar({
         </>
       )}
     </>
+  )
+}
+
+/** 회차별 few-shot 진단 카드 — error_summary + first_wrong_step + feedback. */
+function MiniDiagnosis({
+  diagnosing,
+  diagnosis,
+}: {
+  diagnosing: boolean
+  diagnosis: SolutionDiagnosisOutputT | null
+}) {
+  if (diagnosing) {
+    return (
+      <div className="flex items-center gap-2 text-sm text-black/50 py-3">
+        <Loader2 size={16} className="animate-spin" />
+        Solar Pro 풀이 진단 중…
+      </div>
+    )
+  }
+  if (!diagnosis) {
+    return (
+      <p className="text-sm text-black/50 py-2">
+        회차 진단을 누적해 다음 문제로 이어갑니다.
+      </p>
+    )
+  }
+  if (diagnosis.error_type === "no_error" && !diagnosis.has_flawed_reasoning) {
+    return (
+      <div className="bg-green-50 border border-green-200 rounded-md p-3 text-sm">
+        <div className="font-bold text-green-700 mb-1">풀이 논리 정상</div>
+        <div className="text-black/70">{diagnosis.student_feedback}</div>
+      </div>
+    )
+  }
+  return (
+    <div className="bg-[#FFF8E6] border border-[#FFA500]/30 rounded-md p-3 space-y-2">
+      <div>
+        <div className="text-[9px] uppercase tracking-[0.15em] font-bold text-[#B25A00]">
+          이 회차 진단
+        </div>
+        <div className="text-sm font-bold mt-0.5">
+          {diagnosis.error_summary}
+        </div>
+      </div>
+      {diagnosis.first_wrong_step && (
+        <div className="text-xs text-black/60">
+          <span className="font-bold">처음 틀린 단계:</span>{" "}
+          {diagnosis.first_wrong_step}
+        </div>
+      )}
+      <div className="text-xs text-black/70 leading-relaxed border-t border-[#FFA500]/20 pt-2">
+        {diagnosis.student_feedback}
+      </div>
+      {diagnosis.missing_concepts.length > 0 && (
+        <div className="flex flex-wrap gap-1 pt-1">
+          {diagnosis.missing_concepts.map((c) => (
+            <span
+              key={c.concept_id}
+              className="text-[10px] font-bold px-1.5 py-0.5 bg-[#FFA500]/15 text-[#B25A00] rounded"
+            >
+              {c.concept_name}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }

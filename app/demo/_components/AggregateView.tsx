@@ -141,6 +141,12 @@ export function AggregateView({
                     <div className="text-black/40 text-[11px] truncate">
                       → {meta?.label ?? a.candidatePatternKey}
                     </div>
+                    {a.diagnosis &&
+                      a.diagnosis.error_type !== "no_error" && (
+                        <div className="text-[10px] text-[#B25A00] mt-0.5 line-clamp-2">
+                          {a.diagnosis.error_summary}
+                        </div>
+                      )}
                   </div>
                 </motion.div>
               )

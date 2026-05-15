@@ -72,6 +72,11 @@ const Item = z.object({
    * 정상 객관식만 부여, 자동변환 단답형은 없음.
    */
   distractorMeanings: z.record(z.string(), z.array(z.string())).optional(),
+  /** 대표 오답 풀이 — few-shot 진단(diagnoseSolution)의 student_solution 입력. */
+  typicalWrongSolution: z.string().optional(),
+  /** 진단 prompt 입력용 개념 id (mapping JSON 출처). */
+  targetConcepts: z.array(z.string()).optional().default([]),
+  prerequisiteConcepts: z.array(z.string()).optional().default([]),
 })
 
 const Chunk = z.object({

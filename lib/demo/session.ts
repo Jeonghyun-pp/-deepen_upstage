@@ -13,6 +13,8 @@
  *   - 새 페이지 refresh 후에도 같은 탭이면 유지 (sessionStorage).
  */
 
+import type { SolutionDiagnosisOutputT } from "@/lib/upstage/prompts/solution-diagnosis"
+
 const STORAGE_KEY = "deepen.demo.session"
 
 export type AttemptRecord = {
@@ -33,6 +35,8 @@ export type AttemptRecord = {
   candidateRationale: string
   /** 회차별 진단 시 인용된 chunk (없을 수도) */
   justificationQuote: string | null
+  /** few-shot 풀이 진단 결과 (Solar diagnoseSolution). 실패 시 null. */
+  diagnosis: SolutionDiagnosisOutputT | null
   timestamp: number
 }
 

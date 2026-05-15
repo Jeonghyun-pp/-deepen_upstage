@@ -16,6 +16,7 @@ import {
   getTargetItemId,
   getPersonaSequence,
   getItemPatternKey,
+  loadDemoData,
 } from "@/lib/demo/data-loader"
 
 type Props = {
@@ -42,6 +43,18 @@ export default async function SolveScreen({ searchParams }: Props) {
     params.itemId ?? sequence[currentIdx]?.uuid ?? getTargetItemId()
   const item = await loadDemoItem(currentItemId)
   const itemPatternKey = getItemPatternKey(currentItemId) ?? ""
+
+  // few-shot 진단(diagnoseSolution) 입력 컨텍스트 — items.json 메타.
+  const fullItem = loadDemoData().items.find((i) => i.uuid === currentItemId)
+  const diagnosisContext = fullItem
+    ? {
+        problemId: fullItem.itemSource ?? fullItem.stableKey,
+        officialSolution: fullItem.itemSolution,
+        typicalWrongSolution: fullItem.typicalWrongSolution ?? "",
+        targetConcepts: fullItem.targetConcepts ?? [],
+        prerequisiteConcepts: fullItem.prerequisiteConcepts ?? [],
+      }
+    : null
 
   // 다음 회차 url — 마지막 회차면 /demo/diagnose (종합).
   let nextUrl: string
@@ -84,6 +97,7 @@ export default async function SolveScreen({ searchParams }: Props) {
         totalRounds={totalRounds}
         personaKey={personaKey}
         nextUrl={nextUrl}
+        diagnosisContext={diagnosisContext}
       />
     </div>
   )

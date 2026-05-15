@@ -18,6 +18,7 @@ import sys
 import io
 import math
 import uuid
+import html
 import hashlib
 from pathlib import Path
 from collections import defaultdict
@@ -42,7 +43,136 @@ with open(SRC / "problem-mapping.json", encoding="utf-8-sig") as f:
 with open(SRC / "concepts.json", encoding="utf-8-sig") as f:
     concepts_data = json.load(f)
 
+# mapping JSON 은 개념 매핑(최종_id·선행_id) 전용. 본문·보기·해설·정답은
+# 검수 완료된 extracted-problems.md 가 1차 소스.
 problems_by_id = {p["id"]: p for p in mapping["문제목록"]}
+
+_CITE_RE = re.compile(r"\[cite:[^\]]*\]")
+_CHOICE_SPLIT_RE = re.compile(r"([①②③④⑤])\s*")
+_EXAM_MD = {
+    "6월 모의평가": "6모",
+    "9월 모의평가": "9모",
+    "대학수학능력시험": "수능",
+}
+
+
+_HTML_TAG_RE = re.compile(r"</?(?:div|span|br|p|table|tr|td|th)\b[^>]*>", re.I)
+
+
+def _clean(s: str) -> str:
+    """[cite:...] + HTML 태그(div/span 등) 제거 + 과한 공백 정리.
+
+    주의: '<보기>' 같은 한국어 표기는 HTML 태그가 아니므로 보존.
+    """
+    s = _CITE_RE.sub("", s)
+    s = _HTML_TAG_RE.sub("", s)
+    s = html.unescape(s)  # &lt; &gt; &amp; &nbsp; 등 디코딩
+    s = s.replace("< 보 기 >", "<보기>").replace("<보 기>", "<보기>")
+    s = re.sub(r"[ \t]+", " ", s)
+    s = re.sub(r"\n{3,}", "\n\n", s)
+    return s.strip()
+
+
+def parse_extracted_md() -> dict:
+    """
+    extracted-problems.md → { problem_id: {body, choices[], solution, answer, points} }
+
+    구조:
+      ## 2026학년도 N월 모의평가 / 대학수학능력시험
+      ### [공통 과목 ...] / [선택: 미적분] / [선택: 기하]
+      #### N번 문제 [cite:...]
+      [문제] 본문 ... [N점]
+      ① ... ② ... ③ ... ④ ... ⑤ ...   (없을 수 있음 — 단답형)
+      **N. 출제의도 ...**  /  정답풀이 :  ...  정답 X
+    """
+    text = (SRC / "extracted-problems.md").read_text(encoding="utf-8-sig")
+    lines = text.split("\n")
+    out: dict = {}
+    cur_exam = cur_unit = None
+    i = 0
+    while i < len(lines):
+        ln = lines[i]
+        if ln.startswith("## ") and not ln.startswith("###"):
+            for k, v in _EXAM_MD.items():
+                if k in ln:
+                    cur_exam = v
+        elif ln.startswith("### "):
+            if "미적분" in ln:
+                cur_unit = "미적분"
+            elif "기하" in ln:
+                cur_unit = "기하"
+            else:
+                cur_unit = "공통"
+        elif ln.startswith("#### "):
+            m = re.search(r"(\d+)번", ln)
+            if m and cur_exam and cur_unit:
+                # 블록 = 다음 #### 또는 다음 ## / ### 헤더 전까지.
+                # i 는 점프하지 않음 — 사이 헤더(## 9월 / ### 미적분)를 놓치지 않도록.
+                j = i + 1
+                while j < len(lines) and not (
+                    lines[j].startswith("#### ")
+                    or lines[j].startswith("## ")
+                    or lines[j].startswith("### ")
+                ):
+                    j += 1
+                block = "\n".join(lines[i + 1 : j])
+                pid = f"2026-{cur_exam}-{cur_unit}-{m.group(1)}"
+                out[pid] = _parse_block(block)
+        i += 1
+    return out
+
+
+def _parse_block(block: str) -> dict:
+    """문제 블록 → {body, choices, solution, answer, points}."""
+    block = _clean(block)
+    points_m = POINT_RE.search(block)
+    points = int(points_m.group(1)) if points_m else 3
+
+    # 보기 영역 — 첫 ① 부터, 해설 앵커 전까지.
+    # 해설 형식: 6모·수능 = "**N. 출제의도" / "정답풀이", 9월 = "[해설]".
+    first_choice = block.find("①")
+    sol_anchor = re.search(r"(\*\*\d+\.\s*출제의도|정답풀이|\[해설\])", block)
+    sol_start = sol_anchor.start() if sol_anchor else len(block)
+
+    if 0 <= first_choice < sol_start:
+        choice_region = block[first_choice:sol_start]
+        body = block[:first_choice]
+        choices = _split_choices(choice_region)
+    else:
+        body = block[:sol_start]
+        choices = []
+
+    body = body.replace("[문제]", "").strip()
+    body = POINT_RE.sub("", body).strip()
+
+    solution = block[sol_start:].strip()
+    ans_m = ANSWER_RE.search(solution)
+    answer = ans_m.group(1).strip() if ans_m else ""
+
+    return {
+        "body": body,
+        "choices": choices,
+        "solution": solution,
+        "answer": answer,
+        "points": points,
+    }
+
+
+def _split_choices(region: str) -> list:
+    """'① $1$  ② $2$ ...' → ['$1$', '$2$', ...]. 줄바꿈 가능."""
+    region = region.replace("\n", " ")
+    parts = _CHOICE_SPLIT_RE.split(region)
+    # parts: ['', '①', ' $1$  ', '②', ' $2$  ', ...]
+    choices = []
+    for idx in range(1, len(parts) - 1, 2):
+        mark = parts[idx]
+        val = parts[idx + 1].strip()
+        if mark in "①②③④⑤" and val:
+            choices.append(val)
+    return choices
+
+
+# EXTRACTED 는 regex 정의(POINT_RE 등) 후 아래에서 채움.
 concept_by_id = {c["id"]: c for c in concepts_data["concepts"]}
 
 
@@ -174,30 +304,14 @@ print(f"✓ edges.json — {len(edges_out)} prereq edges")
 
 
 # ── 3) items.json: 19문제 본문에서 추출 ───────────────────────────────
-CHOICE_RE = re.compile(r"([①②③④⑤])\s*([^①②③④⑤\n]+)")
 POINT_RE = re.compile(r"\[(\d)점\]")
-ANSWER_RE = re.compile(r"정답\s*([①②③④⑤\d]+)")
+ANSWER_RE = re.compile(r"정답\s*[:：]?\s*([①②③④⑤]|-?\d+)")
 INT_ANSWER_RE = re.compile(r"^\s*(-?\d+)\s*$")
 CHOICE_NUM_MAP = {"①": "1", "②": "2", "③": "3", "④": "4", "⑤": "5"}
 
-
-def parse_problem_body(text: str):
-    """[문제] ... [N점]\n① ... ② ... 본문에서 본문/보기 분리."""
-    body = text.replace("[문제]", "").strip()
-    point_m = POINT_RE.search(body)
-    points = int(point_m.group(1)) if point_m else 3
-    choices = [m.group(2).strip() for m in CHOICE_RE.finditer(body)]
-    first_choice = re.search(r"[①②③④⑤]", body)
-    main = body[: first_choice.start()].strip() if first_choice else body.strip()
-    main = POINT_RE.sub("", main).strip()
-    return main, choices, points
-
-
-def parse_answer(solution: str):
-    m = ANSWER_RE.search(solution)
-    if not m:
-        return None
-    return m.group(1).strip()
+# 검수 완료된 extracted-problems.md 파싱 — items 의 1차 소스.
+EXTRACTED = parse_extracted_md()
+print(f"[extracted-md] {len(EXTRACTED)}문제 파싱 완료")
 
 
 def synthesize_choices(answer_raw: str, seq_idx: int):
@@ -230,24 +344,34 @@ def synthesize_choices(answer_raw: str, seq_idx: int):
     return [str(c) for c in sorted_cands], target_idx + 1
 
 
-def derive_choices_and_answer(problem, seq_idx: int):
-    """문제 본문 파싱 + 단답형이면 자동 5지선다 변환."""
-    main, choices, points = parse_problem_body(problem["문제"])
-    raw_answer = parse_answer(problem["해설"]) or ""
+def derive_from_extracted(pid: str, seq_idx: int):
+    """
+    extracted-md 파싱 결과 → (body, choices, answer_idx, points, solution, was_synth).
+    객관식이면 보기 그대로, 단답형이면 자동 5지 변환.
+    """
+    ext = EXTRACTED.get(pid)
+    if not ext:
+        raise KeyError(f"extracted-md 에 {pid} 없음")
+
+    body = ext["body"]
+    choices = ext["choices"]
+    points = ext["points"]
+    raw_answer = ext["answer"]
+    solution = ext["solution"]
 
     if len(choices) >= 4:
-        # 객관식 — 정답 인덱스 그대로
+        # 객관식 — 정답 기호/번호 그대로
         if raw_answer in CHOICE_NUM_MAP:
             ans_idx = CHOICE_NUM_MAP[raw_answer]
         elif raw_answer.isdigit() and 1 <= int(raw_answer) <= 5:
             ans_idx = raw_answer
         else:
             ans_idx = "1"
-        return main, choices, ans_idx, points, False
+        return body, choices, ans_idx, points, solution, False
 
     # 단답형 — 자동 5지선다 변환
     synthesized, ans_idx_int = synthesize_choices(raw_answer, seq_idx)
-    return main, synthesized, str(ans_idx_int), points, True
+    return body, synthesized, str(ans_idx_int), points, solution, True
 
 
 # 페르소나별 시퀀스 → 문제별 어떤 페르소나에 어떤 순서로 들어가는지
@@ -263,6 +387,135 @@ PERSONA_TO_DEFICIT = {
     "C": "h1-인수분해",
     "D": "c1-도함수",
 }
+
+# ── 대표 오답 풀이 (B-3) ──────────────────────────────────────────
+# few-shot 진단(diagnoseSolution)의 student_solution 입력.
+# 학생이 오답 보기를 고르면 이 풀이로 진단, 정답이면 itemSolution(정답풀이) 사용.
+# 각 문제 해설에서 "전형적으로 한 단계 틀리는" 버전.
+TYPICAL_WRONG_SOLUTIONS: dict[str, str] = {
+    "2026-6모-공통-11": (
+        "v(t) = dx/dt = 3t^2 - 2t - 1 이다.\n"
+        "ㄴ. v(1) = 3 - 2 - 1 = 0 이므로 t=1에서 운동 방향이 바뀐다. 참.\n"
+        "ㄱ. x(1) = 1 - 1 - 1 + 1 = 0 이므로 거짓.\n"
+        "ㄷ. 가속도는 복잡해서 판단하기 어려우므로 ㄴ만 옳다고 본다.\n"
+        "답: ②"
+    ),
+    "2026-6모-공통-16": (
+        "log_5(x+1) + log_5(x-1) = log_5(x^2-1) 이고 log_25(9) = log_5(3) 이다.\n"
+        "x^2 - 1 = 3 에서 x^2 = 4 이므로 x = 2 또는 x = -2.\n"
+        "답: x = 2 또는 -2"
+    ),
+    "2026-6모-공통-2": (
+        "f(x) = x^2 - x + 1 의 도함수는 f'(x) = 2x 이다.\n"
+        "lim(h→0) [f(1+h)-f(1)]/h = f'(1) = 2 × 1 = 2.\n"
+        "답: ②"
+    ),
+    "2026-6모-공통-9": (
+        "∫(x+1)f(x)dx = ∫xf(x)dx + ∫f(x)dx 이고 조건에서 ∫xf(x)dx = 36.\n"
+        "f(x)=x^2+ax 이므로 ∫_{-3}^{3}(x^3+ax^2)dx 를 계산한다.\n"
+        "x^3 항도 [x^4/4] 로 적분하면 (81/4 - 81/4) = 0, ax^2 항은 9a.\n"
+        "9a = 36 에서 a = 4.\n"
+        "답: ④"
+    ),
+    "2026-6모-기하-24": (
+        "포물선 y^2 = 12x 위의 점 (3,6)에서의 접선의 기울기를 음함수 미분으로 구한다.\n"
+        "2y·y' = 12 에서 y' = 6/y = 6/6 = 1.\n"
+        "접선: y - 6 = 1·(x - 3), 즉 y = x + 3 ... 점 (1,a) 대입하면 a = 4 인데\n"
+        "접점 y좌표를 기울기로 잘못 봐서 y = 6(x-3)+6 으로 두고 a = 6·(1-3)+6 = -6.\n"
+        "답: ②"
+    ),
+    "2026-6모-미적분-26": (
+        "g'(a) = f'(g(a)) 이므로 g'(a) = 1/8 에서 f'(g(a)) = 1/8 이다.\n"
+        "f'(x) = 3e^{3x} - 6e^{2x} + 4e^x 이고 f'(g(a)) = 1/8 을 푼다.\n"
+        "복잡하므로 g(a)=0 으로 두면 f'(0) = 3-6+4 = 1, a = f(0) = 1-3+4 = 2.\n"
+        "a + f'(g(a)) = 2 + 1 = 3 ... 보기에 맞춰 13으로 본다.\n"
+        "답: ③"
+    ),
+    "2026-6모-미적분-28": (
+        "조건 (가)를 x에 대해 미분하면 5(f(x))^4·f'(x) + 3(f(x))^2·f'(x) + a 이다.\n"
+        "우변 ln(x^2+x+5/2) 의 미분은 1/(x^2+x+5/2) 로 둔다.\n"
+        "x=α 대입해서 a를 구하고 b는 조건 (가)에 직접 대입.\n"
+        "합성함수 미분에서 분자 (2x+1) 을 빠뜨려 a = -5/3, a·e^b = -5/3·e^{-4/3}.\n"
+        "답: ②"
+    ),
+    "2026-9모-공통-11": (
+        "움직인 거리는 속도를 적분한 것이므로 ∫_0^2 v(t)dt 이다.\n"
+        "∫_0^2 (3t^2-10t+7)dt = [t^3-5t^2+7t]_0^2 = 8-20+14 = 2.\n"
+        "ㄷ. 움직인 거리가 4가 아니라 2이므로 거짓.\n"
+        "ㄱ. v(t)=(t-1)(3t-7), v(1)=0 이므로 참. ㄴ도 위치 적분으로 참.\n"
+        "답: ②"
+    ),
+    "2026-9모-공통-13": (
+        "f(x) = x^2+6x+12 = (x+3)^2+3 > 0 이다.\n"
+        "분모 (f(x))^2 - k(x+2)f(x) = f(x){f(x) - k(x+2)} 이고\n"
+        "극한이 존재하려면 분모가 0이 아니면 되므로 f(x) - k(x+2) ≠ 0.\n"
+        "판별식 D = (6-k)^2 - 4(12-2k) > 0 이면 된다고 보고 k 범위를 구한다.\n"
+        "답: ①"
+    ),
+    "2026-9모-기하-23": (
+        "포물선 y^2 = 8x 를 표준형 y^2 = 4qx 와 비교하면 4q = 8.\n"
+        "q = 8/4 = 2 인데 초점을 (2q, 0) 으로 잘못 알아 p = 4.\n"
+        "답: ④"
+    ),
+    "2026-9모-미적분-27": (
+        "h(x) = f(x^3+x) 라 하면 g 는 h 의 역함수이므로 g'(1) = 1/h'(?).\n"
+        "h'(x) = f'(x^3+x)·(3x^2+1) 이다.\n"
+        "f(2)=1 이므로 x^3+x=2 인 x=1 에서 h(1)=1, g'(1) = 1/h'(1).\n"
+        "h'(1) = f'(2)·4 인데 합성함수 미분의 (3x^2+1) 을 빠뜨려 h'(1)=f'(2).\n"
+        "답: ①"
+    ),
+    "2026-9모-미적분-28": (
+        "f(x) = g(x) - tan g(x) 를 미분하면 f'(x) = g'(x) - g'(x)sec^2 g(x).\n"
+        "조건에서 g(0) 값을 구하고 g'(0) 을 대입한다.\n"
+        "sec^2 의 미분 처리를 단순화해 g'(0)·(g(0))^2 = 1 로 본다.\n"
+        "답: ①"
+    ),
+    "2026-수능-공통-13": (
+        "f'(x) = 2x-4 이므로 f'(1) = -2, 접선 l: y = -2x - 4.\n"
+        "g(x) = (x^3-2x)f(x) 이므로 g'(x) = (3x^2-2)f(x) 이다.\n"
+        "g'(1) = 1·(-6) = -6, 접선 m: y = -6x + 12.\n"
+        "두 직선과 y축으로 둘러싸인 넓이 = 1/2 × 16 × 4 = 32.\n"
+        "답: ②"
+    ),
+    "2026-수능-공통-17": (
+        "F(x) = ∫(4x^3 - 2x)dx = x^4 - x^2 이다.\n"
+        "F(0) = 4 라는 조건이 있지만 적분상수 C 없이 F(2) = 16 - 4 = 12.\n"
+        "답: 12"
+    ),
+    "2026-수능-공통-2": (
+        "f(x) = 3x^3 + 4x + 1 의 도함수는 f'(x) = 9x^2 + 4.\n"
+        "lim(h→0) [f(1+h)-f(1)]/h = f'(1) = 9 + 4 = 13 인데\n"
+        "f(1) = 3+4+1 = 8 을 빼야 한다고 보고 13 - 8 ... 보기에 맞춰 14로 본다.\n"
+        "답: ④"
+    ),
+    "2026-수능-공통-5": (
+        "f(x) = (x+2)(2x^2-x-2) 이므로 곱의 미분법으로\n"
+        "f'(x) = (x+2)·(4x-1) 이다. (앞 항 (x+2)'·(2x^2-x-2) 누락)\n"
+        "f'(1) = 3 × 3 = 9 ... 보기에 맞춰 9로 본다.\n"
+        "답: ③"
+    ),
+    "2026-수능-공통-9": (
+        "f'(x) = 3x^2 + 6ax - 9a^2 = 3(x+3a)(x-a) 이고 x=-3a 극대, x=a 극소.\n"
+        "직선 y=5 가 접하려면 극솟값 f(a) = 5 라고 본다.\n"
+        "f(a) = a^3 + 3a^3 - 9a^3 + 4 = -5a^3 + 4 = 5 에서 a^3 = -1/5.\n"
+        "a 값을 대충 잡아 f(2) 를 계산한다.\n"
+        "답: ④"
+    ),
+    "2026-수능-기하-24": (
+        "포물선 y^2 = 12(x-2) 의 초점과 준선 사이 거리를 구한다.\n"
+        "y^2 = 12x 와 비교해 4q = 12, q = 3.\n"
+        "초점과 준선 사이 거리는 q = 3 이라고 본다. (실제는 2q)\n"
+        "답: ①"
+    ),
+    "2026-수능-미적분-28": (
+        "f(x) = x^2/2 - x + ln(1+x), f'(x) = x - 1 + 1/(1+x) = x^2/(x+1).\n"
+        "접선이 y축과 만나는 점과 수선의 발 사이 거리를 t로 두고 식을 세운다.\n"
+        "거리 계산에서 접선의 y절편 부호를 잘못 잡아 t의 식이 달라진다.\n"
+        "정적분 계산을 부분적분 없이 단순화한다.\n"
+        "답: ⑤"
+    ),
+}
+
 
 # ── distractor 수작업 라벨링 ──────────────────────────────────────
 # 6개 정상 객관식만. 각 오답 보기 (1~5, 정답 제외) → 추정 결손 nodeKey[] 매핑.
@@ -319,7 +572,9 @@ synthesized_count = 0
 for pid in pool["pool_problem_ids"]:
     seq_counter += 1
     p = problems_by_id[pid]
-    main, choices, answer, points, was_synth = derive_choices_and_answer(p, seq_counter)
+    main, choices, answer, points, solution, was_synth = derive_from_extracted(
+        pid, seq_counter
+    )
     if was_synth:
         synthesized_count += 1
 
@@ -351,16 +606,22 @@ for pid in pool["pool_problem_ids"]:
         "itemSource": pid,
         "itemChoices": choices,
         "itemAnswer": answer,
-        "itemSolution": p["해설"][:1000],
+        "itemSolution": solution[:1000],
         "itemDifficulty": (points - 1) / 4,
         "patternKey": stable_key_for_node(deficit_node),
         "metaLabel": f"P{seq_counter}",
         "personaMappings": personas,
         "examPoints": points,
         "wasSynthesizedChoices": was_synth,
+        # few-shot 진단(diagnoseSolution) 입력용 개념 — mapping JSON 에서.
+        "targetConcepts": p.get("최종_id", []),
+        "prerequisiteConcepts": p.get("선행_및_추가_id", []),
     }
     if distractor_meanings:
         item_record["distractorMeanings"] = distractor_meanings
+    # 대표 오답 풀이 — few-shot 진단의 student_solution 입력.
+    if pid in TYPICAL_WRONG_SOLUTIONS:
+        item_record["typicalWrongSolution"] = TYPICAL_WRONG_SOLUTIONS[pid]
     items_out.append(item_record)
 
 # isTarget 부여 — 4 페르소나 각 시퀀스 첫 문제(order=1) 모두 anchor.
