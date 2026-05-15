@@ -17,6 +17,7 @@ import { appendAttempt, type AttemptRecord } from "@/lib/demo/session"
 import { runSolutionDiagnosis, recognizeHandwriting } from "@/lib/demo/actions"
 import type { SolutionDiagnosisOutputT } from "@/lib/upstage/prompts/solution-diagnosis"
 import { MathText } from "./MathText"
+import { WrongSolveButton } from "./WrongSolveButton"
 
 type DiagnosisContext = {
   problemId: string
@@ -212,8 +213,13 @@ export function SolveCanvas({
       {/* 1행: 문제 + 보기 / 채점 */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
         <div className="bg-white rounded-lg border border-black/5 p-6 min-h-[360px]">
-          <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
-            {isRetry ? "재시도 · 결손 보강 후" : "보기 선택"}
+          <div className="flex items-start justify-between gap-2 mb-3">
+            <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40">
+              {isRetry ? "재시도 · 결손 보강 후" : "보기 선택"}
+            </div>
+            {diagnosisContext?.typicalWrongSolution && (
+              <WrongSolveButton wrongSolution={diagnosisContext.typicalWrongSolution} />
+            )}
           </div>
 
           <div className="text-base leading-relaxed mb-6">
