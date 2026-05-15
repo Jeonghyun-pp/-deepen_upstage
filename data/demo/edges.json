@@ -1,11 +1,79 @@
 {
   "prerequisite": [
-    { "from": "LEAF-1", "to": "LEAF-2", "weight": 0.9 },
-    { "from": "LEAF-1", "to": "MID-1",  "weight": 0.9 },
-    { "from": "LEAF-2", "to": "MID-1",  "weight": 0.7 },
-    { "from": "LEAF-3", "to": "MID-2",  "weight": 0.95 },
-    { "from": "MID-2",  "to": "TARGET", "weight": 0.9 },
-    { "from": "LEAF-1", "to": "TARGET", "weight": 0.85 },
-    { "from": "MID-1",  "to": "TARGET", "weight": 0.7 }
+    {
+      "from": "H1-복소수-이차방정식",
+      "to": "H1-이차방정식-이차함수",
+      "weight": 0.9
+    },
+    {
+      "from": "H1-인수분해",
+      "to": "H1-복소수-이차방정식",
+      "weight": 0.9
+    },
+    {
+      "from": "C1-함수극한",
+      "to": "C1-미분계수",
+      "weight": 0.9
+    },
+    {
+      "from": "C1-함수연속",
+      "to": "C1-미분계수",
+      "weight": 0.9
+    },
+    {
+      "from": "C1-미분계수",
+      "to": "C1-도함수",
+      "weight": 0.9
+    },
+    {
+      "from": "H1-다항식연산",
+      "to": "H1-인수분해",
+      "weight": 0.9
+    },
+    {
+      "from": "H2-함수",
+      "to": "C1-함수극한",
+      "weight": 0.9
+    },
+    {
+      "from": "C1-함수극한",
+      "to": "C1-함수연속",
+      "weight": 0.9
+    },
+    {
+      "from": "H2-집합",
+      "to": "H2-함수",
+      "weight": 0.9
+    },
+    {
+      "from": "C1-도함수",
+      "to": "C1-도함수활용",
+      "weight": 0.9
+    },
+    {
+      "from": "H2-직선방정식",
+      "to": "C1-도함수활용",
+      "weight": 0.9
+    },
+    {
+      "from": "H2-함수",
+      "to": "C2-여러미분법",
+      "weight": 0.9
+    },
+    {
+      "from": "H1-인수분해",
+      "to": "H1-여러방정식-부등식",
+      "weight": 0.9
+    },
+    {
+      "from": "H1-이차방정식-이차함수",
+      "to": "H1-여러방정식-부등식",
+      "weight": 0.9
+    },
+    {
+      "from": "H1-인수분해",
+      "to": "H1-이차방정식-이차함수",
+      "weight": 0.7
+    }
   ]
 }

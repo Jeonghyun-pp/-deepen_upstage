@@ -16,9 +16,11 @@
 import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { edges, nodes } from "@/lib/db/schema"
-import { isAvailable, scorePrereqMatch } from "@/lib/upstage/client"
+import { isAvailable, scorePrereqMatch, solarChat } from "@/lib/upstage/client"
 import { loadDemoItem, loadChunksForPattern } from "./queries"
 import { getFallbackPatternId, getPatternByUuid } from "./data-loader"
+import type { DemoSession } from "./session"
+import type { AggregateResult } from "./aggregate"
 
 export interface DiagnosisResult {
   /** Target item (Q6). */
@@ -182,5 +184,73 @@ export async function diagnoseAttempt({
     studentSteps: steps,
     studentAnswer: ans,
     correctAnswer: target.itemAnswer ?? "?",
+  }
+}
+
+/**
+ * 5회 history + 종합 aggregate 결과 → Solar Pro narration 1단락.
+ *
+ * Solar 미연결 시 정적 fallback 문장으로 대체.
+ * 시연 임팩트: "표면적으로 다른 단원인데 같은 결손으로 수렴" 한 점을 강조.
+ */
+export async function narrateAggregate({
+  session,
+  aggregate,
+  topNodeLabel,
+}: {
+  session: DemoSession
+  aggregate: AggregateResult
+  topNodeLabel: string
+}): Promise<string> {
+  const totalAttempts = session.attempts.length
+  const topAppearance = aggregate.appearanceCount[aggregate.topCandidatePatternKey] ?? 0
+  const correctCount = session.attempts.filter((a) => a.isCorrect).length
+
+  const staticFallback = [
+    `총 ${totalAttempts}문제 중 ${topAppearance}회 동일 결손 후보로 등장.`,
+    correctCount > 0
+      ? `${correctCount}문제는 정답으로 무죄 처리되어 잡음을 제거했습니다.`
+      : "",
+    `표면 단원은 다르지만 ${topNodeLabel} 단계에서 일관되게 막힌 것으로 보입니다.`,
+  ]
+    .filter(Boolean)
+    .join(" ")
+
+  if (!isAvailable()) return staticFallback
+
+  try {
+    const summary = session.attempts
+      .map(
+        (a, i) =>
+          `${i + 1}회 (${a.itemStableKey}, ${a.isCorrect ? "정답" : "오답"}, ` +
+          `회차후보=${a.candidatePatternKey})`,
+      )
+      .join("\n")
+
+    const text = await solarChat(
+      [
+        {
+          role: "system",
+          content:
+            "당신은 한국 고등학교 수학 진단 도우미입니다. 학생의 5회 풀이 history 를 종합해 결손을 짧게 narrate 합니다. JSON 출력 금지, 자연스러운 한국어 2~3 문장만.",
+        },
+        {
+          role: "user",
+          content:
+            `5회 풀이 history:\n${summary}\n\n` +
+            `종합 결손 후보: ${topNodeLabel}\n` +
+            `appearance: ${JSON.stringify(aggregate.appearanceCount)}\n` +
+            `innocence:  ${JSON.stringify(aggregate.innocenceCount)}\n\n` +
+            "위 데이터로 학생의 종합 결손을 2~3 문장으로 narrate. " +
+            "표면 단원은 다른데도 같은 결손으로 수렴한 점을 한 번은 명시.",
+        },
+      ],
+      { temperature: 0.3 },
+    )
+    const trimmed = text.trim()
+    return trimmed.length > 20 ? trimmed : staticFallback
+  } catch (err) {
+    console.warn("[demo/diagnose] narrateAggregate Solar fail:", err)
+    return staticFallback
   }
 }

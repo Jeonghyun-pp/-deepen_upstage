@@ -20,6 +20,12 @@ import {
   DiagnoseOutput,
   type DiagnoseInputT,
 } from "./prompts/diagnose"
+import {
+  buildDiagnosisMessages,
+  SolutionDiagnosisOutput,
+  type SolutionDiagnosisInput,
+  type SolutionDiagnosisOutputT,
+} from "./prompts/solution-diagnosis"
 
 const BASE_URL = "https://api.upstage.ai/v1"
 
@@ -86,6 +92,50 @@ export async function scorePrereqMatch(
       lastErr = err
       const msg = err instanceof Error ? err.message : String(err)
       // 429 만 backoff. JSON/zod 파싱 실패는 즉시 throw.
+      if (!msg.includes("429") && !msg.includes("rate")) break
+      await new Promise((r) => setTimeout(r, backoffMs))
+      backoffMs *= 2
+    }
+  }
+  throw lastErr instanceof Error ? lastErr : new Error(String(lastErr))
+}
+
+/**
+ * 학생 풀이 논리 진단 — few-shot prompt (prompts/solution-diagnosis.ts).
+ *
+ * 단순 정답/오답이 아니라 first_wrong_step·error_type·missing_concepts 까지.
+ * 429 → backoff 3회, JSON/zod 실패는 즉시 throw (호출 측이 fallback).
+ */
+export async function diagnoseSolution(
+  input: SolutionDiagnosisInput,
+  opts: { signal?: AbortSignal } = {},
+): Promise<SolutionDiagnosisOutputT> {
+  const client = getClient()
+  if (!client) {
+    throw new Error("Upstage client unavailable — UPSTAGE_API_KEY missing")
+  }
+
+  const messages = buildDiagnosisMessages(input)
+
+  let lastErr: unknown = null
+  let backoffMs = 1000
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const resp = await client.chat.completions.create(
+        {
+          model: env.UPSTAGE_SOLAR_MODEL,
+          messages,
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+          max_tokens: 1800,
+        },
+        { signal: opts.signal },
+      )
+      const raw = resp.choices[0]?.message?.content ?? ""
+      return SolutionDiagnosisOutput.parse(JSON.parse(raw))
+    } catch (err) {
+      lastErr = err
+      const msg = err instanceof Error ? err.message : String(err)
       if (!msg.includes("429") && !msg.includes("rate")) break
       await new Promise((r) => setTimeout(r, backoffMs))
       backoffMs *= 2

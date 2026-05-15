@@ -1,50 +1,59 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowRight, Check, X, Camera, Loader2, Upload } from "lucide-react"
+import { ArrowRight, Check, X, Loader2 } from "lucide-react"
 import type { DemoNode } from "@/lib/demo/queries"
-import type { OcrStepsOutputT } from "@/lib/upstage/prompts/ocr-steps"
+import { appendAttempt, type AttemptRecord } from "@/lib/demo/session"
+import { runSolutionDiagnosis } from "@/lib/demo/actions"
+import type { SolutionDiagnosisOutputT } from "@/lib/upstage/prompts/solution-diagnosis"
+import { MathText } from "./MathText"
+
+type DiagnosisContext = {
+  problemId: string
+  officialSolution: string
+  typicalWrongSolution: string
+  targetConcepts: string[]
+  prerequisiteConcepts: string[]
+}
 
 type Props = {
   item: DemoNode | null
+  /** items.json 의 patternKey (stableKey) — aggregate 알고리즘 키. */
+  itemPatternKey?: string
   isRetry: boolean
-}
-
-type Mode = "choice" | "upload"
-
-type OcrResponse = {
-  result: OcrStepsOutputT
-  source: "live" | "sample" | "stub"
-  stepsKey: string
+  /** 1-base 회차. retry 모드면 무관. */
+  round?: number
+  totalRounds?: number
+  personaKey?: string
+  /** 다음 회차 url — server 가 미리 계산 (마지막 회차면 /demo/diagnose). */
+  nextUrl?: string
+  /** few-shot 진단 입력 컨텍스트. */
+  diagnosisContext?: DiagnosisContext | null
 }
 
 /**
- * V1 hybrid:
- *   · choice — 5지선다 클릭 (안전 path)
- *   · upload — 학생 풀이 이미지 업로드 → Upstage Document Parse + Solar Pro 2
- *               (sample mode = body 없음 → public/demo/q6-student-handwriting.png)
+ * 5지선다 클릭 → 제출 시 few-shot 풀이 진단(diagnoseSolution) 호출.
+ * 회차별로 appendAttempt 로 sessionStorage 누적.
  */
-export function SolveCanvas({ item, isRetry }: Props) {
+export function SolveCanvas({
+  item,
+  itemPatternKey = "",
+  isRetry,
+  round = 1,
+  totalRounds = 5,
+  personaKey: _personaKey = "A",
+  nextUrl,
+  diagnosisContext,
+}: Props) {
   const router = useRouter()
-  const [mode, setMode] = useState<Mode>(isRetry ? "choice" : "upload")
-
-  // choice mode state
   const [selected, setSelected] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
-
-  // upload mode state
-  const [ocr, setOcr] = useState<OcrResponse | null>(null)
-  const [ocrLoading, setOcrLoading] = useState(false)
-  const [ocrError, setOcrError] = useState<string | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-
-  // blob URL 누수 방지.
-  useEffect(() => {
-    return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl)
-    }
-  }, [previewUrl])
+  const [diagnosing, setDiagnosing] = useState(false)
+  const [diagnosis, setDiagnosis] = useState<SolutionDiagnosisOutputT | null>(
+    null,
+  )
+  const isLastRound = !isRetry && round >= totalRounds
 
   if (!item) {
     return <div className="px-8 py-12 text-black/50">문항을 찾을 수 없습니다.</div>
@@ -54,151 +63,108 @@ export function SolveCanvas({ item, isRetry }: Props) {
   const isCorrect = selected === correctIdx
   const choices = item.itemChoices ?? []
 
-  async function handleUploadSample() {
-    setOcrLoading(true)
-    setOcrError(null)
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl)
-      setPreviewUrl(null)
+  function recordAttempt(diag: SolutionDiagnosisOutputT | null) {
+    if (isRetry || !item) return
+    const record: AttemptRecord = {
+      itemId: item.id,
+      itemStableKey: item.label ?? `R${round}`,
+      itemPatternKey,
+      studentAnswer: selected !== null ? String(selected + 1) : "?",
+      correctAnswer: item.itemAnswer ?? "?",
+      isCorrect,
+      studentSteps: [],
+      candidatePatternKey: itemPatternKey,
+      candidateLabel: item.label ?? "결손 후보",
+      candidateScore: isCorrect ? 0.1 : 0.7,
+      candidateRationale: isCorrect
+        ? "이 문제는 정답 — 관련 prereq 무죄."
+        : "이 문제 오답 — 결손 의심.",
+      justificationQuote: null,
+      diagnosis: diag,
+      timestamp: Date.now(),
     }
-    try {
-      const resp = await fetch(`/api/demo/ocr?itemId=${item!.id}`, {
-        method: "POST",
-      })
-      if (!resp.ok) throw new Error(`OCR ${resp.status}`)
-      const data = (await resp.json()) as OcrResponse
-      setOcr(data)
-    } catch (err) {
-      setOcrError(err instanceof Error ? err.message : String(err))
-    } finally {
-      setOcrLoading(false)
-    }
+    appendAttempt(record)
   }
 
-  async function handleUploadFile(file: File) {
-    setOcrLoading(true)
-    setOcrError(null)
-    if (previewUrl) URL.revokeObjectURL(previewUrl)
-    setPreviewUrl(URL.createObjectURL(file))
-    try {
-      const form = new FormData()
-      form.append("file", file)
-      const resp = await fetch(`/api/demo/ocr?itemId=${item!.id}`, {
-        method: "POST",
-        body: form,
-      })
-      if (!resp.ok) throw new Error(`OCR ${resp.status}`)
-      const data = (await resp.json()) as OcrResponse
-      setOcr(data)
-    } catch (err) {
-      setOcrError(err instanceof Error ? err.message : String(err))
-    } finally {
-      setOcrLoading(false)
-    }
-  }
-
-  function handleUploadNext() {
-    if (!ocr) return
-    router.push(
-      `/demo/diagnose?itemId=${item!.id}&attempt=wrong&stepsKey=${ocr.stepsKey}`,
-    )
-  }
-
-  function handleChoiceSubmit() {
+  async function handleSubmit() {
     if (selected === null) return
     setSubmitted(true)
+    if (isRetry || !diagnosisContext || !item) return
+
+    // 정답이면 정답 풀이, 오답이면 대표 오답 풀이를 진단 입력으로.
+    const correct = selected === correctIdx
+    const studentSolution = correct
+      ? diagnosisContext.officialSolution
+      : diagnosisContext.typicalWrongSolution
+    if (!studentSolution.trim()) return
+
+    setDiagnosing(true)
+    const result = await runSolutionDiagnosis({
+      problemId: diagnosisContext.problemId,
+      problem: item.content,
+      studentSolution,
+      officialSolution: diagnosisContext.officialSolution,
+      targetConcepts: diagnosisContext.targetConcepts,
+      prerequisiteConcepts: diagnosisContext.prerequisiteConcepts,
+      relatedProblemCards: "",
+    })
+    setDiagnosis(result)
+    setDiagnosing(false)
   }
 
-  function handleChoiceNext() {
-    if (isRetry || isCorrect) {
-      router.push(`/demo`)
-    } else {
-      router.push(`/demo/diagnose?itemId=${item!.id}&attempt=wrong`)
+  function handleNext() {
+    if (!item) {
+      router.push("/demo")
+      return
     }
+    if (isRetry) {
+      router.push("/demo/result")
+      return
+    }
+    recordAttempt(diagnosis)
+    router.push(nextUrl ?? "/demo/diagnose")
   }
 
   return (
     <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 px-8 py-6">
-      {/* 좌: 문제 + 풀이 영역 */}
-      <div className="bg-white rounded-lg border border-black/5 p-6 min-h-[400px] relative">
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40">
-            {isRetry ? "재시도 · 결손 보강 후" : "풀이 영역"}
-          </div>
-          {!isRetry && (
-            <div className="flex gap-1 text-[10px] font-bold">
-              <button
-                onClick={() => setMode("upload")}
-                className={`px-2 py-1 rounded ${
-                  mode === "upload"
-                    ? "bg-black text-white"
-                    : "bg-black/[0.04] text-black/50"
-                }`}
-              >
-                사진 풀이
-              </button>
-              <button
-                onClick={() => setMode("choice")}
-                className={`px-2 py-1 rounded ${
-                  mode === "choice"
-                    ? "bg-black text-white"
-                    : "bg-black/[0.04] text-black/50"
-                }`}
-              >
-                보기 선택
-              </button>
-            </div>
-          )}
+      {/* 좌: 문제 + 보기 */}
+      <div className="bg-white rounded-lg border border-black/5 p-6 min-h-[400px]">
+        <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
+          {isRetry ? "재시도 · 결손 보강 후" : "보기 선택"}
         </div>
 
-        <div className="text-base leading-relaxed mb-6 whitespace-pre-wrap">
-          {item.content}
+        <div className="text-base leading-relaxed mb-6">
+          <MathText>{item.content}</MathText>
         </div>
 
-        {mode === "choice" ? (
-          <ChoiceList
-            choices={choices}
-            selected={selected}
-            correctIdx={correctIdx}
-            submitted={submitted}
-            onSelect={(i) => !submitted && setSelected(i)}
-          />
-        ) : (
-          <UploadPanel
-            ocr={ocr}
-            loading={ocrLoading}
-            error={ocrError}
-            previewUrl={previewUrl}
-            onUploadSample={handleUploadSample}
-            onUploadFile={handleUploadFile}
-          />
-        )}
+        <ChoiceList
+          choices={choices}
+          selected={selected}
+          correctIdx={correctIdx}
+          submitted={submitted}
+          onSelect={(i) => !submitted && setSelected(i)}
+        />
       </div>
 
-      {/* 우: 채점·다음 단계 */}
+      {/* 우: 채점 + 회차 진단 */}
       <div className="bg-white rounded-lg border border-black/5 p-6 flex flex-col">
-        {mode === "choice" ? (
-          <ChoiceSidebar
-            submitted={submitted}
-            isCorrect={isCorrect}
-            selected={selected}
-            onSubmit={handleChoiceSubmit}
-            onNext={handleChoiceNext}
-            isRetry={isRetry}
-          />
-        ) : (
-          <UploadSidebar
-            ocr={ocr}
-            correctAnswer={item.itemAnswer ?? "?"}
-            onNext={handleUploadNext}
-          />
-        )}
+        <ChoiceSidebar
+          submitted={submitted}
+          isCorrect={isCorrect}
+          selected={selected}
+          onSubmit={handleSubmit}
+          onNext={handleNext}
+          isRetry={isRetry}
+          isLastRound={isLastRound}
+          round={round}
+          totalRounds={totalRounds}
+          diagnosing={diagnosing}
+          diagnosis={diagnosis}
+        />
       </div>
     </div>
   )
 }
-
-/* ── choice mode ──────────────────────────────────── */
 
 function ChoiceList({
   choices,
@@ -237,7 +203,7 @@ function ChoiceList({
             <span className="inline-block w-6 text-black/40 font-bold">
               {["①", "②", "③", "④", "⑤"][i]}
             </span>
-            {c}
+            <MathText preserveWhitespace={false}>{c}</MathText>
           </button>
         )
       })}
@@ -252,6 +218,11 @@ function ChoiceSidebar({
   onSubmit,
   onNext,
   isRetry,
+  isLastRound,
+  round,
+  totalRounds,
+  diagnosing,
+  diagnosis,
 }: {
   submitted: boolean
   isCorrect: boolean
@@ -259,11 +230,22 @@ function ChoiceSidebar({
   onSubmit: () => void
   onNext: () => void
   isRetry: boolean
+  isLastRound: boolean
+  round: number
+  totalRounds: number
+  diagnosing: boolean
+  diagnosis: SolutionDiagnosisOutputT | null
 }) {
+  const nextLabel = isRetry
+    ? "정복·결손 지도 보기"
+    : isLastRound
+      ? "종합 진단 보기"
+      : `다음 문제 (${round + 1}/${totalRounds})`
+
   return (
     <>
       <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
-        채점
+        {isRetry ? "채점" : `채점 — 회차 ${round}/${totalRounds}`}
       </div>
       {!submitted ? (
         <>
@@ -286,16 +268,17 @@ function ChoiceSidebar({
             {isCorrect ? <Check size={20} /> : <X size={20} />}
             {isCorrect ? "정답!" : "오답"}
           </div>
-          <p className="text-sm text-black/60 mb-4">
-            {isCorrect
-              ? "정답이에요. 풀이 단계를 모두 거쳤습니다."
-              : "Q6 의 진짜 결손이 어디에 있는지 함께 짚어볼게요."}
-          </p>
+
+          {/* 회차 진단 — Solar 풀이 분석 */}
+          {!isRetry && (
+            <MiniDiagnosis diagnosing={diagnosing} diagnosis={diagnosis} />
+          )}
+
           <button
             onClick={onNext}
-            className="mt-auto flex items-center justify-center gap-2 px-4 py-2.5 bg-[#15803D] text-white text-sm font-bold rounded-md"
+            className="mt-4 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#15803D] text-white text-sm font-bold rounded-md"
           >
-            {isCorrect || isRetry ? "데모 종료" : "결손 진단 보기"}
+            {nextLabel}
             <ArrowRight size={16} />
           </button>
         </>
@@ -304,212 +287,68 @@ function ChoiceSidebar({
   )
 }
 
-/* ── upload mode ──────────────────────────────────── */
-
-function UploadPanel({
-  ocr,
-  loading,
-  error,
-  previewUrl,
-  onUploadSample,
-  onUploadFile,
+/** 회차별 few-shot 진단 카드 — error_summary + first_wrong_step + feedback. */
+function MiniDiagnosis({
+  diagnosing,
+  diagnosis,
 }: {
-  ocr: OcrResponse | null
-  loading: boolean
-  error: string | null
-  previewUrl: string | null
-  onUploadSample: () => void
-  onUploadFile: (file: File) => void
+  diagnosing: boolean
+  diagnosis: SolutionDiagnosisOutputT | null
 }) {
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const cameraInputRef = useRef<HTMLInputElement>(null)
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    // 같은 파일 재선택 가능하도록 input 비우기.
-    e.target.value = ""
-    if (file) onUploadFile(file)
-  }
-
-  if (loading) {
+  if (diagnosing) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 gap-3">
-        {previewUrl && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={previewUrl}
-            alt="업로드한 풀이"
-            className="max-h-40 rounded-md border border-black/10 mb-2"
-          />
-        )}
-        <Loader2 className="animate-spin text-black/40" size={32} />
-        <div className="text-sm text-black/50">
-          학생 손글씨 풀이를 인식하는 중…
-        </div>
-        <div className="text-[10px] uppercase tracking-[0.18em] text-black/30">
-          Upstage Document Parse + Solar Pro 2
-        </div>
+      <div className="flex items-center gap-2 text-sm text-black/50 py-3">
+        <Loader2 size={16} className="animate-spin" />
+        Solar Pro 풀이 진단 중…
       </div>
     )
   }
-
-  if (!ocr) {
+  if (!diagnosis) {
     return (
-      <div className="flex flex-col items-center justify-center py-10 gap-4 border-2 border-dashed border-black/15 rounded-lg px-6">
-        <Camera size={32} className="text-black/30" />
-        <div className="text-sm text-black/60 text-center max-w-sm">
-          종이에 푼 풀이를 <span className="font-bold">사진으로 촬영</span>하거나{" "}
-          <span className="font-bold">갤러리에서 선택</span>해 올려주세요.
-        </div>
-
-        <input
-          ref={cameraInputRef}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          onChange={handleChange}
-          className="hidden"
-        />
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleChange}
-          className="hidden"
-        />
-
-        <div className="flex gap-2 flex-wrap justify-center">
-          <button
-            onClick={() => cameraInputRef.current?.click()}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#15803D] text-white text-sm font-bold rounded-md hover:bg-[#0F6A30]"
-          >
-            <Camera size={16} /> 촬영
-          </button>
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-bold rounded-md hover:bg-black/80"
-          >
-            <Upload size={16} /> 파일 선택
-          </button>
-        </div>
-
-        <button
-          onClick={onUploadSample}
-          className="text-xs text-black/40 hover:text-black/70 underline underline-offset-2"
-        >
-          데모용 sample 풀이로 시연
-        </button>
-
-        {error && (
-          <div className="text-xs text-red-500 max-w-sm text-center">
-            에러: {error}
-          </div>
-        )}
+      <p className="text-sm text-black/50 py-2">
+        회차 진단을 누적해 다음 문제로 이어갑니다.
+      </p>
+    )
+  }
+  if (diagnosis.error_type === "no_error" && !diagnosis.has_flawed_reasoning) {
+    return (
+      <div className="bg-green-50 border border-green-200 rounded-md p-3 text-sm">
+        <div className="font-bold text-green-700 mb-1">풀이 논리 정상</div>
+        <div className="text-black/70">{diagnosis.student_feedback}</div>
       </div>
     )
   }
-
   return (
-    <div>
-      {previewUrl && (
-        <div className="mb-4">
-          <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-2">
-            업로드한 풀이
-          </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={previewUrl}
-            alt="업로드한 풀이"
-            className="max-h-44 rounded-md border border-black/10"
-          />
+    <div className="bg-[#FFF8E6] border border-[#FFA500]/30 rounded-md p-3 space-y-2">
+      <div>
+        <div className="text-[9px] uppercase tracking-[0.15em] font-bold text-[#B25A00]">
+          이 회차 진단
+        </div>
+        <div className="text-sm font-bold mt-0.5">
+          {diagnosis.error_summary}
+        </div>
+      </div>
+      {diagnosis.first_wrong_step && (
+        <div className="text-xs text-black/60">
+          <span className="font-bold">처음 틀린 단계:</span>{" "}
+          {diagnosis.first_wrong_step}
         </div>
       )}
-
-      <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
-        인식된 풀이 단계
-        <span className="ml-2 text-[9px] text-black/30">
-          source: {ocr.source}
-        </span>
+      <div className="text-xs text-black/70 leading-relaxed border-t border-[#FFA500]/20 pt-2">
+        {diagnosis.student_feedback}
       </div>
-      <div className="space-y-2">
-        {ocr.result.steps.map((step, i) => (
-          <div
-            key={i}
-            className="px-4 py-3 bg-black/[0.02] border border-black/5 rounded-md"
-            style={{
-              animation: `fadeIn 0.4s ease-out ${i * 0.12}s both`,
-            }}
-          >
-            <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-1">
-              ({i + 1}) {step.label}
-            </div>
-            <div className="text-sm font-mono">{step.latex}</div>
-          </div>
-        ))}
-      </div>
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(4px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+      {diagnosis.missing_concepts.length > 0 && (
+        <div className="flex flex-wrap gap-1 pt-1">
+          {diagnosis.missing_concepts.map((c) => (
+            <span
+              key={c.concept_id}
+              className="text-[10px] font-bold px-1.5 py-0.5 bg-[#FFA500]/15 text-[#B25A00] rounded"
+            >
+              {c.concept_name}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
-  )
-}
-
-function UploadSidebar({
-  ocr,
-  correctAnswer,
-  onNext,
-}: {
-  ocr: OcrResponse | null
-  correctAnswer: string
-  onNext: () => void
-}) {
-  if (!ocr) {
-    return (
-      <>
-        <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
-          채점
-        </div>
-        <p className="text-sm text-black/60">
-          사진을 업로드하면 풀이 단계를 자동으로 추출합니다.
-        </p>
-      </>
-    )
-  }
-
-  return (
-    <>
-      <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
-        채점
-      </div>
-      <div className="flex items-center gap-2 text-lg font-bold mb-3 text-red-600">
-        <X size={20} />
-        오답
-      </div>
-      <div className="space-y-2 mb-4 text-sm">
-        <div>
-          <span className="text-black/40 text-xs">학생 답:</span>{" "}
-          <span className="text-red-600 font-bold">
-            {ocr.result.studentAnswer}
-          </span>
-        </div>
-        <div>
-          <span className="text-black/40 text-xs">정답:</span>{" "}
-          <span className="text-green-600 font-bold">{correctAnswer}</span>
-        </div>
-      </div>
-      <p className="text-sm text-black/60 mb-4">
-        풀이 어디가 막혔는지 짚어볼게요.
-      </p>
-      <button
-        onClick={onNext}
-        className="mt-auto flex items-center justify-center gap-2 px-4 py-2.5 bg-[#15803D] text-white text-sm font-bold rounded-md"
-      >
-        결손 진단 보기
-        <ArrowRight size={16} />
-      </button>
-    </>
   )
 }

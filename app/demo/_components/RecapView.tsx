@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowRight, Check } from "lucide-react"
 import type { RecapCard } from "@/lib/demo/recap-cards"
+import { MathText } from "./MathText"
 
 type Props = {
   card: RecapCard
@@ -35,8 +36,8 @@ export function RecapView({ card, returnItemId }: Props) {
         <h3 className="text-xl font-bold mb-6">{card.title}</h3>
         <div className="prose prose-sm max-w-none">
           {card.body.split("\n").map((line, i) => (
-            <p key={i} className="my-2 leading-relaxed whitespace-pre-wrap">
-              {line || " "}
+            <p key={i} className="my-2 leading-relaxed">
+              {line ? <MathText>{line}</MathText> : " "}
             </p>
           ))}
         </div>
@@ -62,7 +63,9 @@ export function RecapView({ card, returnItemId }: Props) {
           <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-black/40 mb-3">
             빠른 확인
           </div>
-          <p className="text-sm font-medium mb-4">{card.quickCheck.question}</p>
+          <p className="text-sm font-medium mb-4">
+            <MathText>{card.quickCheck.question}</MathText>
+          </p>
           {!answered ? (
             <button
               onClick={() => setAnswered(true)}
@@ -74,10 +77,12 @@ export function RecapView({ card, returnItemId }: Props) {
             <div>
               <div className="flex items-center gap-2 text-green-600 font-bold mb-2">
                 <Check size={16} />
-                {card.quickCheck.answer}
+                <MathText preserveWhitespace={false}>
+                  {card.quickCheck.answer}
+                </MathText>
               </div>
               <p className="text-xs text-black/60 leading-relaxed">
-                {card.quickCheck.explanation}
+                <MathText>{card.quickCheck.explanation}</MathText>
               </p>
             </div>
           )}
@@ -87,7 +92,7 @@ export function RecapView({ card, returnItemId }: Props) {
           onClick={handleRetry}
           className="flex items-center justify-center gap-2 px-4 py-3 bg-[#15803D] text-white text-sm font-bold rounded-md hover:bg-[#0F6A30] transition"
         >
-          Q6 다시 풀어보기
+          다시 풀어보기
           <ArrowRight size={16} />
         </button>
       </div>

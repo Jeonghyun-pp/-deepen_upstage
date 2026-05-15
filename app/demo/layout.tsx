@@ -8,6 +8,7 @@
  *   - 인증 우회 (DEV_AUTH_BYPASS_USER_ID 로 작동)
  */
 
+import "katex/dist/katex.min.css"
 import { DemoChrome } from "./_components/DemoChrome"
 
 export const metadata = {

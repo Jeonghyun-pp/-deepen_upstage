@@ -1,7 +1,3 @@
 {
-  "regions": ["icn1"],
-  "crons": [
-    { "path": "/api/cron/daily-challenge", "schedule": "30 15 * * *" },
-    { "path": "/api/cron/document-jobs", "schedule": "0 18 * * *" }
-  ]
+  "regions": ["icn1"]
 }
