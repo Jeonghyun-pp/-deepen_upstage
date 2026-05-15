@@ -1,0 +1,435 @@
+{
+  "dataset_meta": {
+    "name": "deepen_solar_wrong_solution_examples",
+    "version": "refined_v1.0",
+    "language": "ko",
+    "purpose": "Solar LLM이 학생의 잘못된 수학 풀이를 진단하도록 만들기 위한 few-shot 및 유사 오류 예시 데이터셋",
+    "source_context": {
+      "project": "Deepen - 학생 풀이의 틀린 이유를 짚어주는 수학 AI 코치",
+      "input_style": "문제, 학생 풀이, 모범 풀이 요약, 개념 id, 관련 문제 카드",
+      "output_style": "JSON diagnostic output",
+      "note": "학생 풀이 예시는 의도적으로 틀리게 작성되었으며, expected_diagnosis가 일종의 답안지 역할을 한다."
+    },
+    "recommended_order": [
+      "E01_product_rule_simple",
+      "E04_tangent_slope_confusion",
+      "E05_position_velocity_confusion",
+      "E03_distance_displacement_confusion",
+      "E06_case_split_missing",
+      "E02_product_rule_complex_propagation"
+    ],
+    "schema_note": {
+      "example_id": "예시 고유 id",
+      "shot_role": "few_shot 또는 analogous_example",
+      "problem_type": "문제 유형",
+      "problem_summary": "외부인이 이해할 수 있는 문제 설명",
+      "target_error_type": "LLM이 잡아야 하는 오류 유형",
+      "student_solution_latex": "의도적으로 틀린 학생 풀이",
+      "expected_diagnosis": "정답지. LLM이 도달해야 할 진단 요약"
+    }
+  },
+  "error_type_dictionary": {
+    "product_rule_missing_term": {
+      "ko_name": "곱의 미분법 항 누락",
+      "definition": "곱으로 이루어진 함수 uv를 미분할 때 u'v 또는 uv' 중 한 항을 빠뜨리는 오류",
+      "typical_first_wrong_step": "(uv)'=uv' 또는 (uv)'=u'v처럼 한 항만 쓰는 단계",
+      "diagnosis_hint": "계산 결과보다 먼저 곱의 미분식 자체가 맞는지 확인한다."
+    },
+    "tangent_slope_confusion": {
+      "ko_name": "접선 기울기 혼동",
+      "definition": "접점의 함수값 f(a), y좌표, 또는 두 점 사이 평균변화율을 접선의 기울기 f'(a)로 착각하는 오류",
+      "typical_first_wrong_step": "접선의 기울기를 f(a) 또는 접점의 y좌표라고 둔 단계",
+      "diagnosis_hint": "접선의 기울기는 derivative value(도함수값) f'(a)임을 확인한다."
+    },
+    "position_velocity_confusion": {
+      "ko_name": "위치·속도·가속도 혼동",
+      "definition": "위치 x(t), 속도 v(t)=x'(t), 가속도 a(t)=v'(t)를 구분하지 못하고 다른 함수에 대입하는 오류",
+      "typical_first_wrong_step": "위치를 물었는데 v(t)를 계산하거나, 속도를 물었는데 x(t)에 대입하는 단계",
+      "diagnosis_hint": "문장이 묻는 대상이 position(위치), velocity(속도), acceleration(가속도) 중 무엇인지 먼저 분리한다."
+    },
+    "velocity_sign_change_error": {
+      "ko_name": "속도 부호 변화 판단 오류",
+      "definition": "v(t)=0이라는 사실만으로 운동 방향 변화가 있다고 단정하거나, v(t)의 sign change(부호 변화)를 확인하지 않는 오류",
+      "typical_first_wrong_step": "v(t)=0인 시각을 찾은 뒤 부호표 없이 바로 방향이 바뀐다고 판단하는 단계",
+      "diagnosis_hint": "운동 방향 변화는 v(t)=0 자체가 아니라 v(t)의 부호가 실제로 바뀌는지로 판단한다."
+    },
+    "distance_displacement_confusion": {
+      "ko_name": "움직인 거리와 변위 혼동",
+      "definition": "distance(움직인 거리)를 구해야 하는데 displacement(변위)인 ∫v(t)dt를 계산하는 오류",
+      "typical_first_wrong_step": "움직인 거리를 ∫v(t)dt로 계산한다고 선언하는 단계",
+      "diagnosis_hint": "움직인 거리는 ∫|v(t)|dt이고, 속도 부호가 바뀌면 구간을 나누어야 한다."
+    },
+    "case_split_missing": {
+      "ko_name": "경우 나누기 누락",
+      "definition": "일반적인 경우만 처리하고, 특수하게 조건을 만족하는 예외 케이스를 따로 확인하지 않는 오류",
+      "typical_first_wrong_step": "분모가 0이면 무조건 극한이 존재하지 않는다고 보고 특수 약분 가능성을 배제하는 단계",
+      "diagnosis_hint": "조건이 '모든 실수에 대해 극한 존재'처럼 전칭 조건이면 일반 케이스와 특수 케이스를 나누어야 한다."
+    }
+  },
+  "problem_type_dictionary": {
+    "derivative_product_rule": {
+      "ko_name": "곱의 미분법",
+      "core_check": "(uv)'=u'v+uv' 두 항이 모두 있는지 확인"
+    },
+    "tangent_line_derivative": {
+      "ko_name": "도함수와 접선의 방정식",
+      "core_check": "접선의 기울기가 f'(a)인지 확인하고 점-기울기식으로 직선 방정식을 세움"
+    },
+    "motion_position_velocity_acceleration": {
+      "ko_name": "위치·속도·가속도 관계",
+      "core_check": "x(t), v(t)=x'(t), a(t)=v'(t)를 구분하고 문제에서 묻는 양에 맞게 대입"
+    },
+    "motion_distance_from_velocity": {
+      "ko_name": "속도 함수와 움직인 거리",
+      "core_check": "distance는 ∫|v(t)|dt, displacement는 ∫v(t)dt"
+    },
+    "limit_parameter_case_split": {
+      "ko_name": "극한 존재 조건과 매개변수",
+      "core_check": "분모가 0이 되지 않는 일반 경우와 0/0 형태가 되는 특수 경우를 분리"
+    },
+    "compound_derivative_tangent_area": {
+      "ko_name": "곱의 미분법·접선·도형 넓이 복합형",
+      "core_check": "첫 미분 오류가 접선 방정식과 넓이 계산까지 전파되는지 추적"
+    }
+  },
+  "examples": [
+    {
+      "example_id": "E01_product_rule_simple",
+      "shot_role": "few_shot",
+      "problem_id": "2026-6모-공통-7",
+      "exam": "2026학년도 6월 모의평가",
+      "problem_type": "derivative_product_rule",
+      "problem_summary": "g(x)=5x^2+xf(x)에서 g'(3)을 구하는 문제. 핵심은 xf(x)를 곱의 미분법으로 미분하는 것이다.",
+      "target_error_type": "product_rule_missing_term",
+      "problem_latex": "다항함수 \\(f(x)\\)에 대하여 함수 \\(g(x)\\)를\n\\[\ng(x)=5x^2+xf(x)\n\\]\n라 하자. \\(f(3)=2,\\ f'(3)=1\\)일 때, \\(g'(3)\\)의 값은?",
+      "correct_solution_summary": "정답 풀이 핵심:\n\\[\ng'(x)=10x+f(x)+xf'(x)\n\\]\n이므로\n\\[\ng'(3)=30+2+3\\cdot 1=35.\n\\]",
+      "final_concept_ids": [
+        "c1-도함수"
+      ],
+      "prerequisite_and_related_concept_ids": [
+        "c1-미분계수",
+        "c1-함수극한",
+        "h2-함수",
+        "m-식의계산"
+      ],
+      "student_solution_latex": "\\[\ng(x)=5x^2+xf(x)\n\\]\n\n이므로 양변을 미분하면\n\n\\[\ng'(x)=10x+xf'(x)\n\\]\n\n이다. 따라서 \\(x=3\\)을 대입하면\n\n\\[\ng'(3)=10\\cdot 3+3f'(3)\n\\]\n\n이다. 문제에서\n\n\\[\nf'(3)=1\n\\]\n\n이므로\n\n\\[\ng'(3)=30+3\\cdot 1=33\n\\]\n\n이다.\n\n따라서 정답은\n\n\\[\n\\boxed{33}\n\\]\n\n이다.",
+      "expected_diagnosis": {
+        "is_correct": false,
+        "has_flawed_reasoning": true,
+        "error_type": "product_rule_missing_term",
+        "error_summary": "xf(x)를 미분할 때 곱의 미분법의 f(x) 항을 누락했다.",
+        "first_wrong_step": "g'(x)=10x+xf'(x)라고 쓴 단계",
+        "why_plausible": "x가 단순히 f(x)에 붙은 계수처럼 보이기 때문에 x 자체도 미분되어 1·f(x) 항이 생긴다는 점을 놓쳤을 가능성이 크다.",
+        "missing_concepts": [
+          {
+            "concept_id": "c1-도함수",
+            "concept_name": "derivative function(도함수)",
+            "reason": "곱의 미분법에서 두 항 u'v와 uv'가 모두 필요하다는 점이 직접적으로 연결된다."
+          }
+        ],
+        "related_pattern": "derivative_product_rule",
+        "fix_strategy": "곱 \\(xf(x)\\)가 나오면 \\(u=x,\\ v=f(x)\\)로 두고 \\((uv)'=u'v+uv'\\)를 먼저 써라.",
+        "student_feedback": "최초 오류는 \\(xf(x)\\)의 미분입니다. \\((xf(x))'=f(x)+xf'(x)\\)이므로 \\(f(3)\\) 항이 빠지면 안 됩니다.",
+        "next_review": [
+          {
+            "concept_id": "c1-도함수",
+            "reason": "곱의 미분법 적용이 핵심 오류이기 때문이다."
+          }
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "example_id": "E04_tangent_slope_confusion",
+      "shot_role": "analogous_example",
+      "problem_id": "2026-9모-공통-7",
+      "exam": "2026학년도 9월 모의평가",
+      "problem_type": "tangent_line_derivative",
+      "problem_summary": "곡선 위의 점 (3,0)에서의 접선이 점 (5,a)를 지날 때 a를 구하는 문제. 핵심은 접선 기울기=f'(3)이다.",
+      "target_error_type": "tangent_slope_confusion",
+      "problem_latex": "곡선\n\\[\ny=x^3-5x^2+6x\n\\]\n위의 점 \\((3,0)\\)에서의 접선이 점 \\((5,a)\\)를 지날 때, \\(a\\)의 값은?",
+      "correct_solution_summary": "정답 풀이 핵심:\n\\[\nf'(x)=3x^2-10x+6,\\qquad f'(3)=3.\n\\]\n따라서 접선은\n\\[\ny=3(x-3)=3x-9\n\\]\n이고, 점 \\((5,a)\\)를 지나므로 \\(a=6\\).",
+      "final_concept_ids": [
+        "c1-도함수활용"
+      ],
+      "prerequisite_and_related_concept_ids": [
+        "c1-도함수",
+        "c1-미분계수",
+        "h2-직선방정식",
+        "h2-함수"
+      ],
+      "student_solution_latex": "곡선을\n\n\\[\ny=f(x)=x^3-5x^2+6x\n\\]\n\n라고 하자. 점 \\((3,0)\\)은 곡선 위의 점이므로\n\n\\[\nf(3)=3^3-5\\cdot 3^2+6\\cdot 3\n\\]\n\n이다. 계산하면\n\n\\[\nf(3)=27-45+18=0\n\\]\n\n이다.\n\n따라서 점 \\((3,0)\\)에서의 접선의 기울기는\n\n\\[\n0\n\\]\n\n이라고 볼 수 있다. 그러므로 접선의 방정식은\n\n\\[\ny-0=0(x-3)\n\\]\n\n이고,\n\n\\[\ny=0\n\\]\n\n이다.\n\n이 접선이 점 \\((5,a)\\)를 지나므로\n\n\\[\na=0\n\\]\n\n이다.\n\n따라서 정답은\n\n\\[\n\\boxed{0}\n\\]\n\n이다.",
+      "expected_diagnosis": {
+        "is_correct": false,
+        "has_flawed_reasoning": true,
+        "error_type": "tangent_slope_confusion",
+        "error_summary": "접점의 함수값 f(3)=0을 접선의 기울기로 착각했다.",
+        "first_wrong_step": "점 (3,0)에서의 접선의 기울기를 f(3)=0이라고 본 단계",
+        "why_plausible": "접점의 y좌표가 0이므로 그래프가 그 점에서 수평일 것이라고 직관적으로 착각했을 가능성이 있다.",
+        "missing_concepts": [
+          {
+            "concept_id": "c1-도함수활용",
+            "concept_name": "application of derivatives(도함수의 활용)",
+            "reason": "접선의 기울기는 함수값이 아니라 도함수값이라는 사실이 직접 핵심이다."
+          },
+          {
+            "concept_id": "h2-직선방정식",
+            "concept_name": "equation of a line(직선의 방정식)",
+            "reason": "점과 기울기로 접선 방정식을 세우는 과정과 연결된다."
+          }
+        ],
+        "related_pattern": "tangent_line_derivative",
+        "fix_strategy": "접선 문제가 나오면 먼저 \\(f'(a)\\)를 계산하고, 그 값을 기울기로 사용해 \\(y-y_0=f'(a)(x-x_0)\\)를 세워라.",
+        "student_feedback": "접점의 y좌표가 0이라고 해서 접선의 기울기가 0인 것은 아닙니다. 접선의 기울기는 반드시 \\(f'(3)\\)으로 구해야 합니다.",
+        "next_review": [
+          {
+            "concept_id": "c1-도함수활용",
+            "reason": "도함수값과 접선 기울기의 연결이 부족하다."
+          }
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "example_id": "E05_position_velocity_confusion",
+      "shot_role": "analogous_example",
+      "problem_id": "2026-6모-공통-11",
+      "exam": "2026학년도 6월 모의평가",
+      "problem_type": "motion_position_velocity_acceleration",
+      "problem_summary": "위치 함수 x(t)가 주어졌을 때 위치, 속도, 가속도 관련 보기를 판정하는 문제.",
+      "target_error_type": "position_velocity_confusion",
+      "problem_latex": "시각 \\(t=0\\)일 때 출발하여 수직선 위를 움직이는 점 \\(P\\)의 위치가\n\\[\nx=t^3-t^2-t+1 \\quad (t\\ge 0)\n\\]\n이다. 보기 ㄱ은 '시각 \\(t=1\\)일 때 점 \\(P\\)의 위치는 1이다'이다.",
+      "correct_solution_summary": "정답 풀이 핵심:\n위치는 위치 함수에 직접 대입한다.\n\\[\nx(1)=1^3-1^2-1+1=0\n\\]\n이므로 보기 ㄱ은 거짓이다. 속도는\n\\[\nv(t)=x'(t)=3t^2-2t-1\n\\]\n이다.",
+      "final_concept_ids": [
+        "c1-도함수활용"
+      ],
+      "prerequisite_and_related_concept_ids": [
+        "c1-도함수",
+        "c1-미분계수",
+        "h1-인수분해",
+        "h2-함수"
+      ],
+      "student_solution_latex": "위치 함수가\n\n\\[\nx=t^3-t^2-t+1\n\\]\n\n로 주어져 있다. 점 \\(P\\)의 속도는 위치를 미분하면 되므로\n\n\\[\nv(t)=x'(t)=3t^2-2t-1\n\\]\n\n이다.\n\n보기 ㄱ에서 시각 \\(t=1\\)일 때의 위치를 물었으므로, \\(t=1\\)을 대입한다.\n\n\\[\nv(1)=3\\cdot 1^2-2\\cdot 1-1=0\n\\]\n\n이다.\n\n따라서 시각 \\(t=1\\)일 때 점 \\(P\\)의 위치는\n\n\\[\n0\n\\]\n\n이다. 보기 ㄱ은\n\n\\[\n\\text{“시각 }t=1\\text{일 때 점 }P\\text{의 위치는 }1\\text{이다.”}\n\\]\n\n라고 했으므로 거짓이다.\n\n또한 보기 ㄴ은 시각 \\(t=1\\)일 때 속도가 \\(0\\)이라고 했으므로 참이다.",
+      "expected_diagnosis": {
+        "is_correct": true,
+        "has_flawed_reasoning": true,
+        "error_type": "position_velocity_confusion",
+        "error_summary": "위치를 물었는데 위치 함수 x(t)가 아니라 속도 v(t)에 대입했다.",
+        "first_wrong_step": "보기 ㄱ의 위치를 판단하면서 \\(v(1)\\)을 계산한 단계",
+        "why_plausible": "문제에서 위치와 속도가 연속해서 등장하므로, 미분한 뒤 얻은 v(t)를 모든 보기 판정에 사용해도 된다고 착각했을 수 있다.",
+        "missing_concepts": [
+          {
+            "concept_id": "c1-도함수활용",
+            "concept_name": "motion with derivatives(도함수를 활용한 운동)",
+            "reason": "위치, 속도, 가속도의 관계와 각 물리량의 구분이 직접 오류와 연결된다."
+          }
+        ],
+        "related_pattern": "motion_position_velocity_acceleration",
+        "fix_strategy": "각 보기를 풀기 전에 묻는 대상이 위치 \\(x(t)\\), 속도 \\(v(t)\\), 가속도 \\(a(t)\\) 중 무엇인지 표시한 뒤 해당 함수에 대입해라.",
+        "student_feedback": "보기 ㄱ의 결론은 맞았지만 이유가 잘못되었습니다. 위치는 \\(v(1)\\)이 아니라 \\(x(1)\\)로 판단해야 합니다.",
+        "next_review": [
+          {
+            "concept_id": "c1-도함수활용",
+            "reason": "위치·속도·가속도 구분이 핵심이다."
+          }
+        ],
+        "uncertainty": "보기 ㄱ과 ㄴ에 대한 부분 풀이만 있으므로 전체 선지 선택의 정오까지는 판단하지 않는다."
+      }
+    },
+    {
+      "example_id": "E03_distance_displacement_confusion",
+      "shot_role": "few_shot",
+      "problem_id": "2026-수능-공통-11",
+      "exam": "2026학년도 대학수학능력시험",
+      "problem_type": "motion_distance_from_velocity",
+      "problem_summary": "속도 함수가 주어졌을 때 특정 시간 구간의 움직인 거리를 판단하는 문제.",
+      "target_error_type": "distance_displacement_confusion",
+      "problem_latex": "점 \\(P\\)의 속도가\n\\[\nv(t)=t^2-kt+4\n\\]\n이다. \\(k=5\\)일 때, 시각 \\(t=0\\)에서 \\(t=2\\)까지 점 \\(P\\)가 움직인 거리가 3인지 판단하라.",
+      "correct_solution_summary": "정답 풀이 핵심:\n\\(k=5\\)이면\n\\[\nv(t)=t^2-5t+4=(t-1)(t-4).\n\\]\n구간 \\(0<t<1\\)에서는 \\(v(t)>0\\), \\(1<t<2\\)에서는 \\(v(t)<0\\)이므로\n\\[\n\\text{distance}=\\int_0^2 |v(t)|dt\n=\n\\int_0^1 v(t)dt-\\int_1^2 v(t)dt=3.\n\\]",
+      "final_concept_ids": [
+        "c1-정적분활용"
+      ],
+      "prerequisite_and_related_concept_ids": [
+        "c1-정적분",
+        "c1-도함수활용",
+        "h1-인수분해"
+      ],
+      "student_solution_latex": "보기 ㄷ을 확인한다.\n\n\\(k=5\\)이면\n\n\\[\nv(t)=t^2-5t+4\n\\]\n\n이다. 시각 \\(t=0\\)에서 \\(t=2\\)까지 움직인 거리는 속도를 적분하면 되므로\n\n\\[\n\\int_0^2 v(t)\\,dt\n\\]\n\n를 계산한다.\n\n따라서\n\n\\[\n\\int_0^2 (t^2-5t+4)\\,dt\n=\n\\left[\n\\frac13t^3-\\frac52t^2+4t\n\\right]_0^2\n\\]\n\n이다. 이를 계산하면\n\n\\[\n\\frac83-10+8\n=\n\\frac23\n\\]\n\n이다.\n\n따라서 시각 \\(t=0\\)에서 \\(t=2\\)까지 점 \\(P\\)가 움직인 거리는\n\n\\[\n\\frac23\n\\]\n\n이다. 그러므로 보기 ㄷ의\n\n\\[\n\\text{“움직인 거리는 }3\\text{이다.”}\n\\]\n\n는 거짓이다.",
+      "expected_diagnosis": {
+        "is_correct": false,
+        "has_flawed_reasoning": true,
+        "error_type": "distance_displacement_confusion",
+        "error_summary": "움직인 거리를 구해야 하는데 변위 \\(\\int v(t)dt\\)를 계산했다.",
+        "first_wrong_step": "움직인 거리는 속도를 적분하면 되므로 \\(\\int_0^2 v(t)dt\\)를 계산한다고 한 단계",
+        "why_plausible": "속도를 적분하면 위치 변화가 나온다는 사실은 맞지만, '움직인 거리'는 뒤로 움직인 구간도 양수로 누적해야 한다는 점을 놓쳤다.",
+        "missing_concepts": [
+          {
+            "concept_id": "c1-정적분활용",
+            "concept_name": "definite integral applications(정적분의 활용)",
+            "reason": "속도 함수에서 움직인 거리를 구할 때 절댓값 적분이 필요하다는 개념이 직접 연결된다."
+          },
+          {
+            "concept_id": "h1-인수분해",
+            "concept_name": "factorization(인수분해)",
+            "reason": "v(t)의 영점과 부호 변화를 확인하려면 인수분해가 필요하다."
+          }
+        ],
+        "related_pattern": "motion_distance_from_velocity",
+        "fix_strategy": "움직인 거리라는 표현이 나오면 먼저 \\(v(t)=0\\)을 풀고 부호표를 만든 뒤 \\(\\int |v(t)|dt\\)로 계산해라.",
+        "student_feedback": "계산한 값 \\(\frac23\\)은 변위입니다. 움직인 거리는 속도의 절댓값을 적분해야 하므로 부호가 바뀌는 \\(t=1\\)에서 구간을 나누어야 합니다.",
+        "next_review": [
+          {
+            "concept_id": "c1-정적분활용",
+            "reason": "거리와 변위의 차이가 핵심 오류이다."
+          },
+          {
+            "concept_id": "h1-인수분해",
+            "reason": "속도의 부호 변화 시점을 찾는 데 필요하다."
+          }
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "example_id": "E06_case_split_missing",
+      "shot_role": "analogous_example",
+      "problem_id": "2026-9모-공통-13",
+      "exam": "2026학년도 9월 모의평가",
+      "problem_type": "limit_parameter_case_split",
+      "problem_summary": "함수 f(x)=x^2+6x+12에 대해 모든 실수 a에서 특정 유리식 극한이 존재하도록 하는 정수 k의 개수를 구하는 문제.",
+      "target_error_type": "case_split_missing",
+      "problem_latex": "함수\n\\[\nf(x)=x^2+6x+12\n\\]\n에 대하여 다음 조건을 만족시키는 모든 정수 \\(k\\)의 개수는?\n\\[\n\\text{모든 실수 } a \\text{에 대하여 }\n\\lim_{x\\to a}\n\\frac{x^2}{(f(x))^2-k(x+2)f(x)}\n\\text{ 의 값이 존재한다.}\n\\]",
+      "correct_solution_summary": "정답 풀이 핵심:\n\\[\n(f(x))^2-k(x+2)f(x)=f(x)\\{f(x)-k(x+2)\\}\n\\]\n이고 \\(f(x)>0\\). 일반적으로 분모가 0이 되지 않으려면\n\\[\nx^2+(6-k)x+12-2k=0\n\\]\n이 실근을 갖지 않아야 하므로 \\(-2<k<6\\). 그러나 분모가 0이 되는 특수 경우도 따져야 하며, \\(a=0,\\ k=6\\)일 때\n\\[\n\\lim_{x\\to 0}\\frac{x^2}{f(x)x^2}=\\frac1{12}\n\\]\n로 존재한다. 따라서 \\(-2<k\\le 6\\), 정수는 8개.",
+      "final_concept_ids": [
+        "c1-함수극한"
+      ],
+      "prerequisite_and_related_concept_ids": [
+        "c1-함수연속",
+        "h1-복소수-이차방정식",
+        "h1-이차방정식-이차함수",
+        "m-이차방정식"
+      ],
+      "student_solution_latex": "주어진 극한은\n\n\\[\n\\lim_{x\\to a}\n\\frac{x^2}{(f(x))^2-k(x+2)f(x)}\n\\]\n\n이고,\n\n\\[\nf(x)=x^2+6x+12\n\\]\n\n이다. 분모를 정리하면\n\n\\[\n(f(x))^2-k(x+2)f(x)\n=\nf(x)\\{f(x)-k(x+2)\\}\n\\]\n\n이다.\n\n또한\n\n\\[\nf(x)=x^2+6x+12=(x+3)^2+3\n\\]\n\n이므로\n\n\\[\nf(x)>0\n\\]\n\n이다. 따라서 극한이 모든 실수 \\(a\\)에 대하여 존재하려면\n\n\\[\nf(x)-k(x+2)=0\n\\]\n\n이 되는 실수 \\(x\\)가 없어야 한다.\n\n즉,\n\n\\[\nx^2+6x+12-k(x+2)=0\n\\]\n\n이 실근을 가지면 안 된다. 정리하면\n\n\\[\nx^2+(6-k)x+12-2k=0\n\\]\n\n이다.\n\n이 이차방정식이 실근을 갖지 않으려면 판별식이 음수여야 하므로\n\n\\[\nD=(6-k)^2-4(12-2k)<0\n\\]\n\n이다. 전개하면\n\n\\[\nD=36-12k+k^2-48+8k\n=\nk^2-4k-12\n\\]\n\n이므로\n\n\\[\nk^2-4k-12<0\n\\]\n\n이다.\n\n따라서\n\n\\[\n(k+2)(k-6)<0\n\\]\n\n이고,\n\n\\[\n-2<k<6\n\\]\n\n이다.\n\n이 조건을 만족하는 정수 \\(k\\)는\n\n\\[\n-1,0,1,2,3,4,5\n\\]\n\n이므로 총\n\n\\[\n7\n\\]\n\n개이다.\n\n따라서 정답은\n\n\\[\n\\boxed{7}\n\\]\n\n이다.",
+      "expected_diagnosis": {
+        "is_correct": false,
+        "has_flawed_reasoning": true,
+        "error_type": "case_split_missing",
+        "error_summary": "분모가 0이 되지 않는 일반 경우만 보고, \\(k=6\\)에서 극한이 존재하는 특수 경우를 누락했다.",
+        "first_wrong_step": "극한이 모든 실수 \\(a\\)에서 존재하려면 \\(f(x)-k(x+2)=0\\)이 되는 실수 \\(x\\)가 없어야 한다고 단정한 단계",
+        "why_plausible": "유리식 극한에서 분모가 0이면 곧바로 극한이 존재하지 않는다고 배웠기 때문에, 분자도 함께 0이 되어 약분되는 특수 경우를 놓쳤을 가능성이 있다.",
+        "missing_concepts": [
+          {
+            "concept_id": "c1-함수극한",
+            "concept_name": "limit of a function(함수의 극한)",
+            "reason": "0/0 형태에서 극한이 존재할 수 있는지 따지는 개념이 직접 연결된다."
+          },
+          {
+            "concept_id": "h1-복소수-이차방정식",
+            "concept_name": "quadratic equation and discriminant(이차방정식과 판별식)",
+            "reason": "일반 경우에서 실근 존재 여부를 판별식으로 판단하는 과정과 연결된다."
+          }
+        ],
+        "related_pattern": "limit_parameter_case_split",
+        "fix_strategy": "매개변수 극한 문제에서는 '분모가 0이 안 되는 경우'와 '분모가 0이 되지만 분자와 함께 상쇄될 수 있는 경우'를 분리해서 확인해라.",
+        "student_feedback": "\\(-2<k<6\\)까지는 일반 경우만 본 결과입니다. \\(k=6\\)에서는 분모와 분자가 함께 \\(x^2\\)를 포함해 극한이 존재하므로 이 특수 케이스를 추가해야 합니다.",
+        "next_review": [
+          {
+            "concept_id": "c1-함수극한",
+            "reason": "분모가 0이 되는 특수 극한의 존재 가능성을 판단해야 한다."
+          },
+          {
+            "concept_id": "h1-복소수-이차방정식",
+            "reason": "판별식을 이용한 일반 케이스 분석이 포함된다."
+          }
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "example_id": "E02_product_rule_complex_propagation",
+      "shot_role": "few_shot",
+      "problem_id": "2026-수능-공통-13",
+      "exam": "2026학년도 대학수학능력시험",
+      "problem_type": "compound_derivative_tangent_area",
+      "problem_summary": "두 접선과 y축으로 둘러싸인 도형의 넓이를 구하는 문제. g(x)=(x^3-2x)f(x)의 도함수를 정확히 구해야 한다.",
+      "target_error_type": "product_rule_missing_term",
+      "problem_latex": "함수\n\\[\nf(x)=x^2-4x-3\n\\]\n에 대하여 곡선 \\(y=f(x)\\) 위의 점 \\((1,-6)\\)에서의 접선을 \\(l\\)이라 하고,\n\\[\ng(x)=(x^3-2x)f(x)\n\\]\n에 대하여 곡선 \\(y=g(x)\\) 위의 점 \\((1,6)\\)에서의 접선을 \\(m\\)이라 하자.\n두 직선 \\(l,m\\)과 \\(y\\)축으로 둘러싸인 도형의 넓이는?",
+      "correct_solution_summary": "정답 풀이 핵심:\n\\[\nf'(1)=-2\n\\]\n이므로 \\(l:y=-2x-4\\).\n또\n\\[\ng'(x)=(3x^2-2)f(x)+(x^3-2x)f'(x)\n\\]\n이므로\n\\[\ng'(1)=1\\cdot(-6)+(-1)\\cdot(-2)=-4.\n\\]\n따라서 \\(m:y=-4x+10\\). 두 직선의 교점은 \\(x=7\\), y절편 차이는 \\(14\\), 넓이는\n\\[\n\\frac12\\cdot 14\\cdot 7=49.\n\\]",
+      "final_concept_ids": [
+        "c1-도함수",
+        "c1-도함수활용"
+      ],
+      "prerequisite_and_related_concept_ids": [
+        "c1-미분계수",
+        "h2-직선방정식",
+        "h2-함수",
+        "m-식의계산"
+      ],
+      "student_solution_latex": "먼저\n\n\\[\nf(x)=x^2-4x-3\n\\]\n\n이므로\n\n\\[\nf'(x)=2x-4\n\\]\n\n이다. 따라서\n\n\\[\nf'(1)=2\\cdot 1-4=-2\n\\]\n\n이므로 곡선 \\(y=f(x)\\) 위의 점 \\((1,-6)\\)에서의 접선 \\(l\\)은\n\n\\[\ny+6=-2(x-1)\n\\]\n\n이다. 즉,\n\n\\[\nl:y=-2x-4\n\\]\n\n이다.\n\n이제\n\n\\[\ng(x)=(x^3-2x)f(x)\n\\]\n\n이므로\n\n\\[\ng'(x)=(3x^2-2)f(x)\n\\]\n\n이다. 따라서\n\n\\[\ng'(1)=(3\\cdot 1^2-2)f(1)\n\\]\n\n이고,\n\n\\[\nf(1)=1^2-4\\cdot 1-3=-6\n\\]\n\n이므로\n\n\\[\ng'(1)=1\\cdot (-6)=-6\n\\]\n\n이다.\n\n따라서 곡선 \\(y=g(x)\\) 위의 점 \\((1,6)\\)에서의 접선 \\(m\\)은\n\n\\[\ny-6=-6(x-1)\n\\]\n\n이고,\n\n\\[\nm:y=-6x+12\n\\]\n\n이다.\n\n두 직선 \\(l,m\\)의 교점을 구하면\n\n\\[\n-2x-4=-6x+12\n\\]\n\n이므로\n\n\\[\n4x=16,\\qquad x=4\n\\]\n\n이다. \\(y\\)축에서 두 직선의 절편 차이는\n\n\\[\n12-(-4)=16\n\\]\n\n이므로, 두 직선과 \\(y\\)축으로 둘러싸인 도형의 넓이는\n\n\\[\n\\frac12\\cdot 16\\cdot 4=32\n\\]\n\n이다.\n\n따라서 구하는 넓이는\n\n\\[\n\\boxed{32}\n\\]\n\n이다.",
+      "expected_diagnosis": {
+        "is_correct": false,
+        "has_flawed_reasoning": true,
+        "error_type": "product_rule_missing_term",
+        "error_summary": "\\(g(x)=(x^3-2x)f(x)\\)를 미분할 때 \\((x^3-2x)f'(x)\\) 항을 누락했고, 그 오류가 접선과 넓이 계산까지 전파되었다.",
+        "first_wrong_step": "\\(g'(x)=(3x^2-2)f(x)\\)라고 쓴 단계",
+        "why_plausible": "앞의 \\(x^3-2x\\)만 미분하고 뒤의 \\(f(x)\\)는 그대로 두는 형태가 자연스러워 보여, 곱의 두 번째 항을 놓쳤을 가능성이 있다.",
+        "missing_concepts": [
+          {
+            "concept_id": "c1-도함수",
+            "concept_name": "derivative function(도함수)",
+            "reason": "복합식에서 곱의 미분법을 정확히 적용해야 한다."
+          },
+          {
+            "concept_id": "c1-도함수활용",
+            "concept_name": "application of derivatives(도함수의 활용)",
+            "reason": "잘못된 도함수값이 접선 방정식과 넓이 계산으로 전파된다."
+          }
+        ],
+        "related_pattern": "compound_derivative_tangent_area",
+        "fix_strategy": "복합 문제에서는 최종 넓이 계산보다 먼저 접선의 기울기를 만드는 도함수 계산을 검산해라. 특히 \\(A(x)f(x)\\) 꼴은 항상 \\(A'(x)f(x)+A(x)f'(x)\\)이다.",
+        "student_feedback": "넓이 계산보다 앞서 \\(g'(x)\\)에서 곱의 미분법 한 항이 빠졌습니다. 이 한 줄 때문에 접선 \\(m\\)의 기울기와 최종 넓이가 모두 달라집니다.",
+        "next_review": [
+          {
+            "concept_id": "c1-도함수",
+            "reason": "곱의 미분법 항 누락이 최초 오류이다."
+          },
+          {
+            "concept_id": "c1-도함수활용",
+            "reason": "도함수값이 접선과 넓이로 이어지는 구조를 복습해야 한다."
+          }
+        ],
+        "uncertainty": null
+      }
+    }
+  ],
+  "solar_prompt_pack": {
+    "recommended_usage": "system prompt에는 error_type_dictionary와 problem_type_dictionary를 넣고, user message에는 examples 중 필요한 항목을 few-shot으로 3~6개 넣는 것을 권장한다.",
+    "minimal_user_input_template": {
+      "problem_id": "<문제 ID>",
+      "problem": "<문제 본문>",
+      "student_solution": "<학생 풀이>",
+      "model_solution_summary": "<모범 풀이 요약>",
+      "final_concept_ids": [
+        "<최종 개념 id>"
+      ],
+      "candidate_concept_ids": [
+        "<선행 및 관련 개념 id>"
+      ],
+      "instruction": "위 학생 풀이를 JSON으로 진단하라."
+    },
+    "expected_output_fields": [
+      "is_correct",
+      "has_flawed_reasoning",
+      "error_type",
+      "error_summary",
+      "first_wrong_step",
+      "why_plausible",
+      "missing_concepts",
+      "related_pattern",
+      "fix_strategy",
+      "student_feedback",
+      "next_review",
+      "uncertainty"
+    ]
+  }
+}
