@@ -5,7 +5,7 @@
 
 import { getRecapCard } from "@/lib/demo/recap-cards"
 import { RecapView } from "../_components/RecapView"
-import { DEMO_TARGET_ITEM_ID } from "@/lib/demo/constants"
+import { getTargetItemId } from "@/lib/demo/data-loader"
 
 type Props = {
   searchParams: Promise<{ patternKey?: string }>
@@ -25,7 +25,7 @@ export default async function RecapScreen({ searchParams }: Props) {
         <p className="text-sm text-black/60 mt-1">{card.subtitle}</p>
       </div>
 
-      <RecapView card={card} returnItemId={DEMO_TARGET_ITEM_ID} />
+      <RecapView card={card} returnItemId={getTargetItemId()} />
     </div>
   )
 }

@@ -1,0 +1,53 @@
+[
+  {
+    "stableKey": "C1",
+    "uuid": "c1111111-1111-4111-8111-111111111111",
+    "ordinal": 1,
+    "sectionTitle": "중3 · 이차방정식의 근의 판별",
+    "content": "이차방정식 ax²+bx+c=0의 근의 판별. 판별식 D=b²-4ac의 부호에 따라 서로 다른 두 실근(D>0), 중근(D=0), 허근(D<0)으로 판단한다.",
+    "patternMappings": [
+      { "patternKey": "LEAF-1", "confidence": 0.95 }
+    ]
+  },
+  {
+    "stableKey": "C2",
+    "uuid": "c2222222-2222-4222-8222-222222222222",
+    "ordinal": 2,
+    "sectionTitle": "고1 · 이차방정식과 이차함수",
+    "content": "이차방정식 ax²+bx+c=0이 실근을 가질 조건은 D≥0이다. 이차함수 y=ax²+bx+c가 x축과 두 점에서 만날 조건은 D>0이다.",
+    "patternMappings": [
+      { "patternKey": "LEAF-2", "confidence": 0.9 },
+      { "patternKey": "MID-1", "confidence": 0.8 }
+    ]
+  },
+  {
+    "stableKey": "C3",
+    "uuid": "c3333333-3333-4333-8333-333333333333",
+    "ordinal": 3,
+    "sectionTitle": "고2 수학Ⅱ · 미분계수",
+    "content": "함수 f(x)가 x=a에서 미분가능할 때 미분계수 f'(a)는 곡선 y=f(x) 위의 점 (a, f(a))에서의 접선의 기울기와 같다.",
+    "patternMappings": [
+      { "patternKey": "LEAF-3", "confidence": 0.95 }
+    ]
+  },
+  {
+    "stableKey": "C4",
+    "uuid": "c4444444-4444-4444-8444-444444444444",
+    "ordinal": 4,
+    "sectionTitle": "고2 수학Ⅱ · 접선의 방정식",
+    "content": "곡선 y=f(x) 위의 점 (a, f(a))에서의 접선의 방정식은 y-f(a) = f'(a)(x-a) 이다.",
+    "patternMappings": [
+      { "patternKey": "MID-2", "confidence": 0.9 }
+    ]
+  },
+  {
+    "stableKey": "C5",
+    "uuid": "c5555555-5555-4555-8555-555555555555",
+    "ordinal": 5,
+    "sectionTitle": "고2 수학Ⅱ · 곡선 밖 접선",
+    "content": "곡선 밖의 한 점에서 그은 접선의 개수를 구할 때는 접점을 미지수 t로 두고 접선이 그 점을 지나는 조건에서 t에 관한 방정식을 얻는다. 그 방정식의 실근 개수가 접선의 개수이며, 판별식 분석이 필요하다.",
+    "patternMappings": [
+      { "patternKey": "TARGET", "confidence": 0.85 }
+    ]
+  }
+]

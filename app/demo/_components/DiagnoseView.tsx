@@ -1,25 +1,72 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 import type { DiagnosisResult } from "@/lib/demo/diagnose"
 
-const PATTERN_KEYS_BY_ID: Record<string, string> = {
-  "11111111-1111-4111-8111-111111111111": "LEAF-1",
-  "22222222-2222-4222-8222-222222222222": "LEAF-2",
-  "33333333-3333-4333-8333-333333333333": "LEAF-3",
-  "44444444-4444-4444-8444-444444444444": "MID-1",
-  "55555555-5555-4555-8555-555555555555": "MID-2",
-  "66666666-6666-4666-8666-666666666666": "TARGET",
+// patternKey ↔ uuid 매핑은 diagnose.ts 에서 candidate.patternKey 로 같이 옴 — 정적 dict 불필요.
+
+/**
+ * 가짜 typewriter — 이미 받은 텍스트를 1글자씩 reveal.
+ * Solar Pro 가 JSON 모드라 진짜 stream 은 못 흘리지만,
+ * "AI 가 생각하면서 답한다" UX 효과는 동일.
+ */
+function TypeOut({
+  text,
+  speed = 22,
+  startDelay = 0,
+  onDone,
+}: {
+  text: string
+  speed?: number
+  startDelay?: number
+  onDone?: () => void
+}) {
+  const [shown, setShown] = useState("")
+  useEffect(() => {
+    setShown("")
+    let cancelled = false
+    let intervalId: ReturnType<typeof setInterval> | null = null
+    const startId = setTimeout(() => {
+      if (cancelled) return
+      let i = 0
+      intervalId = setInterval(() => {
+        i++
+        setShown(text.slice(0, i))
+        if (i >= text.length) {
+          if (intervalId) clearInterval(intervalId)
+          onDone?.()
+        }
+      }, speed)
+    }, startDelay)
+    return () => {
+      cancelled = true
+      clearTimeout(startId)
+      if (intervalId) clearInterval(intervalId)
+    }
+  }, [text, speed, startDelay, onDone])
+
+  const isComplete = shown.length === text.length
+  return (
+    <>
+      {shown}
+      {!isComplete && (
+        <span className="ml-0.5 inline-block w-[2px] h-[0.95em] bg-current align-middle animate-pulse" />
+      )}
+    </>
+  )
 }
 
 export function DiagnoseView({ diagnosis }: { diagnosis: DiagnosisResult }) {
   const router = useRouter()
-  const patternKey = PATTERN_KEYS_BY_ID[diagnosis.candidate.id] ?? "LEAF-1"
+
+  // typewriter chain — rationale 끝나면 justification 박스 등장.
+  const [rationaleDone, setRationaleDone] = useState(false)
 
   function handleRecap() {
-    router.push(`/demo/recap?patternKey=${patternKey}`)
+    router.push(`/demo/recap?patternKey=${diagnosis.candidate.patternKey}`)
   }
 
   return (
@@ -59,6 +106,54 @@ export function DiagnoseView({ diagnosis }: { diagnosis: DiagnosisResult }) {
         <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-white/50 mb-3">
           ★ 결손 역추적 — Solar Pro
         </div>
+
+        {/* BFS 역추적 경로 — TARGET → winner */}
+        <div className="bg-white/5 border border-white/10 rounded-md p-3 mb-4">
+          <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-white/50 mb-2">
+            역추적 경로
+          </div>
+          <div className="flex items-stretch gap-2">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex-1 px-3 py-2 border border-white/20 rounded text-xs flex flex-col justify-center min-w-0"
+            >
+              <div className="text-white/40 text-[9px] uppercase tracking-wider mb-0.5">
+                풀던 문제
+              </div>
+              <div className="text-white truncate">{diagnosis.target.label}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -6 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
+              className="text-[#FFA500] text-2xl self-center"
+            >
+              →
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                boxShadow: [
+                  "0 0 0 0 rgba(255,165,0,0)",
+                  "0 0 16px 2px rgba(255,165,0,0.45)",
+                  "0 0 8px 1px rgba(255,165,0,0.25)",
+                ],
+              }}
+              transition={{ delay: 1.1, duration: 0.6 }}
+              className="flex-1 px-3 py-2 border-2 border-[#FFA500] rounded text-xs flex flex-col justify-center min-w-0"
+            >
+              <div className="text-[#FFA500] text-[9px] uppercase tracking-wider mb-0.5 font-bold">
+                결손
+              </div>
+              <div className="text-white font-bold truncate">
+                {diagnosis.candidate.label}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
         <div className="mb-4">
           <div className="text-xs text-white/40 mb-1">진짜 결손</div>
           <div className="text-2xl font-extrabold text-[#FFA500]">
@@ -70,24 +165,33 @@ export function DiagnoseView({ diagnosis }: { diagnosis: DiagnosisResult }) {
         </div>
 
         {diagnosis.candidate.rationale && (
-          <p className="text-sm text-white/80 mb-4 leading-relaxed">
-            {diagnosis.candidate.rationale}
+          <p className="text-sm text-white/80 mb-4 leading-relaxed min-h-[1.4em]">
+            <TypeOut
+              text={diagnosis.candidate.rationale}
+              startDelay={1700}
+              onDone={() => setRationaleDone(true)}
+            />
           </p>
         )}
 
         {diagnosis.justification && (
           <motion.div
             initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+            animate={rationaleDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.4 }}
             className="bg-white/5 border border-white/10 rounded-md p-4 mb-4"
           >
             <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-yellow-400 mb-2">
               📖 본문 인용 · {diagnosis.justification.sectionTitle ?? "NCIC 교육과정"}
             </div>
-            <div className="text-sm leading-relaxed">
-              <span className="bg-yellow-400/30 px-1 rounded">
-                {diagnosis.justification.quote}
+            <div className="text-sm leading-relaxed text-white/90">
+              <span className="bg-yellow-300 text-black px-1.5 py-0.5 rounded font-semibold shadow-[0_1px_0_rgba(0,0,0,0.15)]">
+                {rationaleDone ? (
+                  <TypeOut text={diagnosis.justification.quote} startDelay={300} />
+                ) : (
+                  // 박스 자체가 안 보이는 동안 placeholder 로 자리 차지.
+                  <span className="opacity-0">{diagnosis.justification.quote}</span>
+                )}
               </span>
             </div>
           </motion.div>

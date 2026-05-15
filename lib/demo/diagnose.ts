@@ -18,7 +18,7 @@ import { db } from "@/lib/db"
 import { edges, nodes } from "@/lib/db/schema"
 import { isAvailable, scorePrereqMatch } from "@/lib/upstage/client"
 import { loadDemoItem, loadChunksForPattern } from "./queries"
-import { PATTERN_LEAF_1 } from "./constants"
+import { getFallbackPatternId, getPatternByUuid } from "./data-loader"
 
 export interface DiagnosisResult {
   /** Target item (Q6). */
@@ -26,6 +26,8 @@ export interface DiagnosisResult {
   /** 가장 가능성 높은 prereq 후보. */
   candidate: {
     id: string
+    /** Pattern stableKey (LEAF-1 등) — 리캡 카드 라우팅에 사용. */
+    patternKey: string
     label: string
     content: string
     score: number
@@ -58,12 +60,20 @@ const STUB_WRONG_ATTEMPT = {
 export async function diagnoseAttempt({
   itemId,
   attemptKey: _attemptKey,
+  studentSteps,
+  studentAnswer,
 }: {
   itemId: string
   attemptKey: string
+  /** ③ OCR pipeline 결과. 없으면 stub. */
+  studentSteps?: string[]
+  studentAnswer?: string
 }): Promise<DiagnosisResult> {
   const target = await loadDemoItem(itemId)
   if (!target) throw new Error(`item not found: ${itemId}`)
+
+  const steps = studentSteps ?? STUB_WRONG_ATTEMPT.steps
+  const ans = studentAnswer ?? STUB_WRONG_ATTEMPT.studentAnswer
 
   // 1) Pattern --contains--> Item 의 source Pattern.
   const [containerEdge] = await db
@@ -88,80 +98,89 @@ export async function diagnoseAttempt({
     prereqIds = prereqRows.map((r) => r.source)
   }
 
-  if (prereqIds.length === 0) prereqIds = [PATTERN_LEAF_1] // fallback
+  if (prereqIds.length === 0) prereqIds = [getFallbackPatternId()] // fallback
 
   const prereqs = await db
     .select()
     .from(nodes)
     .where(inArray(nodes.id, prereqIds))
 
-  // 3) 각 prereq 에 대해 score. Upstage 가용하면 LLM, 아니면 weight 기반.
-  let bestId = prereqs[0]!.id
-  let bestScore = 0
-  let bestRationale = ""
-  let bestJustification: { quote: string; chunkId: string; sectionTitle: string | null } | null =
-    null
+  // 3) 후보 prereq scoring — 병렬. 30초 룰 사수.
+  //    각 후보: LLM 1회 → 실패 시 chunk confidence 기반 heuristic.
+  const scored = await Promise.all(
+    prereqs.map(async (p) => {
+      const candidateChunks = await loadChunksForPattern(p.id)
+      const fallback = () => {
+        const fb = candidateChunks[0]
+        return {
+          patternId: p.id,
+          score: fb?.confidence ?? 0,
+          rationale: `${p.label} 결손이 의심됩니다.`,
+          justification: fb
+            ? { quote: fb.content, chunkId: fb.id, sectionTitle: fb.sectionTitle }
+            : null,
+        }
+      }
 
-  for (const p of prereqs) {
-    const candidateChunks = await loadChunksForPattern(p.id)
-
-    if (isAvailable()) {
+      if (!isAvailable()) return fallback()
       try {
-        const result = await scorePrereqMatch({
-          steps: STUB_WRONG_ATTEMPT.steps,
-          studentAnswer: STUB_WRONG_ATTEMPT.studentAnswer,
+        const r = await scorePrereqMatch({
+          steps,
+          studentAnswer: ans,
           correctAnswer: target.itemAnswer ?? "?",
+          targetSolution: target.itemSolution ?? undefined,
           targetPattern: { label: target.label, content: target.content },
           candidatePattern: { id: p.id, label: p.label, content: p.content },
           contextChunks: candidateChunks.map((c) => ({ id: c.id, content: c.content })),
         })
-        if (result.score > bestScore) {
-          bestScore = result.score
-          bestId = p.id
-          bestRationale = result.rationale
-          if (result.justification && result.justificationChunkId) {
-            const chunk = candidateChunks.find((c) => c.id === result.justificationChunkId)
-            bestJustification = {
-              quote: result.justification,
-              chunkId: result.justificationChunkId,
-              sectionTitle: chunk?.sectionTitle ?? null,
-            }
-          }
+        const matchedChunk =
+          r.justificationChunkId &&
+          candidateChunks.find((c) => c.id === r.justificationChunkId)
+        return {
+          patternId: p.id,
+          score: r.score,
+          rationale: r.rationale,
+          justification:
+            r.justification && matchedChunk
+              ? {
+                  quote: r.justification,
+                  chunkId: matchedChunk.id,
+                  sectionTitle: matchedChunk.sectionTitle,
+                }
+              : null,
         }
       } catch (err) {
-        console.warn("[demo/diagnose] Solar Pro fail, fallback to weight:", err)
-        // fall through to heuristic
+        console.warn(`[demo/diagnose] Solar Pro fail for ${p.label}:`, err)
+        return fallback()
       }
-    }
+    }),
+  )
 
-    // Heuristic fallback — 매핑된 chunk 가 있고 confidence 높으면 점수↑.
-    if (bestScore === 0 && candidateChunks[0]) {
-      bestScore = candidateChunks[0].confidence
-      bestId = p.id
-      bestRationale = `${p.label} 결손이 의심됩니다.`
-      bestJustification = {
-        quote: candidateChunks[0].content,
-        chunkId: candidateChunks[0].id,
-        sectionTitle: candidateChunks[0].sectionTitle,
-      }
-    }
-  }
+  // argmax. tie 시 fallback pattern (보통 LEAF-1) 우선 — 데모 안전판.
+  const fallbackId = getFallbackPatternId()
+  const winner = scored.reduce((best, cur) => {
+    if (cur.score > best.score) return cur
+    if (cur.score === best.score && cur.patternId === fallbackId) return cur
+    return best
+  })
 
-  const winner = prereqs.find((p) => p.id === bestId)!
+  const winnerNode = prereqs.find((p) => p.id === winner.patternId)!
+  const winnerPattern = getPatternByUuid(winnerNode.id)
 
   return {
     target: { id: target.id, label: target.label, content: target.content },
     candidate: {
-      id: winner.id,
-      label: winner.label,
-      content: winner.content,
-      score: bestScore,
-      rationale: bestRationale,
+      id: winnerNode.id,
+      patternKey: winnerPattern?.stableKey ?? "UNKNOWN",
+      label: winnerNode.label,
+      content: winnerNode.content,
+      score: winner.score,
+      rationale: winner.rationale,
     },
-    bfsPath: targetPatternId ? [targetPatternId, winner.id] : [winner.id],
-    justification: bestJustification,
-    studentSteps: STUB_WRONG_ATTEMPT.steps,
-    studentAnswer: STUB_WRONG_ATTEMPT.studentAnswer,
+    bfsPath: targetPatternId ? [targetPatternId, winnerNode.id] : [winnerNode.id],
+    justification: winner.justification,
+    studentSteps: steps,
+    studentAnswer: ans,
     correctAnswer: target.itemAnswer ?? "?",
   }
 }

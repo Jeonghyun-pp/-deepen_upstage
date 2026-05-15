@@ -1,0 +1,11 @@
+{
+  "prerequisite": [
+    { "from": "LEAF-1", "to": "LEAF-2", "weight": 0.9 },
+    { "from": "LEAF-1", "to": "MID-1",  "weight": 0.9 },
+    { "from": "LEAF-2", "to": "MID-1",  "weight": 0.7 },
+    { "from": "LEAF-3", "to": "MID-2",  "weight": 0.95 },
+    { "from": "MID-2",  "to": "TARGET", "weight": 0.9 },
+    { "from": "LEAF-1", "to": "TARGET", "weight": 0.85 },
+    { "from": "MID-1",  "to": "TARGET", "weight": 0.7 }
+  ]
+}
