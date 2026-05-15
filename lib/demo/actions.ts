@@ -8,6 +8,10 @@
 
 import { narrateAggregate } from "./diagnose"
 import { diagnoseSolution } from "@/lib/upstage/client"
+import {
+  recognizeHandwritingImage,
+  type HandwritingOcrResult,
+} from "@/lib/upstage/recognize-handwriting"
 import type { DemoSession } from "./session"
 import type { AggregateResult } from "./aggregate"
 import type {
@@ -34,6 +38,21 @@ export async function runSolutionDiagnosis(
     return await diagnoseSolution(input)
   } catch (err) {
     console.warn("[demo] runSolutionDiagnosis fail:", err)
+    return null
+  }
+}
+
+/**
+ * 손풀이 노트 OCR — SolveCanvas 가 화면 캡처 PNG(dataURL)를 넘긴다.
+ * Upstage 실패 시 null (UI 가 officialSolution 으로 fallback).
+ */
+export async function recognizeHandwriting(
+  dataUrl: string,
+): Promise<HandwritingOcrResult | null> {
+  try {
+    return await recognizeHandwritingImage(dataUrl)
+  } catch (err) {
+    console.warn("[demo] recognizeHandwriting fail:", err)
     return null
   }
 }

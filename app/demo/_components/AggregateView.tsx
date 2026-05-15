@@ -119,6 +119,12 @@ export function AggregateView({
           <div className="space-y-2">
             {session.attempts.map((a, i) => {
               const meta = patternByKey.get(a.candidatePatternKey)
+              // 오답 회차의 결손 개념 — distractorMeanings(오답 보기→결손) 기반.
+              const deficits = a.isCorrect
+                ? []
+                : distractorOf(a.itemPatternKey, a.studentAnswer).map(
+                    (k) => patternByKey.get(k)?.label ?? k,
+                  )
               return (
                 <motion.div
                   key={i}
@@ -141,12 +147,11 @@ export function AggregateView({
                     <div className="text-black/40 text-[11px] truncate">
                       → {meta?.label ?? a.candidatePatternKey}
                     </div>
-                    {a.diagnosis &&
-                      a.diagnosis.error_type !== "no_error" && (
-                        <div className="text-[10px] text-[#B25A00] mt-0.5 line-clamp-2">
-                          {a.diagnosis.error_summary}
-                        </div>
-                      )}
+                    {deficits.length > 0 && (
+                      <div className="text-[10px] text-[#B25A00] mt-0.5 line-clamp-2">
+                        결손 의심 · {deficits.join(", ")}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               )
@@ -245,7 +250,7 @@ export function AggregateView({
           onClick={handleRecap}
           className="mt-auto flex items-center justify-center gap-2 px-4 py-2.5 bg-[#FFA500] text-black text-sm font-bold rounded-md hover:bg-[#FFB733] transition"
         >
-          2분 리캡 보기
+          리캡 보기
           <ArrowRight size={16} />
         </button>
       </div>

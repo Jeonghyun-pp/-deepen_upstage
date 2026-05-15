@@ -38,6 +38,10 @@ export function ResultView({ graph, patterns, edges, itemMeta }: Props) {
     [itemMeta],
   )
   const scopeNodes = useMemo(() => patterns.map((p) => p.key), [patterns])
+  const patternByKey = useMemo(
+    () => new Map(patterns.map((p) => [p.key, p])),
+    [patterns],
+  )
 
   useEffect(() => {
     const s = getSession()
@@ -97,7 +101,11 @@ export function ResultView({ graph, patterns, edges, itemMeta }: Props) {
         </div>
 
         {/* 우: 결손 포인트 정리 */}
-        <DeficitSummary session={session} />
+        <DeficitSummary
+          session={session}
+          distractorOf={distractorOf}
+          labelOf={(k) => patternByKey.get(k)?.label ?? k}
+        />
       </div>
 
       <div className="px-8 py-5 flex items-center justify-between">
@@ -124,20 +132,33 @@ export function ResultView({ graph, patterns, edges, itemMeta }: Props) {
   )
 }
 
-/** 결손 포인트 정리 — 회차별 few-shot 진단 종합. */
-function DeficitSummary({ session }: { session: DemoSession }) {
-  // 오답이거나 풀이 논리 결함이 있는 회차 (= 결손 드러난 회차).
-  const flawed = session.attempts.filter(
-    (a) => a.diagnosis && (!a.diagnosis.is_correct || a.diagnosis.has_flawed_reasoning),
-  )
+/** 결손 포인트 정리 — 오답 보기(distractorMeanings) 기반 결손 개념 종합. */
+function DeficitSummary({
+  session,
+  distractorOf,
+  labelOf,
+}: {
+  session: DemoSession
+  distractorOf: (itemPatternKey: string, studentChoice: string) => string[]
+  labelOf: (key: string) => string
+}) {
+  // 오답 회차 = 결손이 드러난 회차. 오답 보기 → 결손 개념 매핑.
+  const wrong = session.attempts
+    .filter((a) => !a.isCorrect)
+    .map((a) => {
+      const keys = distractorOf(a.itemPatternKey, a.studentAnswer)
+      // 오답 보기에 매핑된 결손이 없으면 문제 자체 패턴을 의심 노드로.
+      return { attempt: a, deficitKeys: keys.length > 0 ? keys : [a.itemPatternKey] }
+    })
 
-  // next_review 종합 (concept_id 중복 제거).
-  const reviewMap = new Map<string, string>()
-  for (const a of flawed) {
-    for (const r of a.diagnosis?.next_review ?? []) {
-      if (!reviewMap.has(r.concept_id)) reviewMap.set(r.concept_id, r.reason)
+  // 결손 개념 종합 — 등장 횟수 집계 후 내림차순.
+  const deficitCount = new Map<string, number>()
+  for (const w of wrong) {
+    for (const k of w.deficitKeys) {
+      deficitCount.set(k, (deficitCount.get(k) ?? 0) + 1)
     }
   }
+  const ranked = [...deficitCount.entries()].sort((a, b) => b[1] - a[1])
 
   return (
     <div className="bg-white rounded-lg border border-black/5 p-5 overflow-y-auto max-h-[460px]">
@@ -145,54 +166,51 @@ function DeficitSummary({ session }: { session: DemoSession }) {
         결손 포인트 정리
       </div>
 
-      {flawed.length === 0 ? (
+      {wrong.length === 0 ? (
         <p className="text-sm text-black/50">
           이번 세션에서 뚜렷한 결손이 진단되지 않았습니다.
         </p>
       ) : (
         <div className="space-y-3">
-          {flawed.map((a, i) => {
-            const d = a.diagnosis!
-            return (
-              <div
-                key={i}
-                className="border border-[#FFA500]/25 bg-[#FFF8E6] rounded-md p-3"
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 bg-[#FFA500]/20 text-[#B25A00] rounded">
-                    {a.itemStableKey}
-                  </span>
-                  <span className="text-sm font-bold flex-1">
-                    {d.error_summary}
-                  </span>
-                </div>
-                {d.first_wrong_step && (
-                  <div className="text-xs text-black/55 mb-1">
-                    처음 틀린 단계: {d.first_wrong_step}
-                  </div>
-                )}
-                <div className="text-xs text-black/75 leading-relaxed border-t border-[#FFA500]/20 pt-1.5 mt-1">
-                  <span className="font-bold">보강 전략 ·</span>{" "}
-                  {d.fix_strategy}
-                </div>
+          {wrong.map(({ attempt, deficitKeys }, i) => (
+            <div
+              key={i}
+              className="border border-[#FFA500]/25 bg-[#FFF8E6] rounded-md p-3"
+            >
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-[10px] font-bold px-1.5 py-0.5 bg-[#FFA500]/20 text-[#B25A00] rounded">
+                  {attempt.itemStableKey}
+                </span>
+                <span className="text-xs text-black/45">
+                  {attempt.studentAnswer}번 오답 · 정답 {attempt.correctAnswer}번
+                </span>
               </div>
-            )
-          })}
+              <div className="text-sm text-black/80 leading-relaxed">
+                <span className="font-bold">결손 의심 ·</span>{" "}
+                {deficitKeys.map((k) => labelOf(k)).join(", ")}
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
-      {reviewMap.size > 0 && (
+      {ranked.length > 0 && (
         <div className="mt-4 pt-3 border-t border-black/5">
           <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-[#15803D] mb-2">
             다음 복습 추천
           </div>
           <ul className="space-y-1.5">
-            {[...reviewMap.entries()].map(([cid, reason]) => (
-              <li key={cid} className="text-xs text-black/70 flex gap-1.5">
+            {ranked.map(([key, count]) => (
+              <li key={key} className="text-xs text-black/70 flex gap-1.5">
                 <span className="text-[#15803D] font-bold">·</span>
                 <span>
-                  <span className="font-mono text-black/50">{cid}</span> —{" "}
-                  {reason}
+                  <span className="font-bold">{labelOf(key)}</span>
+                  {count > 1 && (
+                    <span className="text-black/45">
+                      {" "}
+                      — {count}개 문제에서 반복
+                    </span>
+                  )}
                 </span>
               </li>
             ))}

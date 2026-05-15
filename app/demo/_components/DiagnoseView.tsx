@@ -201,7 +201,7 @@ export function DiagnoseView({ diagnosis }: { diagnosis: DiagnosisResult }) {
           onClick={handleRecap}
           className="mt-auto flex items-center justify-center gap-2 px-4 py-2.5 bg-[#FFA500] text-black text-sm font-bold rounded-md hover:bg-[#FFB733] transition"
         >
-          2분 리캡 보기
+          리캡 보기
           <ArrowRight size={16} />
         </button>
       </div>
