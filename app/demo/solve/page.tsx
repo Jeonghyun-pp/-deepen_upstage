@@ -1,34 +1,114 @@
 /**
- * ③ Q6 캔버스 (0:50 ~ 2:00) — 펜으로 풀이.
- * ⑥ 재시도 (4:15 ~ 5:00) — mode=retry 로 동일 페이지 재사용.
+ * ③ 회차별 풀이 (0:40 ~ 3:30) — 5문제 시퀀스 중 N번째.
+ * ⑥ 재시도 (mode=retry 시 단발 흐름).
  *
- * tldraw 캔버스는 client 컴포넌트. 손글씨 → LaTeX 인식은 실시간 (Claude Vision 또는 IE Vision).
+ * searchParams:
+ *   itemId   현재 회차의 문제 (server 가 미리 계산해서 link 에 박음)
+ *   persona  "A" | "B" | "C" | "D" — 세션 페르소나
+ *   round    1~5 — 현재 회차
+ *   mode     "retry" 시 단발 모드 (회차 indicator 없음)
  */
 
 import { loadDemoItem } from "@/lib/demo/queries"
 import { SolveCanvas } from "../_components/SolveCanvas"
-import { getTargetItemId } from "@/lib/demo/data-loader"
+import { MathText } from "../_components/MathText"
+import {
+  getTargetItemId,
+  getPersonaSequence,
+  getItemPatternKey,
+} from "@/lib/demo/data-loader"
 
 type Props = {
-  searchParams: Promise<{ itemId?: string; mode?: "retry" }>
+  searchParams: Promise<{
+    itemId?: string
+    persona?: string
+    round?: string
+    mode?: "retry"
+  }>
 }
 
 export default async function SolveScreen({ searchParams }: Props) {
-  const { itemId = getTargetItemId(), mode } = await searchParams
-  const item = await loadDemoItem(itemId)
+  const params = await searchParams
+  const personaKey = params.persona ?? "A"
+  const round = Math.max(1, parseInt(params.round ?? "1", 10))
+  const mode = params.mode
   const isRetry = mode === "retry"
+
+  // persona 시퀀스 — 회차별 다음 문제 url 미리 계산.
+  const sequence = isRetry ? [] : getPersonaSequence(personaKey)
+  const totalRounds = sequence.length || 5
+  const currentIdx = Math.min(round - 1, sequence.length - 1)
+  const currentItemId =
+    params.itemId ?? sequence[currentIdx]?.uuid ?? getTargetItemId()
+  const item = await loadDemoItem(currentItemId)
+  const itemPatternKey = getItemPatternKey(currentItemId) ?? ""
+
+  // 다음 회차 url — 마지막 회차면 /demo/diagnose (종합).
+  let nextUrl: string
+  if (isRetry) {
+    nextUrl = "/demo"
+  } else if (round >= totalRounds) {
+    nextUrl = `/demo/diagnose?persona=${personaKey}`
+  } else {
+    const nextItem = sequence[round] // round 는 1-base, sequence 는 0-base → 다음 = idx round
+    const nextItemId = nextItem?.uuid ?? currentItemId
+    nextUrl = `/demo/solve?itemId=${nextItemId}&persona=${personaKey}&round=${round + 1}`
+  }
 
   return (
     <div className="flex-1 flex flex-col">
       <div className="px-8 pt-6">
-        <div className="text-[11px] tracking-[0.25em] font-bold uppercase text-black/40 mb-2">
-          {isRetry ? "STEP 6 / 6 · 재시도" : "STEP 3 / 6 · 풀이"}
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-[11px] tracking-[0.25em] font-bold uppercase text-black/40">
+            {isRetry
+              ? "STEP 6 / 6 · 재시도"
+              : `STEP 3 / 6 · 회차 ${round} / ${totalRounds}`}
+          </div>
+          {!isRetry && <RoundDots total={totalRounds} current={round} />}
         </div>
         <h2 className="text-2xl font-bold">{item?.label}</h2>
-        <p className="text-base text-black/70 mt-2">{item?.content}</p>
+        <div className="text-base text-black/70 mt-2">
+          {item?.content ? <MathText>{item.content}</MathText> : null}
+        </div>
       </div>
 
-      <SolveCanvas item={item} isRetry={isRetry} />
+      <SolveCanvas
+        // 회차/itemId 변경 시 컴포넌트 강제 remount → useState 초기화.
+        // Next.js 는 같은 page 의 query 변경만으로 client component 를 재사용하므로
+        // selected/submitted state 가 회차 간 carry-over 되는 문제 방지.
+        key={`${personaKey}-${round}-${currentItemId}`}
+        item={item}
+        itemPatternKey={itemPatternKey}
+        isRetry={isRetry}
+        round={round}
+        totalRounds={totalRounds}
+        personaKey={personaKey}
+        nextUrl={nextUrl}
+      />
+    </div>
+  )
+}
+
+function RoundDots({ total, current }: { total: number; current: number }) {
+  return (
+    <div className="flex items-center gap-1.5">
+      {Array.from({ length: total }, (_, i) => {
+        const n = i + 1
+        const done = n < current
+        const active = n === current
+        return (
+          <div
+            key={n}
+            className={`w-6 h-1.5 rounded-full ${
+              done
+                ? "bg-[#15803D]"
+                : active
+                  ? "bg-[#15803D]/60"
+                  : "bg-black/10"
+            }`}
+          />
+        )
+      })}
     </div>
   )
 }

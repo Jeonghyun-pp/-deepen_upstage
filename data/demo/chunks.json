@@ -1,53 +1,132 @@
 [
   {
-    "stableKey": "C1",
-    "uuid": "c1111111-1111-4111-8111-111111111111",
+    "stableKey": "NCIC-1",
+    "uuid": "2722138b-2452-4c72-8e86-5aef533bd2ba",
     "ordinal": 1,
-    "sectionTitle": "중3 · 이차방정식의 근의 판별",
-    "content": "이차방정식 ax²+bx+c=0의 근의 판별. 판별식 D=b²-4ac의 부호에 따라 서로 다른 두 실근(D>0), 중근(D=0), 허근(D<0)으로 판단한다.",
+    "sectionTitle": "고등(공통) · 복소수와 이차방정식",
+    "content": "이차방정식 ax²+bx+c=0의 판별식 D=b²-4ac의 부호로 근의 개수를 판별한다. D>0이면 서로 다른 두 실근, D=0이면 중근, D<0이면 서로 다른 두 허근을 갖는다. [10공수1-02-04]",
     "patternMappings": [
-      { "patternKey": "LEAF-1", "confidence": 0.95 }
+      {
+        "patternKey": "H1-복소수-이차방정식",
+        "confidence": 0.95
+      }
     ]
   },
   {
-    "stableKey": "C2",
-    "uuid": "c2222222-2222-4222-8222-222222222222",
+    "stableKey": "NCIC-2",
+    "uuid": "b7b6c36f-1a10-402e-8e21-8207166dae53",
     "ordinal": 2,
-    "sectionTitle": "고1 · 이차방정식과 이차함수",
-    "content": "이차방정식 ax²+bx+c=0이 실근을 가질 조건은 D≥0이다. 이차함수 y=ax²+bx+c가 x축과 두 점에서 만날 조건은 D>0이다.",
+    "sectionTitle": "고등(공통) · 이차방정식과 이차함수",
+    "content": "이차함수의 그래프와 직선의 위치 관계는 두 식을 연립하여 얻은 이차방정식의 판별식의 부호로 판단한다. 두 점에서 만나면 D>0, 접하면 D=0, 만나지 않으면 D<0이다. [10공수1-02-05]",
     "patternMappings": [
-      { "patternKey": "LEAF-2", "confidence": 0.9 },
-      { "patternKey": "MID-1", "confidence": 0.8 }
+      {
+        "patternKey": "H1-이차방정식-이차함수",
+        "confidence": 0.95
+      }
     ]
   },
   {
-    "stableKey": "C3",
-    "uuid": "c3333333-3333-4333-8333-333333333333",
+    "stableKey": "NCIC-3",
+    "uuid": "776eb917-9ce8-4fd7-8f69-64d78b5ac2f8",
     "ordinal": 3,
-    "sectionTitle": "고2 수학Ⅱ · 미분계수",
-    "content": "함수 f(x)가 x=a에서 미분가능할 때 미분계수 f'(a)는 곡선 y=f(x) 위의 점 (a, f(a))에서의 접선의 기울기와 같다.",
+    "sectionTitle": "고등(일반선택) · 미적분Ⅰ — 미분계수",
+    "content": "함수 f(x)의 x=a에서의 미분계수는 f'(a) = lim_{h→0} [f(a+h)-f(a)]/h 로 정의되며, 이는 곡선 y=f(x) 위의 점 (a, f(a))에서의 접선의 기울기와 같다. [12미적Ⅰ-02-01]",
     "patternMappings": [
-      { "patternKey": "LEAF-3", "confidence": 0.95 }
+      {
+        "patternKey": "C1-미분계수",
+        "confidence": 0.95
+      }
     ]
   },
   {
-    "stableKey": "C4",
-    "uuid": "c4444444-4444-4444-8444-444444444444",
+    "stableKey": "NCIC-4",
+    "uuid": "ecaf12eb-a99d-4fa3-89bf-8bb7a3afed2e",
     "ordinal": 4,
-    "sectionTitle": "고2 수학Ⅱ · 접선의 방정식",
-    "content": "곡선 y=f(x) 위의 점 (a, f(a))에서의 접선의 방정식은 y-f(a) = f'(a)(x-a) 이다.",
+    "sectionTitle": "고등(일반선택) · 미적분Ⅰ — 다항함수의 도함수",
+    "content": "다항함수 f(x) = xⁿ (n은 자연수)의 도함수는 f'(x) = nx^(n-1) 이다. 일반적으로 다항함수의 도함수는 각 항을 같은 규칙으로 미분하여 더해서 구한다. [12미적Ⅰ-02-04]",
     "patternMappings": [
-      { "patternKey": "MID-2", "confidence": 0.9 }
+      {
+        "patternKey": "C1-도함수",
+        "confidence": 0.95
+      }
     ]
   },
   {
-    "stableKey": "C5",
-    "uuid": "c5555555-5555-4555-8555-555555555555",
+    "stableKey": "NCIC-5",
+    "uuid": "d6b3c051-83ad-41bf-8ecb-7ad5ddf691a2",
     "ordinal": 5,
-    "sectionTitle": "고2 수학Ⅱ · 곡선 밖 접선",
-    "content": "곡선 밖의 한 점에서 그은 접선의 개수를 구할 때는 접점을 미지수 t로 두고 접선이 그 점을 지나는 조건에서 t에 관한 방정식을 얻는다. 그 방정식의 실근 개수가 접선의 개수이며, 판별식 분석이 필요하다.",
+    "sectionTitle": "고등(공통) · 인수분해",
+    "content": "고등 인수분해는 삼차식 a³±b³ = (a±b)(a²∓ab+b²), 완전제곱식, 치환, 인수정리(다항식 P(x)에 대하여 P(a)=0이면 (x-a)는 인수)를 활용한다. [10공수1-01-04]",
     "patternMappings": [
-      { "patternKey": "TARGET", "confidence": 0.85 }
+      {
+        "patternKey": "H1-인수분해",
+        "confidence": 0.95
+      }
+    ]
+  },
+  {
+    "stableKey": "NCIC-6",
+    "uuid": "4bcb2885-cbf7-4844-8df3-6cc28a58b480",
+    "ordinal": 6,
+    "sectionTitle": "고등(일반선택) · 미적분Ⅰ — 도함수의 활용",
+    "content": "도함수 f'(x)를 이용하여 접선의 방정식·증감·극값·그래프 개형·속도·가속도 등을 분석한다. f'(x)=0의 실근에서 극값 후보가 나오며, 부호 변화로 극대/극소를 판정한다. [12미적Ⅰ-02-06]",
+    "patternMappings": [
+      {
+        "patternKey": "C1-도함수활용",
+        "confidence": 0.95
+      }
+    ]
+  },
+  {
+    "stableKey": "NCIC-7",
+    "uuid": "4e8a2e93-268d-4618-8ca1-29439823e813",
+    "ordinal": 7,
+    "sectionTitle": "고등(일반선택) · 미적분Ⅰ — 함수의 극한",
+    "content": "함수의 극한은 lim_{x→a} f(x) = L 로 표기하며, 좌극한과 우극한이 같을 때 극한이 존재한다. [12미적Ⅰ-01-01]",
+    "patternMappings": [
+      {
+        "patternKey": "C1-함수극한",
+        "confidence": 0.95
+      }
+    ]
+  },
+  {
+    "stableKey": "NCIC-8",
+    "uuid": "6eff1bc5-fd72-4b55-8a31-6c77d3dabe26",
+    "ordinal": 8,
+    "sectionTitle": "고등(일반선택) · 미적분Ⅰ — 함수의 연속",
+    "content": "함수 f(x)가 x=a에서 연속이려면 lim_{x→a} f(x) = f(a)가 성립해야 한다. 다항함수는 모든 실수에서 연속이다. [12미적Ⅰ-01-04]",
+    "patternMappings": [
+      {
+        "patternKey": "C1-함수연속",
+        "confidence": 0.95
+      }
+    ]
+  },
+  {
+    "stableKey": "NCIC-9",
+    "uuid": "3f9f82c0-2d25-42b0-8d8b-ee49f3fdc69b",
+    "ordinal": 9,
+    "sectionTitle": "고등(공통) · 다항식의 연산",
+    "content": "다항식의 덧셈·뺄셈·곱셈·나눗셈을 수행한다. 곱셈공식 (a+b)³ = a³+3a²b+3ab²+b³, (a+b+c)² = a²+b²+c²+2ab+2bc+2ca 등이 자주 사용된다. [10공수1-01-02]",
+    "patternMappings": [
+      {
+        "patternKey": "H1-다항식연산",
+        "confidence": 0.95
+      }
+    ]
+  },
+  {
+    "stableKey": "NCIC-10",
+    "uuid": "053704d2-9b39-4f02-84da-44778cdcb03c",
+    "ordinal": 10,
+    "sectionTitle": "고등(진로선택) · 미적분Ⅱ — 여러 가지 미분법",
+    "content": "지수·로그·삼각함수의 미분, 몫의 미분, 합성함수의 미분(연쇄법칙), 매개변수·음함수·역함수의 미분을 다룬다. (gof)'(x) = g'(f(x))·f'(x). [12미적Ⅱ-02-05]",
+    "patternMappings": [
+      {
+        "patternKey": "C2-여러미분법",
+        "confidence": 0.95
+      }
     ]
   }
 ]

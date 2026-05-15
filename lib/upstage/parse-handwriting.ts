@@ -1,8 +1,10 @@
 /**
- * ③ OCR pipeline — Upstage Document Parse + Solar Pro 2.
+ * ③ OCR pipeline — Solar Pro 2 vision (multimodal).
  *
- *   image  ──[Document Parse]──→ rawText
- *   rawText + Q6 context ──[Solar Pro 2 + prompts/ocr-steps]──→ { steps, studentAnswer }
+ *   image  ──[Solar Pro 2 vision]──→ { steps, studentAnswer }
+ *
+ * 회전된 사진·손글씨·한국어·수식 모두 vision 모델이 한 번에 처리.
+ * Document Parse 는 인쇄물 전용으로 손글씨 + 회전에 약해서 제거.
  *
  * 호출처: app/api/demo/ocr/route.ts
  * 실패 시: STUB_OCR_RESULT 로 fallback (route 가 결정).
@@ -10,13 +12,7 @@
 
 import OpenAI from "openai"
 import { env, features } from "@/lib/env"
-import {
-  buildMessages as buildOcrMessages,
-  OcrStepsOutput,
-  type OcrStepsOutputT,
-} from "./prompts/ocr-steps"
-
-const DOCUMENT_PARSE_URL = "https://api.upstage.ai/v1/document-digitization"
+import { OcrStepsOutput, type OcrStepsOutputT } from "./prompts/ocr-steps"
 
 let _solarClient: OpenAI | null = null
 function getSolarClient(): OpenAI | null {
@@ -30,105 +26,79 @@ function getSolarClient(): OpenAI | null {
   return _solarClient
 }
 
-/**
- * 1) Document Parse — 이미지/PDF → text/markdown.
- */
-async function documentParse(blob: Blob, filename: string): Promise<string> {
-  if (!features.upstage) throw new Error("Upstage 키 미설정")
+const VISION_SYSTEM = `당신은 한국 고등학교 수학 손글씨 풀이를 인식하는 OCR 도우미다.
 
-  const form = new FormData()
-  form.append("document", blob, filename)
-  form.append("model", "document-parse")
-  // OCR 강제 — 손글씨/이미지 PDF 다 cover.
-  form.append("ocr", "force")
+이미지에는 학생이 종이에 적은 풀이가 있다. 사진이 옆/거꾸로 회전돼있어도 글자 방향을 자동 인식해서 읽어라.
 
-  const resp = await fetch(DOCUMENT_PARSE_URL, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${env.UPSTAGE_API_KEY}`,
-    },
-    body: form,
-  })
+규칙:
+1. 학생이 실제로 적은 식만 단계로 추출. 정답 풀이를 만들어 끼우지 마라.
+2. 각 step 의 label 은 한국어 (예: "도함수 계산", "극값 조건", "f(2) 대입").
+3. 알아볼 수 없는 영역은 skip.
+4. 학생이 도달한 최종 답을 studentAnswer 에 표기. 객관식이면 보기 번호 또는 그 텍스트 (예: "14", "③", "k < -4", "2개").
+5. steps 는 1~6개.
 
-  if (!resp.ok) {
-    const text = await resp.text()
-    throw new Error(
-      `Document Parse ${resp.status}: ${text.slice(0, 300)}`,
-    )
-  }
-
-  const data = (await resp.json()) as {
-    content?: { markdown?: string; text?: string; html?: string }
-    text?: string
-    markdown?: string
-    html?: string
-  }
-
-  // 응답 shape 변종 흡수 (markdown > text > html 우선).
-  const out =
-    data.content?.markdown ??
-    data.markdown ??
-    data.content?.text ??
-    data.text ??
-    data.content?.html ??
-    data.html ??
-    ""
-
-  if (!out.trim()) {
-    throw new Error("Document Parse 응답 비어있음")
-  }
-  return out
-}
+응답은 반드시 JSON:
+{ "steps": [{"latex": "...", "label": "..."}], "studentAnswer": "..." }`
 
 /**
- * 2) Solar Pro 2 — rawText → { steps, studentAnswer } 구조화.
+ * 메인 — image → { steps, studentAnswer }.
+ *
+ * @param blob 학생 풀이 이미지 (jpeg/png)
+ * @param _filename 디버그용 (Upstage 호출엔 사용 X)
+ * @param problemContext 학생이 풀던 문제 본문
  */
-async function structureSteps(
-  rawText: string,
+export async function parseHandwriting(
+  blob: Blob,
+  _filename: string,
   problemContext: string,
 ): Promise<OcrStepsOutputT> {
   const client = getSolarClient()
   if (!client) throw new Error("Upstage 키 미설정")
 
-  const messages = buildOcrMessages({ rawText, problemContext })
+  // 이미지 → base64 dataURL.
+  const arrayBuffer = await blob.arrayBuffer()
+  const base64 = Buffer.from(arrayBuffer).toString("base64")
+  const mimeType = blob.type || "image/jpeg"
+  const dataUrl = `data:${mimeType};base64,${base64}`
+
   const resp = await client.chat.completions.create({
     model: env.UPSTAGE_SOLAR_MODEL,
-    messages,
+    messages: [
+      { role: "system", content: VISION_SYSTEM },
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text:
+              `학생이 풀던 문제:\n${problemContext}\n\n` +
+              "위 사진은 이 학생의 손글씨 풀이입니다. " +
+              "단계별로 추출하고 최종 답을 찾으세요.",
+          },
+          {
+            type: "image_url",
+            image_url: { url: dataUrl },
+          },
+        ],
+      },
+    ],
     response_format: { type: "json_object" },
     temperature: 0.1,
+    max_tokens: 1500,
   })
   const raw = resp.choices[0]?.message?.content ?? ""
   return OcrStepsOutput.parse(JSON.parse(raw))
 }
 
 /**
- * 메인 — image → { steps, studentAnswer }.
- */
-export async function parseHandwriting(
-  blob: Blob,
-  filename: string,
-  problemContext: string,
-): Promise<OcrStepsOutputT> {
-  const rawText = await documentParse(blob, filename)
-  return structureSteps(rawText, problemContext)
-}
-
-/**
  * 데모 안전판 — Upstage 실패 / sample 누락 시 fallback.
- * Q6 학생 풀이 (판별식 누락 시나리오와 일치).
+ *
+ * 의도적으로 generic (특정 문제의 정답 X) — 시연자가 stub 노출을 인지할 수 있게.
+ * 라이브 OCR 가 실패하면 화면에 "OCR 실패 (재업로드 권장)" 으로 보임.
  */
 export const STUB_OCR_RESULT: OcrStepsOutputT = {
   steps: [
-    { latex: "(t,\\ t^2+t+1)", label: "접점 설정" },
-    { latex: "f'(t)=2t+1", label: "기울기 계산" },
-    {
-      latex: "-3-(t^2+t+1)=(2t+1)(0-t)",
-      label: "접선이 (0,-3) 통과 조건",
-    },
-    {
-      latex: "-t^2=4\\ \\Rightarrow\\ t^2=-4",
-      label: "부호 처리 — 판별식 미적용",
-    },
+    { latex: "\\text{(OCR 인식 실패 — 재업로드 권장)}", label: "OCR 실패" },
   ],
-  studentAnswer: "0개",
+  studentAnswer: "?",
 }

@@ -1,75 +1,254 @@
 [
   {
-    "stableKey": "LEAF-1",
-    "uuid": "11111111-1111-4111-8111-111111111111",
+    "stableKey": "H1-이차방정식-이차함수",
+    "uuid": "2dcfd6e1-61c5-415f-81e5-8cc3e11bc019",
     "displayLayer": "concept",
-    "label": "판별식",
-    "content": "이차방정식 ax²+bx+c=0의 실근 개수를 D=b²-4ac의 부호로 판별. D>0 두 실근, D=0 중근, D<0 허근.",
-    "tldr": "판별식 D=b²-4ac",
-    "grade": "중3",
-    "signature": ["판별식", "이차방정식"],
+    "label": "이차방정식과 이차함수 (관계·위치관계·최대최소)",
+    "content": "이차방정식과 이차함수 (관계·위치관계·최대최소) — 방정식과 부등식 (고등(공통))",
+    "tldr": "이차방정식과 이차함수의 관계·위치관계",
+    "grade": "고등(공통)",
+    "signature": [
+      "이차방정식과 이차함수 (관계·위치관계·최대최소)"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 500.0,
+      "y": 150.0
+    }
+  },
+  {
+    "stableKey": "H1-복소수-이차방정식",
+    "uuid": "108ed8aa-7650-478e-8fdd-1a673e5f411e",
+    "displayLayer": "concept",
+    "label": "복소수와 이차방정식 (판별식·근과 계수)",
+    "content": "복소수와 이차방정식 (판별식·근과 계수) — 방정식과 부등식 (고등(공통))",
+    "tldr": "판별식 D = b² - 4ac · 근과 계수",
+    "grade": "고등(공통)",
+    "signature": [
+      "복소수와 이차방정식 (판별식·근과 계수)"
+    ],
     "isKiller": false,
     "isFallback": true,
-    "whiteboardPos": { "x": 200, "y": 100 }
+    "whiteboardPos": {
+      "x": 676.8,
+      "y": 223.2
+    }
   },
   {
-    "stableKey": "LEAF-2",
-    "uuid": "22222222-2222-4222-8222-222222222222",
+    "stableKey": "C1-미분계수",
+    "uuid": "3fdcca86-bc8f-4bbc-84fb-662a00dcf7ee",
     "displayLayer": "concept",
-    "label": "이차방정식 근 존재 조건",
-    "content": "이차방정식이 실근을 가질 조건 D≥0.",
-    "tldr": "D≥0 ⇔ 실근",
-    "grade": "고1",
-    "signature": ["이차방정식", "근의 존재"],
+    "label": "미분계수",
+    "content": "미분계수 — 미분 (고등(일반선택))",
+    "tldr": "f'(a) = lim h→0 [f(a+h)-f(a)]/h",
+    "grade": "고등(일반선택)",
+    "signature": [
+      "미분계수"
+    ],
     "isKiller": false,
-    "whiteboardPos": { "x": 500, "y": 100 }
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 500.0,
+      "y": 0.0
+    }
   },
   {
-    "stableKey": "LEAF-3",
-    "uuid": "33333333-3333-4333-8333-333333333333",
+    "stableKey": "C1-도함수",
+    "uuid": "d133093c-26c0-4b24-8787-b49eee348589",
     "displayLayer": "concept",
-    "label": "미분계수 = 접선 기울기",
-    "content": "f'(a) = 점 (a, f(a))에서의 접선의 기울기.",
-    "tldr": "f'(a) = 접선 기울기",
-    "grade": "고2",
-    "signature": ["미분계수", "접선", "기울기"],
+    "label": "도함수 (다항함수의 미분)",
+    "content": "도함수 (다항함수의 미분) — 미분 (고등(일반선택))",
+    "tldr": "다항함수 미분 — (xⁿ)' = nx^(n-1)",
+    "grade": "고등(일반선택)",
+    "signature": [
+      "도함수 (다항함수의 미분)"
+    ],
     "isKiller": false,
-    "whiteboardPos": { "x": 800, "y": 100 }
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 880.4,
+      "y": 276.4
+    }
   },
   {
-    "stableKey": "MID-1",
-    "uuid": "44444444-4444-4444-8444-444444444444",
-    "displayLayer": "pattern",
-    "label": "이차함수와 직선의 위치관계",
-    "content": "이차함수와 직선이 만나는 점의 개수 = 두 식을 연립한 이차방정식의 판별식 부호.",
-    "tldr": "위치관계 ↔ 판별식",
-    "grade": "고1",
-    "signature": ["이차함수", "직선", "위치관계"],
+    "stableKey": "H1-인수분해",
+    "uuid": "0c67ef8c-9de3-4a63-8f85-7206d1ce8bda",
+    "displayLayer": "concept",
+    "label": "인수분해 (고등)",
+    "content": "인수분해 (고등) — 다항식 (고등(공통))",
+    "tldr": "고등 인수분해 (삼차·치환·인수정리)",
+    "grade": "고등(공통)",
+    "signature": [
+      "인수분해 (고등)"
+    ],
     "isKiller": false,
-    "whiteboardPos": { "x": 350, "y": 350 }
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 750.0,
+      "y": 400.0
+    }
   },
   {
-    "stableKey": "MID-2",
-    "uuid": "55555555-5555-4555-8555-555555555555",
+    "stableKey": "C1-함수극한",
+    "uuid": "9b685e39-f6cf-4fbe-87c7-15cacfb874c2",
     "displayLayer": "pattern",
-    "label": "곡선 위 점에서의 접선의 방정식",
-    "content": "곡선 y=f(x) 위의 점 (a, f(a))에서의 접선: y - f(a) = f'(a)(x - a).",
-    "tldr": "y - f(a) = f'(a)(x-a)",
-    "grade": "고2",
-    "signature": ["접선", "미분"],
+    "label": "함수의 극한",
+    "content": "함수의 극한 — 함수의 극한과 연속 (고등(일반선택))",
+    "tldr": "함수의 극한",
+    "grade": "고등(일반선택)",
+    "signature": [
+      "함수의 극한"
+    ],
     "isKiller": false,
-    "whiteboardPos": { "x": 700, "y": 350 }
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 735.1,
+      "y": 723.6
+    }
   },
   {
-    "stableKey": "TARGET",
-    "uuid": "66666666-6666-4666-8666-666666666666",
+    "stableKey": "C1-함수연속",
+    "uuid": "26fbbc90-708d-4f94-88ec-983de3c0c133",
     "displayLayer": "pattern",
-    "label": "곡선 밖 한 점에서 그은 접선의 개수",
-    "content": "곡선 밖 점 P에서 그은 접선의 접점을 t로 두면 f'(t)·(P_x - t) = P_y - f(t). 이 t-방정식의 실근 개수 = 접선의 개수. 판별식 분석 필요.",
-    "tldr": "접점 t-방정식의 실근 = 접선 개수",
-    "grade": "고2",
-    "signature": ["접선", "곡선 밖", "판별식"],
-    "isKiller": true,
-    "whiteboardPos": { "x": 500, "y": 600 }
+    "label": "함수의 연속",
+    "content": "함수의 연속 — 함수의 극한과 연속 (고등(일반선택))",
+    "tldr": "함수의 연속",
+    "grade": "고등(일반선택)",
+    "signature": [
+      "함수의 연속"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 264.9,
+      "y": 723.6
+    }
+  },
+  {
+    "stableKey": "H2-함수",
+    "uuid": "a03382bd-f3b8-4e32-8b45-ac3cd2297b5f",
+    "displayLayer": "pattern",
+    "label": "함수 (합성함수·역함수)",
+    "content": "함수 (합성함수·역함수) — 함수와 그래프 (고등(공통))",
+    "tldr": "함수 (합성함수·역함수)",
+    "grade": "고등(공통)",
+    "signature": [
+      "함수 (합성함수·역함수)"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 676.8,
+      "y": 576.8
+    }
+  },
+  {
+    "stableKey": "H2-집합",
+    "uuid": "d3678b14-33a7-4d0e-8203-692ff68c0ffe",
+    "displayLayer": "pattern",
+    "label": "집합 (포함관계·연산·벤다이어그램)",
+    "content": "집합 (포함관계·연산·벤다이어그램) — 집합과 명제 (고등(공통))",
+    "tldr": "집합 (포함관계·연산·벤다이어그램)",
+    "grade": "고등(공통)",
+    "signature": [
+      "집합 (포함관계·연산·벤다이어그램)"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 500.0,
+      "y": 650.0
+    }
+  },
+  {
+    "stableKey": "C1-도함수활용",
+    "uuid": "448ddaa8-2e2a-4d1d-81f5-e182f8dc9036",
+    "displayLayer": "pattern",
+    "label": "도함수의 활용 (접선·평균값정리·증감·극값·그래프·속도·가속도)",
+    "content": "도함수의 활용 (접선·평균값정리·증감·극값·그래프·속도·가속도) — 미분 (고등(일반선택))",
+    "tldr": "도함수의 활용 (접선·평균값정리·증감·극값·그래프·속도·가속도)",
+    "grade": "고등(일반선택)",
+    "signature": [
+      "도함수의 활용 (접선·평균값정리·증감·극값·그래프·속도·가속도)"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 119.6,
+      "y": 276.4
+    }
+  },
+  {
+    "stableKey": "C2-여러미분법",
+    "uuid": "57b1460f-a19d-4679-8979-cc3d2b23f329",
+    "displayLayer": "pattern",
+    "label": "여러 가지 미분법 (몫·합성·매개변수·음함수·역함수)",
+    "content": "여러 가지 미분법 (몫·합성·매개변수·음함수·역함수) — 미분법 (고등(진로선택))",
+    "tldr": "여러 가지 미분법 (몫·합성·매개변수·음함수·역함수)",
+    "grade": "고등(진로선택)",
+    "signature": [
+      "여러 가지 미분법 (몫·합성·매개변수·음함수·역함수)"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 500.0,
+      "y": -150.0
+    }
+  },
+  {
+    "stableKey": "H1-다항식연산",
+    "uuid": "b34ea42a-fd36-4192-891d-a43a66969cdf",
+    "displayLayer": "pattern",
+    "label": "다항식의 연산",
+    "content": "다항식의 연산 — 다항식 (고등(공통))",
+    "tldr": "다항식의 연산",
+    "grade": "고등(공통)",
+    "signature": [
+      "다항식의 연산"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 323.2,
+      "y": 576.8
+    }
+  },
+  {
+    "stableKey": "H1-여러방정식-부등식",
+    "uuid": "0886b106-8342-46bb-88ce-b3b7b565272d",
+    "displayLayer": "pattern",
+    "label": "여러 가지 방정식과 부등식 (삼·사차·연립이차·절댓값·이차부등식)",
+    "content": "여러 가지 방정식과 부등식 (삼·사차·연립이차·절댓값·이차부등식) — 방정식과 부등식 (고등(공통))",
+    "tldr": "여러 가지 방정식과 부등식 (삼·사차·연립이차·절댓값·이차부등식)",
+    "grade": "고등(공통)",
+    "signature": [
+      "여러 가지 방정식과 부등식 (삼·사차·연립이차·절댓값·이차부등식)"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 250.0,
+      "y": 400.0
+    }
+  },
+  {
+    "stableKey": "H2-직선방정식",
+    "uuid": "6497a691-4bb9-4b61-8422-171108c461c7",
+    "displayLayer": "pattern",
+    "label": "직선의 방정식 (평행·수직·점과 직선의 거리)",
+    "content": "직선의 방정식 (평행·수직·점과 직선의 거리) — 도형의 방정식 (고등(공통))",
+    "tldr": "직선의 방정식 (평행·수직·점과 직선의 거리)",
+    "grade": "고등(공통)",
+    "signature": [
+      "직선의 방정식 (평행·수직·점과 직선의 거리)"
+    ],
+    "isKiller": false,
+    "isFallback": false,
+    "whiteboardPos": {
+      "x": 323.2,
+      "y": 223.2
+    }
   }
 ]

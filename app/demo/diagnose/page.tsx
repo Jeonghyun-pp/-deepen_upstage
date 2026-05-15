@@ -1,54 +1,66 @@
 /**
- * ④ 진단 (2:00 ~ 2:45) — ★ 데모 임팩트 정점.
+ * ④ 종합 진단 (3:30 ~ 4:30) — ★ 데모 임팩트 정점.
  *
- * 실시간 Solar Pro 호출 (lib/upstage/client.ts).
- * BFS 화살표 애니메이션으로 TARGET → LEAF-1 역추적 시각화.
- * NCIC 인용 형광 highlight.
+ * 5회 풀이 history (sessionStorage) → 종합 결손 노드 + Solar Pro narration.
+ * 좌측 5회 history 패널 + 우측 종합 결손 카드 + 인용.
+ *
+ * 단일 itemId 진단 모드는 더 이상 사용 안 함 (회차별은 SolveCanvas 내부에 미니 진단 inline).
  */
 
-import { diagnoseAttempt } from "@/lib/demo/diagnose"
-import { DiagnoseView } from "../_components/DiagnoseView"
-import { getTargetItemId } from "@/lib/demo/data-loader"
-import { getOcrResult } from "@/lib/demo/ocr-store"
+import { AggregateView } from "../_components/AggregateView"
+import { loadDemoData } from "@/lib/demo/data-loader"
 
-type Props = {
-  searchParams: Promise<{
-    itemId?: string
-    attempt?: string
-    stepsKey?: string
-  }>
-}
+export default async function DiagnoseScreen() {
+  const data = loadDemoData()
 
-export default async function DiagnoseScreen({ searchParams }: Props) {
-  const {
-    itemId = getTargetItemId(),
-    attempt = "wrong",
-    stepsKey,
-  } = await searchParams
+  const patterns = data.patterns.map((p) => ({
+    key: p.stableKey,
+    label: p.label,
+    tldr: p.tldr ?? null,
+  }))
 
-  // ③ OCR pipeline 결과가 있으면 그걸 학생 풀이로 사용.
-  // 없으면 diagnose.ts 내부 STUB_WRONG_ATTEMPT 가 fallback.
-  const ocr = stepsKey ? getOcrResult(stepsKey) : null
+  const edges = data.edges.prerequisite.map((e) => ({
+    from: e.from,
+    to: e.to,
+  }))
 
-  const diagnosis = await diagnoseAttempt({
-    itemId,
-    attemptKey: attempt,
-    studentSteps: ocr?.steps.map((s) => s.latex),
-    studentAnswer: ocr?.studentAnswer,
-  })
+  // patternKey → 가장 confidence 높은 chunk 인용 (NCIC 본문).
+  const chunkByPattern: Record<string, { quote: string; section: string }> = {}
+  for (const c of data.chunks) {
+    for (const m of c.patternMappings) {
+      const prev = chunkByPattern[m.patternKey]
+      if (!prev || m.confidence > 0.9) {
+        chunkByPattern[m.patternKey] = {
+          quote: c.content,
+          section: c.sectionTitle ?? "NCIC 교육과정",
+        }
+      }
+    }
+  }
+
+  // distractor 라벨링 메타 — 학생 오답 → 결손 노드 추론용.
+  const itemMeta = data.items.map((it) => ({
+    patternKey: it.patternKey ?? null,
+    distractorMeanings: it.distractorMeanings,
+  }))
 
   return (
     <div className="flex-1 flex flex-col">
       <div className="px-8 pt-6">
         <div className="text-[11px] tracking-[0.25em] font-bold uppercase text-[#DA1E28] mb-2">
-          STEP 4 / 6 · 결손 역추적
+          STEP 4 / 6 · 5회 종합 진단
         </div>
         <h2 className="text-2xl font-bold">
-          진짜 결손은 <span className="text-[#DA1E28]">{diagnosis.candidate.label}</span>
+          5문제를 통합해서, <span className="text-[#DA1E28]">진짜 결손</span>을 짚어냅니다
         </h2>
       </div>
 
-      <DiagnoseView diagnosis={diagnosis} />
+      <AggregateView
+        patterns={patterns}
+        edges={edges}
+        chunkByPattern={chunkByPattern}
+        itemMeta={itemMeta}
+      />
     </div>
   )
 }

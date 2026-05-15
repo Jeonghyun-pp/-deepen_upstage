@@ -14,11 +14,11 @@ export default function DemoLanding() {
           Deepen × Upstage · Hackathon Demo
         </div>
         <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8">
-          5분이면<br />
-          <span className="text-[#15803D]">5분의 격차</span>를 메운다
+          5분 5문제로<br />
+          <span className="text-[#15803D]">진짜 결손</span>을 찾는다
         </h1>
         <p className="text-lg md:text-xl text-black/60 leading-relaxed mb-12 max-w-xl">
-          평가원 기출 한 문제. 학생이 못 풀면, 진짜 결손이 어디인지 — Deepen이 그래프를 거꾸로 짚는다.
+          평가원 기출 5문제. 표면 단원은 달라도 같은 결손에서 막힌다면 — Deepen 그래프가 빨갛게 가리킨다.
         </p>
         <Link
           href="/demo/graph"

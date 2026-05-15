@@ -35,6 +35,13 @@ const Pattern = z.object({
   whiteboardPos: z.object({ x: z.number(), y: z.number() }).optional().nullable(),
 })
 
+const PersonaMapping = z.object({
+  /** 페르소나 key: "A" | "B" | "C" | "D" */
+  persona: z.string(),
+  /** 시퀀스 내 순서 (1~5) */
+  order: z.number().int().positive(),
+})
+
 const Item = z.object({
   stableKey: z.string(),
   uuid: z.string().uuid(),
@@ -50,9 +57,21 @@ const Item = z.object({
   patternKey: z.string().optional().nullable(),
   /** seed 의 meta.label — UI 가 분류 표시할 때 사용 (옵션). */
   metaLabel: z.string().optional(),
-  /** 데모 진입 시 default 로 노출되는 TARGET item. 정확히 1개여야 함. */
+  /** 데모 진입 시 default 로 노출되는 anchor item (페르소나별 시퀀스 시작점). */
   isTarget: z.boolean().optional(),
   isDistractor: z.boolean().optional(),
+  /** 페르소나별 시퀀스 메타 — 1문제가 여러 페르소나에 속할 수 있음. */
+  personaMappings: z.array(PersonaMapping).optional().default([]),
+  /** 평가원 배점 (2/3/4점). */
+  examPoints: z.number().int().optional(),
+  /** 단답형 → 5지선다 자동 변환 여부. */
+  wasSynthesizedChoices: z.boolean().optional(),
+  /**
+   * distractor 라벨링 — 학생이 고른 오답 보기 → 추정 결손 노드.
+   * { "2": ["C1-도함수"], "3": ["H1-인수분해"] } (보기번호 1~5 → patternKey[])
+   * 정상 객관식만 부여, 자동변환 단답형은 없음.
+   */
+  distractorMeanings: z.record(z.string(), z.array(z.string())).optional(),
 })
 
 const Chunk = z.object({
@@ -191,11 +210,11 @@ export function loadDemoData() {
     }
   }
 
-  // TARGET item 정확히 1개
+  // anchor item (페르소나별 시퀀스 진입점) 최소 1개 — 4 페르소나면 4개까지 허용.
   const targets = items.filter((i) => i.isTarget)
-  if (targets.length !== 1) {
+  if (targets.length < 1) {
     throw new Error(
-      `items.json must contain exactly 1 isTarget=true item, found ${targets.length}`,
+      `items.json must contain at least 1 isTarget=true item, found ${targets.length}`,
     )
   }
 
@@ -217,11 +236,57 @@ export function loadDemoData() {
 
 export function getTargetItem(): ItemData {
   const { items } = loadDemoData()
-  return items.find((i) => i.isTarget)! // 검증됨
+  // 첫 anchor item — 기본 데모 진입점 (페르소나 A 시퀀스 시작).
+  return items.find((i) => i.isTarget)!
 }
 
 export function getTargetItemId(): string {
   return getTargetItem().uuid
+}
+
+/** 페르소나별 시퀀스 5문제 — order 순. */
+export function getPersonaSequence(personaKey: string): ItemData[] {
+  const { items } = loadDemoData()
+  const matched = items.flatMap((it) => {
+    const m = it.personaMappings?.find((pm) => pm.persona === personaKey)
+    return m ? [{ item: it, order: m.order }] : []
+  })
+  matched.sort((a, b) => a.order - b.order)
+  return matched.map((x) => x.item)
+}
+
+/** 전체 페르소나 key 목록 — items.json 에서 자동 수집. */
+export function getAllPersonas(): string[] {
+  const { items } = loadDemoData()
+  const keys = new Set<string>()
+  for (const it of items) {
+    for (const pm of it.personaMappings ?? []) keys.add(pm.persona)
+  }
+  return [...keys].sort()
+}
+
+/** uuid → items.json 의 patternKey (stableKey) lookup. */
+export function getItemPatternKey(itemUuid: string): string | null {
+  const { items } = loadDemoData()
+  const matched = items.find((i) => i.uuid === itemUuid)
+  return matched?.patternKey ?? null
+}
+
+/**
+ * 결손 노드(patternKey)에 맞는 재시도 문제 1개.
+ * 같은 patternKey 문제 중 excludeItemIds(이미 푼 것)에 없는 것 우선.
+ * 매칭이 없으면 null.
+ */
+export function getRetryItemForPattern(
+  patternKey: string,
+  excludeItemIds: string[] = [],
+): ItemData | null {
+  const { items } = loadDemoData()
+  const matched = items.filter((i) => i.patternKey === patternKey)
+  if (matched.length === 0) return null
+  const exclude = new Set(excludeItemIds)
+  const unsolved = matched.filter((i) => !exclude.has(i.uuid))
+  return unsolved[0] ?? matched[0]!
 }
 
 export function getFallbackPatternId(): string {
