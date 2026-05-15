@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Nunito } from "next/font/google";
+import { Nunito, Nanum_Pen_Script } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
@@ -8,6 +8,17 @@ const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
   variable: "--font-nunito",
+});
+
+/**
+ * Nanum Pen Script — 데모의 "학생 손풀이" 스캔 패널 전용 손글씨 폰트.
+ * OCR 인식 결과를 수기 풀이처럼 보여주는 데 사용 (app/demo/_components/SolveCanvas).
+ */
+const nanumPen = Nanum_Pen_Script({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-handwriting",
 });
 
 /**
@@ -38,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${nunito.variable} ${pretendard.variable} ${nunito.className} h-full antialiased`}
+      className={`${nunito.variable} ${pretendard.variable} ${nanumPen.variable} ${nunito.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NuqsAdapter>{children}</NuqsAdapter>

@@ -28,7 +28,7 @@ export default function DemoLanding() {
           <ArrowRight size={18} />
         </Link>
         <div className="mt-16 text-xs text-black/40">
-          1) 그래프 자동 생성 · 2) 펜으로 풀이 · 3) 결손 역추적 · 4) 2분 리캡 · 5) 재시도
+          1) 지식그래프 · 2) 5문제 풀이 + 손풀이 OCR · 3) 결손 역추적 · 4) 리캡 · 5) 재시도
         </div>
       </div>
     </div>

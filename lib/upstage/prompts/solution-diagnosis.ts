@@ -48,6 +48,8 @@ export const SolutionDiagnosisOutput = z.object({
   related_pattern: z.string(),
   fix_strategy: z.string(),
   student_feedback: z.string(),
+  /** 풀이가 옳을 때(no_error) 각 핵심 단계가 왜 타당한지 상세 설명. 오류면 "". */
+  correct_reasoning: z.string().default(""),
   next_review: z
     .array(
       z.object({
@@ -82,6 +84,7 @@ const SYSTEM = `너는 수학 정답 풀이를 새로 작성하는 모델이 아
 - 실제 오류와 직접 연결되는 부족 개념만 고른다.
 - 같은 유형을 다시 만났을 때 사용할 수 있는 대처 전략을 제시한다.
 - 학생에게 보여줄 피드백은 짧고 명확하게 쓴다.
+- 풀이가 옳다면, 왜 옳은지를 각 핵심 단계 단위로 구체적으로 설명한다.
 
 절대 하지 말아야 할 것:
 1. 모범 풀이 전체를 장황하게 다시 쓰지 마라.
@@ -103,6 +106,8 @@ const SYSTEM = `너는 수학 정답 풀이를 새로 작성하는 모델이 아
 - 최종 답이 틀렸고 중간 논리도 틀렸으면 is_correct=false, has_flawed_reasoning=true로 둔다.
 - 최종 답은 우연히 맞았지만 중간 논리가 틀렸으면 is_correct=true, has_flawed_reasoning=true로 둔다.
 - 풀이와 답이 모두 맞으면 is_correct=true, has_flawed_reasoning=false, error_type=no_error로 둔다.
+- 풀이가 모두 맞으면(no_error) correct_reasoning에 각 핵심 단계가 왜 수학적으로 타당한지 2~4문장으로 구체적으로 설명한다. "맞았다"로 끝내지 말고, 어떤 정리·법칙·정의를 어떻게 올바르게 적용했는지, 흔히 틀리는 지점을 어떻게 피했는지를 단계별로 짚어준다. 오류가 있으면 correct_reasoning은 빈 문자열 ""로 둔다.
+- student_feedback은 정답이든 오답이든 항상 짧게 쓴다. 상세 설명은 correct_reasoning(정답) 또는 why_plausible·fix_strategy(오답)에 담는다.
 - 학생 풀이가 너무 짧아서 판단하기 어렵다면 uncertainty에 판단이 어려운 이유를 쓴다.
 - missing_concepts는 최대 3개까지만 넣는다. 보통 1~2개가 적절하다.
 - next_review도 최대 3개까지만 넣는다.
@@ -134,6 +139,7 @@ error_type은 반드시 아래 목록 중 하나만 고른다.
   "related_pattern": "이 문제가 속하는 대표 패턴",
   "fix_strategy": "같은 유형을 다시 만났을 때의 대처 전략",
   "student_feedback": "학생에게 직접 보여줄 짧은 피드백",
+  "correct_reasoning": "풀이가 옳을 때 각 핵심 단계가 왜 타당한지 2~4문장으로 상세히 설명. 오류가 있으면 빈 문자열",
   "next_review": [
     { "concept_id": "복습할 개념 id", "reason": "복습 이유" }
   ],
@@ -189,6 +195,7 @@ g'(x)=10x+f(x)+xf'(x)이므로 g'(3)=30+2+3×1=35이다.
         "곱이 보이면 먼저 u(x)v(x)로 나누고, u'(x)v(x)+u(x)v'(x)를 기계적으로 적는다. 이 문제에서는 u=x, v=f(x)이므로 (xf(x))'=1·f(x)+x·f'(x)=f(x)+xf'(x)이다.",
       student_feedback:
         "방향은 맞았지만 xf(x)를 미분할 때 f(x) 항이 빠졌습니다. x도 하나의 함수이므로 (xf(x))'=f(x)+xf'(x)로 처리해야 합니다.",
+      correct_reasoning: "",
       next_review: [
         { concept_id: "c1-도함수", reason: "곱의 미분법을 다시 확인해야 한다." },
         {
@@ -244,6 +251,7 @@ v(t)=(t-1)(t-4)이다. 0<t<1에서 v(t)>0, 1<t<2에서 v(t)<0이므로 움직인
         "'움직인 거리'라는 표현이 나오면 먼저 v(t)=0인 시각을 찾고, 각 구간의 속도 부호를 확인한 뒤 ∫|v(t)|dt로 계산한다. ∫v(t)dt는 변위이다.",
       student_feedback:
         "속도를 적분해야 한다는 방향은 맞습니다. 다만 움직인 거리는 변위와 달라서, 속도가 음수인 구간을 그대로 더하면 안 됩니다. v(t)의 부호가 바뀌는 t=1을 기준으로 절댓값 적분을 해야 합니다.",
+      correct_reasoning: "",
       next_review: [
         {
           concept_id: "c1-정적분활용",
@@ -255,6 +263,44 @@ v(t)=(t-1)(t-4)이다. 0<t<1에서 v(t)>0, 1<t<2에서 v(t)<0이므로 움직인
           reason: "속도 함수의 부호 변화를 찾기 위해 인수분해가 필요하다.",
         },
       ],
+      uncertainty: null,
+    }),
+  },
+  {
+    user: `[Few-shot 3]
+
+문제 ID: 2026-9모-공통-9
+문제:
+다항함수 f(x)에 대하여 f(2)=3, f'(2)=4일 때, 함수 h(x)=x^2 f(x)의 h'(2)의 값을 구하시오.
+
+학생 풀이:
+h(x)=x^2 f(x)이므로 곱의 미분법에 의해 h'(x)=2x·f(x)+x^2·f'(x)이다.
+x=2를 대입하면 h'(2)=2×2×f(2)+2^2×f'(2)=4×3+4×4=12+16=28이다.
+
+모범 풀이 요약:
+h'(x)=2x f(x)+x^2 f'(x)이므로 h'(2)=4×3+4×4=28이다.
+
+최종 개념 id: ["c1-도함수"]
+선행 개념 id: ["c1-미분계수", "c1-함수극한", "m-식의계산"]
+
+위 학생 풀이를 JSON으로 진단하라.`,
+    assistant: JSON.stringify({
+      is_correct: true,
+      has_flawed_reasoning: false,
+      error_type: "no_error",
+      error_summary: "오류 없음. 곱의 미분법을 두 항 모두 살려 올바르게 적용했다.",
+      first_wrong_step: null,
+      why_plausible: "",
+      missing_concepts: [],
+      related_pattern:
+        "곱의 미분법으로 도함수를 구해 특정 점의 미분계수를 계산하는 기본 패턴",
+      fix_strategy:
+        "곱 형태가 보이면 u(x)v(x)로 나누고 u'v+uv'를 적은 뒤, f(a)와 f'(a)를 올바른 위치에 대입한다.",
+      student_feedback:
+        "곱의 미분법을 두 항 모두 살려 정확히 적용했고, f(2)와 f'(2)를 혼동 없이 대입했습니다.",
+      correct_reasoning:
+        "첫째, h(x)를 x^2과 f(x) 두 함수의 곱으로 보고 곱의 미분법 (uv)'=u'v+uv'를 적용한 것이 정확하다. u=x^2이면 u'=2x, v=f(x)이면 v'=f'(x)이므로 h'(x)=2x·f(x)+x^2·f'(x)가 되며, 흔히 누락하는 u'v 항(2x·f(x))을 빠뜨리지 않고 두 항을 모두 살렸다. 둘째, x=2를 대입할 때 f(2)=3은 함수값 자리에, f'(2)=4는 미분계수 자리에 각각 정확히 넣어 2×2×3=12와 4×4=16을 더했다. 함수값 f(2)와 미분계수 f'(2)를 혼동하지 않고 구분해 쓴 점이 이 풀이가 옳은 핵심 이유다.",
+      next_review: [],
       uncertainty: null,
     }),
   },
